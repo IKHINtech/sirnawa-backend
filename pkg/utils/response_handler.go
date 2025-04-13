@@ -37,7 +37,7 @@ func (h *ResponseHandler) Ok(
 	})
 }
 
-func (h *ResponseHandler) Created(c *fiber.Ctx, data interface{}, message string) error {
+func (h *ResponseHandler) Created(c *fiber.Ctx, data any, message string) error {
 	return c.Status(fiber.StatusCreated).JSON(ResponseData{
 		Status:  "Created",
 		Message: message,

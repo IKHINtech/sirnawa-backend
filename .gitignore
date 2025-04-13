@@ -27,7 +27,6 @@ go.sum
 
 # Env and config
 .env
-.env.*
 
 # Logs
 *.log
