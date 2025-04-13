@@ -4,14 +4,15 @@ import "time"
 
 type Resident struct {
 	BaseModel
-	HouseID        uint      `json:"house_id"`
-	Name           string    `json:"name"`
-	NIK            string    `json:"nik"`
-	BirthDate      time.Time `json:"birth_date"`
-	Gender         string    `json:"gender"`
-	Job            string    `json:"job"`
-	IsHeadOfFamily bool      `json:"is_head_of_family"`
+	HouseID        string    `gorm:"not null" json:"house_id"`
+	Name           string    `gorm:"not null" json:"name"`
+	NIK            string    `gorm:"not null" json:"nik"`
+	BirthDate      time.Time `gorm:"not null" json:"birth_date"`
+	Gender         string    `gorm:"not null" json:"gender"`
+	Job            string    `gorm:"not null" json:"job"`
+	IsHeadOfFamily bool      `gorm:"default:false" json:"is_head_of_family"`
 	User           *User     `gorm:"foreignKey:ResidentID" json:"user,omitempty"`
+	House          House     `gorm:"foreignKey:HouseID" json:"house"`
 }
 
 type Residents []Resident

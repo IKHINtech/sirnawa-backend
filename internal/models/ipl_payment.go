@@ -4,7 +4,7 @@ import "time"
 
 type IplPayment struct {
 	BaseModel
-	HouseID string           `json:"house_id"`
+	HouseID string           `gorm:"not null" json:"house_id"`
 	House   House            `gorm:"foreignKey:HouseID" json:"house"`
 	Month   int              `gorm:"not null" json:"month"`
 	Year    int              `gorm:"not null" json:"year"`
