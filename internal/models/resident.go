@@ -13,3 +13,5 @@ type Resident struct {
 	IsHeadOfFamily bool      `json:"is_head_of_family"`
 	User           *User     `gorm:"foreignKey:ResidentID" json:"user,omitempty"`
 }
+
+type Residents []Resident

@@ -30,13 +30,13 @@ func Migrate() error {
 		&models.Block{},
 		&models.Announcement{},
 		&models.House{},
-		&models.IPLPayment{}, // Add IPLPayment model to MI
+		&models.IplPayment{}, // Add IPLPayment model to MI
 		&models.Post{},
 		&models.PostComment{},
 		&models.Resident{},
 		&models.RondaGroup{},
 		&models.RondaGroupMember{},
-		&models.RondaContribution{},
+		&models.RondaContributionItem{},
 		&models.Shop{},
 		&models.ShopProduct{},
 	)

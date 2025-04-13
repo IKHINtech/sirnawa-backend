@@ -1,12 +1,12 @@
 package models
 
-import "time"
+import "github.com/lib/pq"
 
 type Announcement struct {
 	BaseModel
-	Title     string    `json:"title"`
-	Content   string    `json:"content"`
-	CreatedBy uint      `json:"created_by"`
-	StartDate time.Time `json:"start_date"`
-	EndDate   time.Time `json:"end_date"`
+	Title       string         `json:"title" gorm:"not null"`
+	Content     string         `json:"content" gorm:"not null"`
+	CreatedBy   string         `json:"created_by" gorm:"not null"`
+	User        User           `json:"user" gorm:"foreignKey:CreatedBy"`
+	Attachments pq.StringArray `json:"attachments" gorm:"type:text[]"`
 }

@@ -4,6 +4,7 @@ go 1.23.2
 
 require (
 	github.com/gofiber/fiber/v2 v2.52.6
+	github.com/lib/pq v1.10.9
 	github.com/spf13/viper v1.20.1
 	gorm.io/gorm v1.25.12
 )
@@ -20,9 +21,7 @@ require (
 	github.com/go-openapi/swag v0.19.15 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
-	github.com/gofiber/utils v0.0.10 // indirect
 	github.com/google/uuid v1.6.0 // indirect
-	github.com/gorilla/schema v1.1.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20221227161230-091c0ba34f0a // indirect
 	github.com/jackc/pgx/v5 v5.5.5 // indirect
@@ -53,7 +52,6 @@ require (
 	github.com/fsnotify/fsnotify v1.8.0 // indirect
 	github.com/go-playground/validator/v10 v10.26.0
 	github.com/go-viper/mapstructure/v2 v2.2.1 // indirect
-	github.com/gofiber/fiber v1.14.6
 	github.com/gofiber/swagger v1.1.1
 	github.com/golang-jwt/jwt/v5 v5.2.2
 	github.com/pelletier/go-toml/v2 v2.2.3 // indirect

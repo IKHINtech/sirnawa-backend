@@ -2,13 +2,13 @@ package models
 
 import "time"
 
-type IPLPayment struct {
+type IplPayment struct {
 	BaseModel
-	HouseID uint       `json:"house_id"`
-	House   House      `gorm:"foreignKey:HouseID" json:"house"`
-	Month   int        `json:"month"`
-	Year    int        `json:"year"`
-	Amount  float64    `json:"amount"`
-	Status  string     `json:"status"` // paid/unpaid
-	PaidAt  *time.Time `json:"paid_at,omitempty"`
+	HouseID string           `json:"house_id"`
+	House   House            `gorm:"foreignKey:HouseID" json:"house"`
+	Month   int              `gorm:"not null" json:"month"`
+	Year    int              `gorm:"not null" json:"year"`
+	Amount  float64          `gorm:"not null" json:"amount"`
+	Status  IplPaymentStatus `gorm:"default:unpaid" json:"status"` // paid/unpaid
+	PaidAt  *time.Time       `json:"paid_at,omitempty"`
 }
