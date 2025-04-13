@@ -1,51 +1,43 @@
 package database
 
 import (
-	"log"
-	"os"
-	"path/filepath"
-
-	"github.com/spf13/viper"
+	"github.com/IKHINtech/sirnawa-backend/internal/config"
+	"github.com/IKHINtech/sirnawa-backend/internal/models"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
-type Config struct {
-	DBHost     string `mapstructure:"DB_HOST"`
-	DBPort     string `mapstructure:"DB_PORT"`
-	DBUser     string `mapstructure:"DB_USER"`
-	DBPassword string `mapstructure:"DB_PASSWORD"`
-	DBName     string `mapstructure:"DB_NAME"`
-	DBSSLMode  string `mapstructure:"DB_SSLMODE"`
-	PORT       string `mapstructure:"PORT"`
-	JWT_SECRET string `mapstructure:"JWT_SECRET"`
+var DB *gorm.DB
+
+func Connect() {
+	var err error
+
+	dsn := config.BuildDSN(config.CFG)
+
+	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{
+		Logger:                 logger.Default.LogMode(logger.Info),
+		SkipDefaultTransaction: true,
+	})
+	if err != nil {
+		panic("Could not connect with the database")
+	}
 }
 
-var CFG Config
-
-func LoadConfig() (config Config, err error) {
-	// Cari lokasi .env (berdasarkan working directory)
-	envPath := filepath.Join(".", ".env")
-	if _, err := os.Stat(envPath); os.IsNotExist(err) {
-		log.Fatalf("File .env tidak ditemukan di: %s", envPath)
-	}
-
-	viper.SetConfigFile(envPath)
-	viper.AutomaticEnv() // Juga baca dari environment variables sistem
-
-	if err := viper.ReadInConfig(); err != nil {
-		return config, err
-	}
-
-	err = viper.Unmarshal(&config)
-
-	CFG = config
-	return config, err
-}
-
-func BuildDSN(cfg Config) string {
-	return "host=" + cfg.DBHost +
-		" user=" + cfg.DBUser +
-		" password=" + cfg.DBPassword +
-		" dbname=" + cfg.DBName +
-		" port=" + cfg.DBPort +
-		" sslmode=" + cfg.DBSSLMode
+func Migrate() error {
+	return DB.AutoMigrate(
+		&models.User{},
+		&models.Block{},
+		&models.Announcement{},
+		&models.House{},
+		&models.IPLPayment{}, // Add IPLPayment model to MI
+		&models.Post{},
+		&models.PostComment{},
+		&models.Resident{},
+		&models.RondaGroup{},
+		&models.RondaGroupMember{},
+		&models.RondaContribution{},
+		&models.Shop{},
+		&models.ShopProduct{},
+	)
 }
