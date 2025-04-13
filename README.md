@@ -50,6 +50,19 @@ sirnawa-backend/
 └── README.md                 # File ini
 
 
+erp-system/
+├── 📁 auth-microservice/      # Layanan autentikasi (JWT, RBAC)
+├── 📁 hrd-microservice/       # Modul HRD (employee, attendance, payroll)
+│   ├── employee-service/     
+│   ├── attendance-service/    
+│   └── payroll-service/      
+├── 📁 proto/                  # Protobuf definitions (shared)
+├── 📁 deployments/            # Docker/K8s configs
+├── 📁 api-gateway/            # Kong/Traefik configuration
+├── 📁 docs/                   # Dokumentasi arsitektur
+├── Makefile                  # Build semua services
+└── README.md                 # File ini
+
 ---
 
 ## 🧪 Cara Menjalankan (Development)
