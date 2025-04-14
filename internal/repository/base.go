@@ -10,7 +10,7 @@ type BaseRepository interface {
 	Create(tx *gorm.DB, data models.BaseModel) (*models.BaseModel, error)
 	Update(tx *gorm.DB, id string, data models.BaseModel) (*models.BaseModel, error)
 	FindAll() (models.BaseModels, error)
-	Pagination(pagination utils.Pagination) (*utils.Pagination, models.BaseModels, error)
+	Paginated(pagination utils.Pagination) (*utils.Pagination, models.BaseModels, error)
 	FindByID(id string) (*models.BaseModel, error)
 	Delete(id string) error
 }
@@ -23,7 +23,7 @@ func NewBaseRepository(db *gorm.DB) BaseRepository {
 	return &BaseRepositoryImpl{db: db}
 }
 
-func (r *BaseRepositoryImpl) Pagination(pagination utils.Pagination) (*utils.Pagination, models.BaseModels, error) {
+func (r *BaseRepositoryImpl) Paginated(pagination utils.Pagination) (*utils.Pagination, models.BaseModels, error) {
 	var datas models.BaseModels
 	query := r.db
 	err := query.Scopes(utils.Paginate(datas, &pagination, query)).Find(&datas).Error
