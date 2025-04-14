@@ -76,16 +76,13 @@ func Login(c *fiber.Ctx) error {
 
 	if err != nil {
 		return h.InternalServerError(c, []string{err.Error(), "Internal server error"})
-	} else if usermodels == nil {
-		CheckPasswordHash(pass, "")
-		return h.Forbidden(c, []string{"Invalid identity or password"})
-	} else {
-		userData = response.UserResponse{
-			ID:    usermodels.ID,
-			Name:  usermodels.Name,
-			Email: usermodels.Email,
-			Role:  usermodels.Role,
-		}
+	}
+
+	userData = response.UserResponse{
+		ID:    usermodels.ID,
+		Name:  usermodels.Name,
+		Email: usermodels.Email,
+		Role:  usermodels.Role,
 	}
 
 	if !CheckPasswordHash(pass, usermodels.Password) {
@@ -114,9 +111,6 @@ func Login(c *fiber.Ctx) error {
 	response := dto.ResponseLogin{
 		User:        userData,
 		AccessToken: accessToken,
-	}
-	if err != nil {
-		return h.InternalServerError(c, []string{err.Error()})
 	}
 
 	return h.Ok(c, response, "Success login", nil)
@@ -164,6 +158,9 @@ func Register(c *fiber.Ctx) error {
 
 	// Validate input fields
 	err := validators.ValidateStruct(input)
+	if err != nil {
+		return h.BadRequest(c, []string{err.Error(), "Invalid Input"})
+	}
 	if err := c.BodyParser(&input); err != nil {
 		return h.BadRequest(c, []string{err.Error(), "Invalid Input"})
 	}
