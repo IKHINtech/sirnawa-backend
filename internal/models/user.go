@@ -4,8 +4,8 @@ type User struct {
 	BaseModel
 	Name       string    `json:"name"`
 	Email      string    `gorm:"uniqueIndex" json:"email"`
-	Password   string    `json:"-"`
-	Role       string    `json:"role"`
-	ResidentID *uint     `json:"resident_id"` // nullable
+	Password   string    `gorm:"not null" json:"-"`
+	Role       Role      `gorm:"type:role;not null" json:"role"`
+	ResidentID *uint     `gorm:"null" json:"resident_id"` // nullable
 	Resident   *Resident `gorm:"foreignKey:ResidentID" json:"resident,omitempty"`
 }

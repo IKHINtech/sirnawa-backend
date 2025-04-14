@@ -82,7 +82,7 @@ func Login(c *fiber.Ctx) error {
 		ID:    usermodels.ID,
 		Name:  usermodels.Name,
 		Email: usermodels.Email,
-		Role:  usermodels.Role,
+		Role:  usermodels.Role.ToString(),
 	}
 
 	if !CheckPasswordHash(pass, usermodels.Password) {
@@ -216,7 +216,7 @@ func RefreshToken(c *fiber.Ctx) error {
 		return h.Unauthorized(c, []string{"Refresh token is missing"})
 	}
 	// Parse and validate the refresh token
-	token, err := jwt.Parse(refreshToken, func(token *jwt.Token) (interface{}, error) {
+	token, err := jwt.Parse(refreshToken, func(token *jwt.Token) (any, error) {
 		// Validate signing method
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fiber.ErrUnauthorized
@@ -244,7 +244,7 @@ func RefreshToken(c *fiber.Ctx) error {
 		ID:    usermodels.ID,
 		Name:  usermodels.Name,
 		Email: usermodels.Email,
-		Role:  usermodels.Role,
+		Role:  usermodels.Role.ToString(),
 	}
 	// Generate new access token
 	accessString, accessTime, err := utils.GenerateAccessToken(*usermodels)
