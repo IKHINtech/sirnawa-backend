@@ -8,12 +8,12 @@ import (
 )
 
 type Pagination struct {
-	Limit      int    `json:"limit,omitempty"`
-	Page       int    `json:"page,omitempty"`
-	Sort       string `json:"sort,omitempty"`
-	SortBy     string `json:"sort_by,omitempty"`
-	TotalRows  int64  `json:"total_rows"`
-	TotalPages int    `json:"total_pages"`
+	Limit      int    `json:"limit,omitempty" query:"limit"`
+	Page       int    `json:"page,omitempty" query:"page"`
+	Sort       string `json:"sort,omitempty" query:"sort"`
+	SortBy     string `json:"sort_by,omitempty" query:"sort_by"`
+	TotalRows  int64  `json:"total_rows" query:"total_rows"`
+	TotalPages int    `json:"total_pages" query:"total_pages"`
 }
 
 func (p *Pagination) GetOffset() int {

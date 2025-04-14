@@ -30,6 +30,7 @@ func (h *baseHandlerImpl) Create(ctx *fiber.Ctx) {
 	var req request.BaseCreateRequest
 	if err := ctx.BodyParser(&req); err != nil {
 		r.BadRequest(ctx, []string{"Body is not valid"})
+		return
 	}
 
 	middleware.ValidateRequest(req)
@@ -37,6 +38,7 @@ func (h *baseHandlerImpl) Create(ctx *fiber.Ctx) {
 	res, err := h.services.Create(req)
 	if err != nil {
 		r.BadRequest(ctx, []string{"error:" + err.Error()})
+		return
 	}
 
 	r.Created(ctx, res, "Successfully created")
@@ -45,10 +47,16 @@ func (h *baseHandlerImpl) Create(ctx *fiber.Ctx) {
 func (h *baseHandlerImpl) Update(ctx *fiber.Ctx) {
 	r := &utils.ResponseHandler{}
 	id := ctx.Params("id")
+	if id == "" {
+		r.BadRequest(ctx, []string{"id is required"})
+		return
+	}
+
 	req := new(request.BaseUpdateRequset)
 
 	if err := ctx.BodyParser(&req); err != nil {
 		r.BadRequest(ctx, []string{"Body is not valid"})
+		return
 	}
 
 	middleware.ValidateRequest(req)
@@ -56,11 +64,73 @@ func (h *baseHandlerImpl) Update(ctx *fiber.Ctx) {
 	res, err := h.services.Update(id, *req)
 	if err != nil {
 		r.BadRequest(ctx, []string{"error:" + err.Error()})
+		return
 	}
 
 	r.Created(ctx, res, "Successfully created")
 }
-func (h *baseHandlerImpl) Paginated(ctx *fiber.Ctx) {}
-func (h *baseHandlerImpl) FindAll(ctx *fiber.Ctx)   {}
-func (h *baseHandlerImpl) FindByID(ctx *fiber.Ctx)  {}
-func (h *baseHandlerImpl) Delete(ctx *fiber.Ctx)    {}
+func (h *baseHandlerImpl) Paginated(ctx *fiber.Ctx) {
+
+	r := &utils.ResponseHandler{}
+	orderBy := ctx.Query("order_by", "created_at")
+
+	// Mengambil nilai parameter order dari query
+	order := ctx.Query("order", "DESC")
+
+	page := ctx.QueryInt("page", 1)
+	pageSize := ctx.QueryInt("page_size", 10)
+
+	paginate := utils.Pagination{
+		Limit:  pageSize,
+		Page:   page,
+		Sort:   order,
+		SortBy: orderBy,
+	}
+	meta, data, err := h.services.Paginated(paginate)
+	if err != nil {
+		r.BadRequest(ctx, []string{"error:" + err.Error()})
+		return
+	}
+	r.Ok(ctx, data, "Successfully get data", meta)
+}
+func (h *baseHandlerImpl) FindAll(ctx *fiber.Ctx) {
+
+	r := &utils.ResponseHandler{}
+	res, err := h.services.FindAll()
+	if err != nil {
+		r.BadRequest(ctx, []string{"error:" + err.Error()})
+		return
+	}
+	r.Ok(ctx, res, "Successfully get data", nil)
+
+}
+func (h *baseHandlerImpl) FindByID(ctx *fiber.Ctx) {
+
+	r := &utils.ResponseHandler{}
+	id := ctx.Params("id")
+	if id == "" {
+		r.BadRequest(ctx, []string{"id is required"})
+		return
+	}
+
+	res, err := h.services.FindByID(id)
+	if err != nil {
+		r.BadRequest(ctx, []string{"error:" + err.Error()})
+	}
+	r.Ok(ctx, res, "Successfully get data", nil)
+}
+func (h *baseHandlerImpl) Delete(ctx *fiber.Ctx) {
+
+	r := &utils.ResponseHandler{}
+	id := ctx.Params("id")
+	if id == "" {
+		r.BadRequest(ctx, []string{"id is required"})
+		return
+	}
+
+	err := h.services.Delete(id)
+	if err != nil {
+		r.BadRequest(ctx, []string{"error:" + err.Error()})
+	}
+	r.Ok(ctx, nil, "Successfully deleted", nil)
+}
