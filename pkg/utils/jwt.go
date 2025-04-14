@@ -13,7 +13,6 @@ import (
 func GenerateAccessToken(data models.User) (string, int64, error) {
 	claims := jwt.MapClaims{
 		"user_id": data.ID,
-		"email":   data.Email,
 		"exp":     time.Now().Add(time.Minute * 15).Unix(), // Berlaku 15 menit
 		"iat":     time.Now().Unix(),
 	}

@@ -36,10 +36,8 @@ func jwtSuccess(c *fiber.Ctx) error {
 
 	// Ambil informasi user dari claims dan set ke context
 	userID := claims["user_id"].(string)
-	username := claims["username"].(string)
 
 	// Menyimpan informasi user ke dalam context Fiber
 	c.Locals("user_id", userID)
-	c.Locals("username", username)
 	return c.Next()
 }
