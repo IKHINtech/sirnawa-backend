@@ -155,4 +155,10 @@ paths:
       summary: Get Paginated Block
       tags:
       - Block
+securityDefinitions:
+  Bearer:
+    description: Type "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"
