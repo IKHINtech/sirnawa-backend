@@ -9,12 +9,12 @@ import (
 )
 
 type BlockHandler interface {
-	Create(ctx *fiber.Ctx)
-	Update(ctx *fiber.Ctx)
-	Paginated(ctx *fiber.Ctx)
-	FindAll(ctx *fiber.Ctx)
-	FindByID(ctx *fiber.Ctx)
-	Delete(ctx *fiber.Ctx)
+	Create(ctx *fiber.Ctx) error
+	Update(ctx *fiber.Ctx) error
+	Paginated(ctx *fiber.Ctx) error
+	FindAll(ctx *fiber.Ctx) error
+	FindByID(ctx *fiber.Ctx) error
+	Delete(ctx *fiber.Ctx) error
 }
 
 type blockHandlerImpl struct {
@@ -36,23 +36,21 @@ func NewBlockHandler(services services.BlockService) BlockHandler {
 // @Success 200 {object} utils.ResponseData
 // @Failure 400 {object} utils.ResponseData
 // @Router /block [post]
-func (h *blockHandlerImpl) Create(ctx *fiber.Ctx) {
+func (h *blockHandlerImpl) Create(ctx *fiber.Ctx) error {
 	r := &utils.ResponseHandler{}
 	var req request.BlockCreateRequest
 	if err := ctx.BodyParser(&req); err != nil {
-		r.BadRequest(ctx, []string{"Body is not valid"})
-		return
+		return r.BadRequest(ctx, []string{"Body is not valid"})
 	}
 
 	middleware.ValidateRequest(req)
 
 	res, err := h.services.Create(req)
 	if err != nil {
-		r.BadRequest(ctx, []string{"error:" + err.Error()})
-		return
+		return r.BadRequest(ctx, []string{"error:" + err.Error()})
 	}
 
-	r.Created(ctx, res, "Successfully created")
+	return r.Created(ctx, res, "Successfully created")
 }
 
 // Update Block
@@ -67,30 +65,27 @@ func (h *blockHandlerImpl) Create(ctx *fiber.Ctx) {
 // @Success 200 {object} utils.ResponseData
 // @Failure 400 {object} utils.ResponseData
 // @Router /block/{id} [put]
-func (h *blockHandlerImpl) Update(ctx *fiber.Ctx) {
+func (h *blockHandlerImpl) Update(ctx *fiber.Ctx) error {
 	r := &utils.ResponseHandler{}
 	id := ctx.Params("id")
 	if id == "" {
-		r.BadRequest(ctx, []string{"id is required"})
-		return
+		return r.BadRequest(ctx, []string{"id is required"})
 	}
 
 	req := new(request.BlockUpdateRequset)
 
 	if err := ctx.BodyParser(&req); err != nil {
-		r.BadRequest(ctx, []string{"Body is not valid"})
-		return
+		return r.BadRequest(ctx, []string{"Body is not valid"})
 	}
 
 	middleware.ValidateRequest(req)
 
 	res, err := h.services.Update(id, *req)
 	if err != nil {
-		r.BadRequest(ctx, []string{"error:" + err.Error()})
-		return
+		return r.BadRequest(ctx, []string{"error:" + err.Error()})
 	}
 
-	r.Created(ctx, res, "Successfully created")
+	return r.Created(ctx, res, "Successfully created")
 }
 
 // Get Pagination Block
@@ -107,17 +102,16 @@ func (h *blockHandlerImpl) Update(ctx *fiber.Ctx) {
 // @Success 200 {object} utils.ResponseData
 // @Failure 400 {object} utils.ResponseData
 // @Router /block/paginated [get]
-func (h *blockHandlerImpl) Paginated(ctx *fiber.Ctx) {
+func (h *blockHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 	r := &utils.ResponseHandler{}
 
 	paginate := utils.GetPaginationParams(ctx)
 
 	meta, data, err := h.services.Paginated(paginate)
 	if err != nil {
-		r.BadRequest(ctx, []string{"error:" + err.Error()})
-		return
+		return r.BadRequest(ctx, []string{"error:" + err.Error()})
 	}
-	r.Ok(ctx, data, "Successfully get data", meta)
+	return r.Ok(ctx, data, "Successfully get data", meta)
 }
 
 // Get List Block
@@ -130,17 +124,16 @@ func (h *blockHandlerImpl) Paginated(ctx *fiber.Ctx) {
 // @Success 200 {object} utils.ResponseData
 // @Failure 400 {object} utils.ResponseData
 // @Router /block [get]
-func (h *blockHandlerImpl) FindAll(ctx *fiber.Ctx) {
+func (h *blockHandlerImpl) FindAll(ctx *fiber.Ctx) error {
 	r := &utils.ResponseHandler{}
 	res, err := h.services.FindAll()
 	if err != nil {
-		r.BadRequest(ctx, []string{"error:" + err.Error()})
-		return
+		return r.BadRequest(ctx, []string{"error:" + err.Error()})
 	}
-	r.Ok(ctx, res, "Successfully get data", nil)
+	return r.Ok(ctx, res, "Successfully get data", nil)
 }
 
-// Find Block By I
+// Find Block By ID
 // @Summary Find Block By ID
 // @Descrpiton Find Block By ID
 // @Tags Block
@@ -151,20 +144,18 @@ func (h *blockHandlerImpl) FindAll(ctx *fiber.Ctx) {
 // @Success 200 {object} utils.ResponseData
 // @Failure 400 {object} utils.ResponseData
 // @Router /block/{id} [get]
-func (h *blockHandlerImpl) FindByID(ctx *fiber.Ctx) {
+func (h *blockHandlerImpl) FindByID(ctx *fiber.Ctx) error {
 	r := &utils.ResponseHandler{}
 	id := ctx.Params("id")
 	if id == "" {
-		r.BadRequest(ctx, []string{"id is required"})
-		return
+		return r.BadRequest(ctx, []string{"id is required"})
 	}
 
 	res, err := h.services.FindByID(id)
 	if err != nil {
-		r.BadRequest(ctx, []string{"error:" + err.Error()})
-		return
+		return r.BadRequest(ctx, []string{"error:" + err.Error()})
 	}
-	r.Ok(ctx, res, "Successfully get data", nil)
+	return r.Ok(ctx, res, "Successfully get data", nil)
 }
 
 // Delete Block By ID
@@ -178,18 +169,16 @@ func (h *blockHandlerImpl) FindByID(ctx *fiber.Ctx) {
 // @Success 200 {object} utils.ResponseData
 // @Failure 400 {object} utils.ResponseData
 // @Router /block/{id} [delete]
-func (h *blockHandlerImpl) Delete(ctx *fiber.Ctx) {
+func (h *blockHandlerImpl) Delete(ctx *fiber.Ctx) error {
 	r := &utils.ResponseHandler{}
 	id := ctx.Params("id")
 	if id == "" {
-		r.BadRequest(ctx, []string{"id is required"})
-		return
+		return r.BadRequest(ctx, []string{"id is required"})
 	}
 
 	err := h.services.Delete(id)
 	if err != nil {
-		r.BadRequest(ctx, []string{"error:" + err.Error()})
-		return
+		return r.BadRequest(ctx, []string{"error:" + err.Error()})
 	}
-	r.Ok(ctx, nil, "Successfully deleted", nil)
+	return r.Ok(ctx, nil, "Successfully deleted", nil)
 }

@@ -40,7 +40,7 @@ func main() {
 	app := fiber.New()
 
 	middleware.SetupCORS(app)
-
+	middleware.SetupRecovery(app)
 	routes.SetupRoutesApp(app)
 
 	if err := app.Listen(":" + config.CFG.PORT); err != nil {

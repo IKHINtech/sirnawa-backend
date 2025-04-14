@@ -2,12 +2,13 @@ package routes
 
 import (
 	_ "github.com/IKHINtech/sirnawa-backend/docs"
+	"github.com/IKHINtech/sirnawa-backend/internal/middleware"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/swagger"
 )
 
 func SetupRoutesApp(app *fiber.App) {
-	// routes.UserRoutes(app.Group("/users"))
+	BlockRoutes(app.Group("/block", middleware.Protected()))
 	// routes.AuthRoutes(app.Group("/auth"))
 
 	// Default route

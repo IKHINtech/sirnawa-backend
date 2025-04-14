@@ -23,7 +23,7 @@ type blockServiceImpl struct {
 	db         *gorm.DB
 }
 
-func NewBlockRepository(repo repository.BlockRepository, db *gorm.DB) BlockService {
+func NewBlockServices(repo repository.BlockRepository, db *gorm.DB) BlockService {
 	return &blockServiceImpl{repository: repo, db: db}
 }
 
