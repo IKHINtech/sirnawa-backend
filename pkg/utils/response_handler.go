@@ -15,10 +15,10 @@ type ErrorDetails struct {
 }
 
 type ResponseData struct {
-	Status  string `json:"status"`
-	Message string `json:"message"`
-	Data    any    `json:"data"`
-	Meta    *Meta  `json:"meta,omitempty"`
+	Status  string      `json:"status"`
+	Message string      `json:"message"`
+	Data    any         `json:"data"`
+	Meta    *Pagination `json:"meta,omitempty"`
 }
 
 type ResponseHandler struct{}
@@ -27,7 +27,7 @@ func (h *ResponseHandler) Ok(
 	c *fiber.Ctx,
 	data any,
 	message string,
-	meta *Meta,
+	meta *Pagination,
 ) error {
 	return c.Status(fiber.StatusOK).JSON(ResponseData{
 		Status:  "success",
