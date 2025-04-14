@@ -31,7 +31,11 @@ func NewBlockHandler(services services.BlockService) BlockHandler {
 // @Tags Block
 // @Accept json
 // @Produce json
-// @Security
+// @Security Bearer
+// @Params data body request.BlockCreateRequest true "Create Block"
+// @Success 200 {object} utils.ResponseData
+// @Failure 400 {object} utils.ResponseData
+// @Router /block [post]
 func (h *blockHandlerImpl) Create(ctx *fiber.Ctx) {
 	r := &utils.ResponseHandler{}
 	var req request.BlockCreateRequest
@@ -51,6 +55,18 @@ func (h *blockHandlerImpl) Create(ctx *fiber.Ctx) {
 	r.Created(ctx, res, "Successfully created")
 }
 
+// Update Block
+// @Summary Update Block
+// @Descrpiton Update Block
+// @Tags Block
+// @Accept json
+// @Produce json
+// @Security Bearer
+// @Params data body request.BlockUpdateRequset true "Update Block"
+// @Params id path string true "Block id"
+// @Success 200 {object} utils.ResponseData
+// @Failure 400 {object} utils.ResponseData
+// @Router /block/{id} [put]
 func (h *blockHandlerImpl) Update(ctx *fiber.Ctx) {
 	r := &utils.ResponseHandler{}
 	id := ctx.Params("id")
@@ -77,6 +93,20 @@ func (h *blockHandlerImpl) Update(ctx *fiber.Ctx) {
 	r.Created(ctx, res, "Successfully created")
 }
 
+// Get Pagination Block
+// @Summary Get Paginated Block
+// @Descrpiton Get Paginated Block
+// @Tags Block
+// @Accept json
+// @Produce json
+// @Security Bearer
+// @Params page query int false "Page number"
+// @Params page_size query int false "Page size"
+// @Params order_by query string false "Order by"
+// @Params order query string false "Order"
+// @Success 200 {object} utils.ResponseData
+// @Failure 400 {object} utils.ResponseData
+// @Router /block/paginated [get]
 func (h *blockHandlerImpl) Paginated(ctx *fiber.Ctx) {
 	r := &utils.ResponseHandler{}
 
@@ -90,6 +120,16 @@ func (h *blockHandlerImpl) Paginated(ctx *fiber.Ctx) {
 	r.Ok(ctx, data, "Successfully get data", meta)
 }
 
+// Get List Block
+// @Summary Get List Block
+// @Descrpiton Get List Block
+// @Tags Block
+// @Accept json
+// @Produce json
+// @Security Bearer
+// @Success 200 {object} utils.ResponseData
+// @Failure 400 {object} utils.ResponseData
+// @Router /block [get]
 func (h *blockHandlerImpl) FindAll(ctx *fiber.Ctx) {
 	r := &utils.ResponseHandler{}
 	res, err := h.services.FindAll()
@@ -100,6 +140,17 @@ func (h *blockHandlerImpl) FindAll(ctx *fiber.Ctx) {
 	r.Ok(ctx, res, "Successfully get data", nil)
 }
 
+// Find Block By I
+// @Summary Find Block By ID
+// @Descrpiton Find Block By ID
+// @Tags Block
+// @Accept json
+// @Produce json
+// @Security Bearer
+// @Params id path string true "Block id"
+// @Success 200 {object} utils.ResponseData
+// @Failure 400 {object} utils.ResponseData
+// @Router /block/{id} [get]
 func (h *blockHandlerImpl) FindByID(ctx *fiber.Ctx) {
 	r := &utils.ResponseHandler{}
 	id := ctx.Params("id")
@@ -116,6 +167,17 @@ func (h *blockHandlerImpl) FindByID(ctx *fiber.Ctx) {
 	r.Ok(ctx, res, "Successfully get data", nil)
 }
 
+// Delete Block By ID
+// @Summary Delete Block By ID
+// @Descrpiton Delete Block By ID
+// @Tags Block
+// @Accept json
+// @Produce json
+// @Security Bearer
+// @Params id path string true "Block id"
+// @Success 200 {object} utils.ResponseData
+// @Failure 400 {object} utils.ResponseData
+// @Router /block/{id} [delete]
 func (h *blockHandlerImpl) Delete(ctx *fiber.Ctx) {
 	r := &utils.ResponseHandler{}
 	id := ctx.Params("id")

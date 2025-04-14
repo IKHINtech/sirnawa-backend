@@ -1,4 +1,30 @@
 basePath: /
+definitions:
+  utils.Pagination:
+    properties:
+      limit:
+        type: integer
+      page:
+        type: integer
+      sort:
+        type: string
+      sort_by:
+        type: string
+      total_pages:
+        type: integer
+      total_rows:
+        type: integer
+    type: object
+  utils.ResponseData:
+    properties:
+      data: {}
+      message:
+        type: string
+      meta:
+        $ref: '#/definitions/utils.Pagination'
+      status:
+        type: string
+    type: object
 host: localhost:5001
 info:
   contact:
@@ -11,5 +37,122 @@ info:
   termsOfService: http://swagger.io/terms/
   title: SIRNAWA API
   version: "1.0"
-paths: {}
+paths:
+  /block:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get List Block
+      tags:
+      - Block
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Create Block
+      tags:
+      - Block
+  /block/{id}:
+    delete:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Delete Block By ID
+      tags:
+      - Block
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Find Block By ID
+      tags:
+      - Block
+    put:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Update Block
+      tags:
+      - Block
+  /block/paginated:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get Paginated Block
+      tags:
+      - Block
 swagger: "2.0"
