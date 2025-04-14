@@ -1,0 +1,15 @@
+basePath: /
+host: localhost:5001
+info:
+  contact:
+    email: sarikhin@yahoo.co.id
+    name: API Support
+  description: This is a API Server for SIRNAWA
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: SIRNAWA API
+  version: "1.0"
+paths: {}
+swagger: "2.0"

@@ -10,6 +10,17 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
+// @title SIRNAWA API
+// @version 1.0
+// @description This is a API Server for SIRNAWA
+// @termsOfService http://swagger.io/terms/
+// @contact.name API Support
+// @contact.email sarikhin@yahoo.co.id
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+// @host localhost:5001
+// @BasePath /
+
 func main() {
 	_, err := config.LoadConfig()
 	if err != nil {

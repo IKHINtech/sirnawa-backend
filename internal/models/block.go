@@ -5,3 +5,5 @@ type Block struct {
 	Name   string `gorm:"uniqueIndex" json:"name"`
 	Houses Houses `gorm:"foreignKey:BlockID" json:"houses,omitempty"`
 }
+
+type Blocks []Block

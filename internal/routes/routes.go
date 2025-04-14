@@ -1,6 +1,7 @@
 package routes
 
 import (
+	_ "github.com/IKHINtech/sirnawa-backend/docs"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/swagger"
 )
