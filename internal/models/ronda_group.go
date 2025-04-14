@@ -3,5 +3,6 @@ package models
 type RondaGroup struct {
 	BaseModel
 	Name    string             `json:"name"`
+	Order   uint               `gorm:"not null"`
 	Members []RondaGroupMember `gorm:"foreignKey:GroupID" json:"members,omitempty"`
 }
