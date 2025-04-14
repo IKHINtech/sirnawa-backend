@@ -2,8 +2,8 @@ package utils
 
 import (
 	"math"
-	"strconv"
 
+	"github.com/gofiber/fiber/v2"
 	"gorm.io/gorm"
 )
 
@@ -62,19 +62,20 @@ func Paginate(value any, pagination *Pagination, db *gorm.DB) func(db *gorm.DB) 
 	}
 }
 
-func GetPaginationParams(pageStr, perPageStr string) (int, int) {
-	const defaultPage = 1
-	const defaultPerPage = 10
+func GetPaginationParams(ctx *fiber.Ctx) Pagination {
+	orderBy := ctx.Query("order_by", "created_at")
 
-	page, err := strconv.Atoi(pageStr)
-	if err != nil || page <= 0 {
-		page = defaultPage
+	// Mengambil nilai parameter order dari query
+	order := ctx.Query("order", "DESC")
+
+	page := ctx.QueryInt("page", 1)
+	pageSize := ctx.QueryInt("page_size", 10)
+
+	paginate := Pagination{
+		Limit:  pageSize,
+		Page:   page,
+		Sort:   order,
+		SortBy: orderBy,
 	}
-
-	perPage, err := strconv.Atoi(perPageStr)
-	if err != nil || perPage <= 0 {
-		perPage = defaultPerPage
-	}
-
-	return page, perPage
+	return paginate
 }
