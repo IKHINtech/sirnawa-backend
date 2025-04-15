@@ -80,7 +80,6 @@ func Login(c *fiber.Ctx) error {
 
 	userData = response.UserResponse{
 		ID:    usermodels.ID,
-		Name:  usermodels.Name,
 		Email: usermodels.Email,
 		Role:  usermodels.Role.ToString(),
 	}
@@ -186,6 +185,7 @@ func Register(c *fiber.Ctx) error {
 	user := models.User{
 		Email:    input.Email,
 		Password: string(hashedPassword),
+		Role:     models.RoleWarga,
 	}
 
 	// Save user to database
@@ -193,7 +193,13 @@ func Register(c *fiber.Ctx) error {
 	if err := db.Create(&user).Error; err != nil {
 		return h.InternalServerError(c, []string{err.Error(), "Failed to create user"})
 	}
-	return h.Created(c, user, "User registered successfully")
+
+	respUser := response.UserResponse{
+		ID:    user.ID,
+		Email: user.Email,
+		Role:  string(user.Role),
+	}
+	return h.Created(c, respUser, "User registered successfully")
 }
 
 // RefreshToken handles refresh token request godoc
@@ -242,7 +248,6 @@ func RefreshToken(c *fiber.Ctx) error {
 
 	userData := response.UserResponse{
 		ID:    usermodels.ID,
-		Name:  usermodels.Name,
 		Email: usermodels.Email,
 		Role:  usermodels.Role.ToString(),
 	}

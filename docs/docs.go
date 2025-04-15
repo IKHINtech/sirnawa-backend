@@ -234,6 +234,17 @@ const docTemplate = `{
                     "Block"
                 ],
                 "summary": "Create Block",
+                "parameters": [
+                    {
+                        "description": "Create Block",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.BlockCreateRequest"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -267,6 +278,32 @@ const docTemplate = `{
                     "Block"
                 ],
                 "summary": "Get Paginated Block",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page size",
+                        "name": "page_size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Order by",
+                        "name": "order_by",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Order",
+                        "name": "order",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -300,6 +337,15 @@ const docTemplate = `{
                     "Block"
                 ],
                 "summary": "Find Block By ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Block id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -331,6 +377,24 @@ const docTemplate = `{
                     "Block"
                 ],
                 "summary": "Update Block",
+                "parameters": [
+                    {
+                        "description": "Update Block",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.BlockUpdateRequset"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Block id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -362,6 +426,15 @@ const docTemplate = `{
                     "Block"
                 ],
                 "summary": "Delete Block By ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Block id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -384,8 +457,7 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "email",
-                "password",
-                "username"
+                "password"
             ],
             "properties": {
                 "email": {
@@ -395,11 +467,25 @@ const docTemplate = `{
                     "type": "string",
                     "maxLength": 32,
                     "minLength": 8
+                }
+            }
+        },
+        "request.BlockCreateRequest": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.BlockUpdateRequset": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
                 },
-                "username": {
-                    "type": "string",
-                    "maxLength": 32,
-                    "minLength": 3
+                "name": {
+                    "type": "string"
                 }
             }
         },

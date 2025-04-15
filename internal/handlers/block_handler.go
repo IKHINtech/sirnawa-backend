@@ -32,7 +32,7 @@ func NewBlockHandler(services services.BlockService) BlockHandler {
 // @Accept json
 // @Produce json
 // @Security Bearer
-// @Params data body request.BlockCreateRequest true "Create Block"
+// @Param data body request.BlockCreateRequest true "Create Block"
 // @Success 200 {object} utils.ResponseData
 // @Failure 400 {object} utils.ResponseData
 // @Router /block [post]
@@ -60,8 +60,8 @@ func (h *blockHandlerImpl) Create(ctx *fiber.Ctx) error {
 // @Accept json
 // @Produce json
 // @Security Bearer
-// @Params data body request.BlockUpdateRequset true "Update Block"
-// @Params id path string true "Block id"
+// @Param data body request.BlockUpdateRequset true "Update Block"
+// @Param id path string true "Block id"
 // @Success 200 {object} utils.ResponseData
 // @Failure 400 {object} utils.ResponseData
 // @Router /block/{id} [put]
@@ -95,10 +95,10 @@ func (h *blockHandlerImpl) Update(ctx *fiber.Ctx) error {
 // @Accept json
 // @Produce json
 // @Security Bearer
-// @Params page query int false "Page number"
-// @Params page_size query int false "Page size"
-// @Params order_by query string false "Order by"
-// @Params order query string false "Order"
+// @Param page query int false "Page number"
+// @Param page_size query int false "Page size"
+// @Param order_by query string false "Order by"
+// @Param order query string false "Order"
 // @Success 200 {object} utils.ResponseData
 // @Failure 400 {object} utils.ResponseData
 // @Router /block/paginated [get]
@@ -140,7 +140,7 @@ func (h *blockHandlerImpl) FindAll(ctx *fiber.Ctx) error {
 // @Accept json
 // @Produce json
 // @Security Bearer
-// @Params id path string true "Block id"
+// @Param id path string true "Block id"
 // @Success 200 {object} utils.ResponseData
 // @Failure 400 {object} utils.ResponseData
 // @Router /block/{id} [get]
@@ -165,7 +165,7 @@ func (h *blockHandlerImpl) FindByID(ctx *fiber.Ctx) error {
 // @Accept json
 // @Produce json
 // @Security Bearer
-// @Params id path string true "Block id"
+// @Param id path string true "Block id"
 // @Success 200 {object} utils.ResponseData
 // @Failure 400 {object} utils.ResponseData
 // @Router /block/{id} [delete]

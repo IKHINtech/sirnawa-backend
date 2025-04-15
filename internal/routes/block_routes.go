@@ -13,8 +13,8 @@ func BlockRoutes(route fiber.Router) {
 	services := services.NewBlockServices(repository, database.DB)
 	handlers := handlers.NewBlockHandler(services)
 	route.Get("/", handlers.FindAll)
-	route.Get("/:id", handlers.FindByID)
 	route.Get("/paginated", handlers.Paginated)
+	route.Get("/:id", handlers.FindByID)
 	route.Post("/", handlers.Create)
 	route.Delete("/:id", handlers.Delete)
 }
