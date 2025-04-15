@@ -17,7 +17,7 @@ func GenerateAccessToken(data models.User) (string, int64, error) {
 		"iat":     time.Now().Unix(),
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	signedToken, err := token.SignedString([]byte(config.CFG.JWT_SECRET))
+	signedToken, err := token.SignedString([]byte(config.AppConfig.JWT_SECRET))
 	if err != nil {
 		return "", 0, err
 	}
@@ -36,7 +36,7 @@ func GenerateRefreshToken(userID string) (string, error) {
 		"iat":     time.Now().Unix(),
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString([]byte(config.CFG.JWT_SECRET))
+	return token.SignedString([]byte(config.AppConfig.JWT_SECRET))
 }
 
 func SetRefreshTokenCookie(c *fiber.Ctx, refreshString string) {

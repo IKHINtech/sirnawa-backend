@@ -11,7 +11,7 @@ import (
 
 func Protected() fiber.Handler {
 	return jwtware.New(jwtware.Config{
-		SigningKey:     jwtware.SigningKey{Key: []byte(config.CFG.JWT_SECRET)},
+		SigningKey:     jwtware.SigningKey{Key: []byte(config.AppConfig.JWT_SECRET)},
 		ErrorHandler:   jwtError,
 		SuccessHandler: jwtSuccess,
 	})

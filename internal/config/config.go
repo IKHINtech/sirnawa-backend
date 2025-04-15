@@ -19,7 +19,7 @@ type Config struct {
 	JWT_SECRET string `mapstructure:"JWT_SECRET"`
 }
 
-var CFG Config
+var AppConfig Config
 
 func LoadConfig() (config Config, err error) {
 	// Cari lokasi .env (berdasarkan working directory)
@@ -37,7 +37,7 @@ func LoadConfig() (config Config, err error) {
 
 	err = viper.Unmarshal(&config)
 
-	CFG = config
+	AppConfig = config
 	return config, err
 }
 

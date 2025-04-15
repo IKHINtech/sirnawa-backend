@@ -43,7 +43,7 @@ func main() {
 	middleware.SetupRecovery(app)
 	routes.SetupRoutesApp(app)
 
-	if err := app.Listen(":" + config.CFG.PORT); err != nil {
+	if err := app.Listen(":" + config.AppConfig.PORT); err != nil {
 		log.Fatalf("Failed to start server: %v", err)
 	}
 }

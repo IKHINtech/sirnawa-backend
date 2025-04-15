@@ -221,7 +221,7 @@ func RefreshToken(c *fiber.Ctx) error {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fiber.ErrUnauthorized
 		}
-		return []byte(config.CFG.JWT_SECRET), nil
+		return []byte(config.AppConfig.JWT_SECRET), nil
 	})
 
 	if err != nil || !token.Valid {
