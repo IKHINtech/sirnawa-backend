@@ -6,31 +6,31 @@ import (
 	"gorm.io/gorm"
 )
 
-type BlockRepository interface {
-	Create(tx *gorm.DB, data models.Block) (*models.Block, error)
-	Update(tx *gorm.DB, id string, data models.Block) (*models.Block, error)
-	FindAll() (models.Blocks, error)
-	Paginated(pagination utils.Pagination) (*utils.Pagination, models.Blocks, error)
-	FindByID(id string) (*models.Block, error)
+type ShopProductRepository interface {
+	Create(tx *gorm.DB, data models.ShopProduct) (*models.ShopProduct, error)
+	Update(tx *gorm.DB, id string, data models.ShopProduct) (*models.ShopProduct, error)
+	FindAll() (models.ShopProducts, error)
+	Paginated(pagination utils.Pagination) (*utils.Pagination, models.ShopProducts, error)
+	FindByID(id string) (*models.ShopProduct, error)
 	Delete(id string) error
 }
 
-type blockRepositoryImpl struct {
+type shopProductRepositoryImpl struct {
 	db *gorm.DB
 }
 
-func NewBlockRepository(db *gorm.DB) BlockRepository {
-	return &blockRepositoryImpl{db: db}
+func NewShopProductRepository(db *gorm.DB) ShopProductRepository {
+	return &shopProductRepositoryImpl{db: db}
 }
 
-func (r *blockRepositoryImpl) Paginated(pagination utils.Pagination) (*utils.Pagination, models.Blocks, error) {
-	var datas models.Blocks
+func (r *shopProductRepositoryImpl) Paginated(pagination utils.Pagination) (*utils.Pagination, models.ShopProducts, error) {
+	var datas models.ShopProducts
 	query := r.db
 	err := query.Scopes(utils.Paginate(datas, &pagination, query)).Find(&datas).Error
 	return &pagination, datas, err
 }
 
-func (r *blockRepositoryImpl) Create(tx *gorm.DB, data models.Block) (*models.Block, error) {
+func (r *shopProductRepositoryImpl) Create(tx *gorm.DB, data models.ShopProduct) (*models.ShopProduct, error) {
 	if tx == nil {
 		tx = r.db
 	}
@@ -41,16 +41,16 @@ func (r *blockRepositoryImpl) Create(tx *gorm.DB, data models.Block) (*models.Bl
 	return &data, err
 }
 
-func (r *blockRepositoryImpl) Update(tx *gorm.DB, id string, data models.Block) (*models.Block, error) {
+func (r *shopProductRepositoryImpl) Update(tx *gorm.DB, id string, data models.ShopProduct) (*models.ShopProduct, error) {
 	if tx == nil {
 		tx = r.db
 	}
-	err := tx.Model(&models.Block{}).Where("id = ?", id).Updates(data).Error
+	err := tx.Model(&models.ShopProduct{}).Where("id = ?", id).Updates(data).Error
 	return &data, err
 }
 
-func (r *blockRepositoryImpl) FindByID(id string) (*models.Block, error) {
-	var data models.Block
+func (r *shopProductRepositoryImpl) FindByID(id string) (*models.ShopProduct, error) {
+	var data models.ShopProduct
 
 	err := r.db.First(&data, "id = ?", id).Error
 	if err != nil {
@@ -59,13 +59,13 @@ func (r *blockRepositoryImpl) FindByID(id string) (*models.Block, error) {
 	return &data, err
 }
 
-func (r *blockRepositoryImpl) FindAll() (models.Blocks, error) {
-	var data models.Blocks
+func (r *shopProductRepositoryImpl) FindAll() (models.ShopProducts, error) {
+	var data models.ShopProducts
 	err := r.db.Find(&data).Error
 	return data, err
 }
 
-func (r *blockRepositoryImpl) Delete(id string) error {
-	err := r.db.Delete(&models.Block{}, "id = ?", id).Error
+func (r *shopProductRepositoryImpl) Delete(id string) error {
+	err := r.db.Delete(&models.ShopProduct{}, "id = ?", id).Error
 	return err
 }

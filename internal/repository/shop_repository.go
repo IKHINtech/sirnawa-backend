@@ -6,31 +6,31 @@ import (
 	"gorm.io/gorm"
 )
 
-type BlockRepository interface {
-	Create(tx *gorm.DB, data models.Block) (*models.Block, error)
-	Update(tx *gorm.DB, id string, data models.Block) (*models.Block, error)
-	FindAll() (models.Blocks, error)
-	Paginated(pagination utils.Pagination) (*utils.Pagination, models.Blocks, error)
-	FindByID(id string) (*models.Block, error)
+type ShopRepository interface {
+	Create(tx *gorm.DB, data models.Shop) (*models.Shop, error)
+	Update(tx *gorm.DB, id string, data models.Shop) (*models.Shop, error)
+	FindAll() (models.Shops, error)
+	Paginated(pagination utils.Pagination) (*utils.Pagination, models.Shops, error)
+	FindByID(id string) (*models.Shop, error)
 	Delete(id string) error
 }
 
-type blockRepositoryImpl struct {
+type shopRepositoryImpl struct {
 	db *gorm.DB
 }
 
-func NewBlockRepository(db *gorm.DB) BlockRepository {
-	return &blockRepositoryImpl{db: db}
+func NewShopRepository(db *gorm.DB) ShopRepository {
+	return &shopRepositoryImpl{db: db}
 }
 
-func (r *blockRepositoryImpl) Paginated(pagination utils.Pagination) (*utils.Pagination, models.Blocks, error) {
-	var datas models.Blocks
+func (r *shopRepositoryImpl) Paginated(pagination utils.Pagination) (*utils.Pagination, models.Shops, error) {
+	var datas models.Shops
 	query := r.db
 	err := query.Scopes(utils.Paginate(datas, &pagination, query)).Find(&datas).Error
 	return &pagination, datas, err
 }
 
-func (r *blockRepositoryImpl) Create(tx *gorm.DB, data models.Block) (*models.Block, error) {
+func (r *shopRepositoryImpl) Create(tx *gorm.DB, data models.Shop) (*models.Shop, error) {
 	if tx == nil {
 		tx = r.db
 	}
@@ -41,16 +41,16 @@ func (r *blockRepositoryImpl) Create(tx *gorm.DB, data models.Block) (*models.Bl
 	return &data, err
 }
 
-func (r *blockRepositoryImpl) Update(tx *gorm.DB, id string, data models.Block) (*models.Block, error) {
+func (r *shopRepositoryImpl) Update(tx *gorm.DB, id string, data models.Shop) (*models.Shop, error) {
 	if tx == nil {
 		tx = r.db
 	}
-	err := tx.Model(&models.Block{}).Where("id = ?", id).Updates(data).Error
+	err := tx.Model(&models.Shop{}).Where("id = ?", id).Updates(data).Error
 	return &data, err
 }
 
-func (r *blockRepositoryImpl) FindByID(id string) (*models.Block, error) {
-	var data models.Block
+func (r *shopRepositoryImpl) FindByID(id string) (*models.Shop, error) {
+	var data models.Shop
 
 	err := r.db.First(&data, "id = ?", id).Error
 	if err != nil {
@@ -59,13 +59,13 @@ func (r *blockRepositoryImpl) FindByID(id string) (*models.Block, error) {
 	return &data, err
 }
 
-func (r *blockRepositoryImpl) FindAll() (models.Blocks, error) {
-	var data models.Blocks
+func (r *shopRepositoryImpl) FindAll() (models.Shops, error) {
+	var data models.Shops
 	err := r.db.Find(&data).Error
 	return data, err
 }
 
-func (r *blockRepositoryImpl) Delete(id string) error {
-	err := r.db.Delete(&models.Block{}, "id = ?", id).Error
+func (r *shopRepositoryImpl) Delete(id string) error {
+	err := r.db.Delete(&models.Shop{}, "id = ?", id).Error
 	return err
 }
