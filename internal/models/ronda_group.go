@@ -6,3 +6,5 @@ type RondaGroup struct {
 	Order   uint               `gorm:"not null"`
 	Members []RondaGroupMember `gorm:"foreignKey:GroupID" json:"members,omitempty"`
 }
+
+type RondaGroups []RondaGroup

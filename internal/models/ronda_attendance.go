@@ -9,3 +9,5 @@ type RondaAttendance struct {
 	Resident        Resident              `gorm:"foreignKey:ResidentID"`
 	RondaActivity   RondaActivity         `gorm:"foreignKey:RondaActivityID"`
 }
+
+type RondaAttendances []RondaAttendance

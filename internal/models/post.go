@@ -10,3 +10,5 @@ type Post struct {
 	Content     string         `gorm:"not null" json:"content"`
 	Attachments pq.StringArray `json:"attachments" gorm:"type:text[]"`
 }
+
+type Posts []Post

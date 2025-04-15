@@ -9,3 +9,5 @@ type User struct {
 	ResidentID *uint     `gorm:"null" json:"resident_id"` // nullable
 	Resident   *Resident `gorm:"foreignKey:ResidentID" json:"resident,omitempty"`
 }
+
+type Users []User

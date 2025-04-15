@@ -8,3 +8,4 @@ type Shop struct {
 	Status      string        `json:"status"` // aktif/nonaktif
 	Products    []ShopProduct `gorm:"foreignKey:ShopID" json:"products,omitempty"`
 }
+type Shops []Shop

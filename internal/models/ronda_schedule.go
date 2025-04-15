@@ -8,3 +8,5 @@ type RondaSchedule struct {
 	GroupID     string     `gorm:"not null" json:"group_id"`
 	Group       RondaGroup `gorm:"foreignKey:GroupID" json:"group"`
 }
+
+type RondaSchedules []RondaSchedule

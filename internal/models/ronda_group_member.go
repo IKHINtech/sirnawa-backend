@@ -7,3 +7,5 @@ type RondaGroupMember struct {
 	Group      RondaGroup `gorm:"foreignKey:GroupID" json:"-"`
 	Resident   Resident   `gorm:"foreignKey:ResidentID" json:"-"`
 }
+
+type RondaGroupMembers []RondaGroupMember

@@ -11,3 +11,5 @@ type RondaActivity struct {
 	CreatedBy    string     `gorm:"not null" json:"created_by"`
 	User         User       `gorm:"foreignKey:CreatedBy" json:"user"`
 }
+
+type RondaActivitys []RondaActivity

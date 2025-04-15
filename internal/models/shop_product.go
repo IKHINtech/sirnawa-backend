@@ -9,3 +9,5 @@ type ShopProduct struct {
 	ImageURL    string  `json:"image_url"`
 	Stock       int     `json:"stock"`
 }
+
+type ShopProducts []ShopProduct

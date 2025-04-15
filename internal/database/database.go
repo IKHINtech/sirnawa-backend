@@ -30,7 +30,7 @@ func Migrate() error {
 		&models.Block{},
 		&models.Announcement{},
 		&models.House{},
-		&models.IplPayment{}, // Add IPLPayment model to MI
+		&models.IplPayment{},
 		&models.Post{},
 		&models.PostComment{},
 		&models.Resident{},

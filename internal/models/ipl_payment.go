@@ -12,3 +12,5 @@ type IplPayment struct {
 	Status  IplPaymentStatus `gorm:"default:unpaid;type:ipl_payment_status" json:"status"` // paid/unpaid
 	PaidAt  *time.Time       `gorm:"null" json:"paid_at,omitempty"`
 }
+
+type IplPayments []IplPayment

@@ -8,3 +8,5 @@ type PostComment struct {
 	User    User   `gorm:"foreignKey:UserID" json:"user"`
 	Post    Post   `gorm:"foreignKey:PostID" json:"post"`
 }
+
+type PostComments []PostComment

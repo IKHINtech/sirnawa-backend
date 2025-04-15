@@ -10,3 +10,5 @@ type RondaConstribution struct {
 	Total        float64    `json:"total"`
 	TotalPenalty float64    `json:"total_penalty"`
 }
+
+type RondaConstributions []RondaConstribution
