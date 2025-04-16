@@ -7,6 +7,7 @@ type Resident struct {
 	HouseID        string    `gorm:"not null" json:"house_id"`
 	Name           string    `gorm:"not null" json:"name"`
 	NIK            string    `gorm:"not null" json:"nik"`
+	PhoneNumber    *string   `gorm:"null" json:"phone_number"`
 	BirthDate      time.Time `gorm:"not null" json:"birth_date"`
 	Gender         string    `gorm:"not null" json:"gender"`
 	Job            string    `gorm:"not null" json:"job"`
