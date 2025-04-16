@@ -18,6 +18,10 @@ func SetupRoutesApp(app *fiber.App) {
 	RondaActivityRoutes(app.Group("/ronda-activity", middleware.Protected()))
 	RondaAttendanceRoutes(app.Group("/ronda-attendance", middleware.Protected()))
 	RondaConstributionRoutes(app.Group("/ronda-constribution", middleware.Protected()))
+	RondaGroupRoutes(app.Group("/ronda-constribution", middleware.Protected()))
+	RondaScheduleRoutes(app.Group("/ronda-schedule", middleware.Protected()))
+	ShopRoutes(app.Group("/shop", middleware.Protected()))
+	ShopProductRoutes(app.Group("/shop-product", middleware.Protected()))
 
 	// Default route
 	app.Get("/", func(c *fiber.Ctx) error {
