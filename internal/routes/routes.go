@@ -8,8 +8,9 @@ import (
 )
 
 func SetupRoutesApp(app *fiber.App) {
-	BlockRoutes(app.Group("/block", middleware.Protected()))
 	AuthRoutes(app.Group("/auth"))
+	BlockRoutes(app.Group("/block", middleware.Protected()))
+	HouseRoutes(app.Group("/house", middleware.Protected()))
 
 	// Default route
 	app.Get("/", func(c *fiber.Ctx) error {

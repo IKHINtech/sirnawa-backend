@@ -1,0 +1,21 @@
+package routes
+
+import (
+	"github.com/IKHINtech/sirnawa-backend/internal/database"
+	"github.com/IKHINtech/sirnawa-backend/internal/handlers"
+	"github.com/IKHINtech/sirnawa-backend/internal/repository"
+	"github.com/IKHINtech/sirnawa-backend/internal/services"
+	"github.com/gofiber/fiber/v2"
+)
+
+func PostCommentRoutes(route fiber.Router) {
+	repository := repository.NewPostCommentRepository(database.DB)
+	services := services.NewPostCommentServices(repository, database.DB)
+	handlers := handlers.NewPostCommentHandler(services)
+
+	route.Get("/", handlers.FindAll)
+	route.Get("/paginated", handlers.Paginated)
+	route.Get("/:id", handlers.FindByID)
+	route.Post("/", handlers.Create)
+	route.Delete("/:id", handlers.Delete)
+}
