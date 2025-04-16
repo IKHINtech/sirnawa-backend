@@ -8,10 +8,10 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func BlockRoutes(route fiber.Router) {
-	repository := repository.NewBlockRepository(database.DB)
-	services := services.NewBlockServices(repository, database.DB)
-	handlers := handlers.NewBlockHandler(services)
+func RondaActivityRoutes(route fiber.Router) {
+	repository := repository.NewRondaActivityRepository(database.DB)
+	services := services.NewRondaActivityServices(repository, database.DB)
+	handlers := handlers.NewRondaActivityHandler(services)
 
 	route.Get("/", handlers.FindAll)
 	route.Get("/paginated", handlers.Paginated)

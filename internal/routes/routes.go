@@ -11,6 +11,13 @@ func SetupRoutesApp(app *fiber.App) {
 	AuthRoutes(app.Group("/auth"))
 	BlockRoutes(app.Group("/block", middleware.Protected()))
 	HouseRoutes(app.Group("/house", middleware.Protected()))
+	IplPaymentRoutes(app.Group("/ipl-payment", middleware.Protected()))
+	PostCommentRoutes(app.Group("/post-comment", middleware.Protected()))
+	PostRoutes(app.Group("/post", middleware.Protected()))
+	ResidentRoutes(app.Group("/resident", middleware.Protected()))
+	RondaActivityRoutes(app.Group("/ronda-activity", middleware.Protected()))
+	RondaAttendanceRoutes(app.Group("/ronda-attendance", middleware.Protected()))
+	RondaConstributionRoutes(app.Group("/ronda-constribution", middleware.Protected()))
 
 	// Default route
 	app.Get("/", func(c *fiber.Ctx) error {
