@@ -24,12 +24,330 @@ definitions:
       name:
         type: string
     type: object
+  request.HouseCreateRequest:
+    properties:
+      block_id:
+        type: string
+      number:
+        type: string
+      status:
+        description: aktif / tidak aktif
+        type: string
+    type: object
+  request.HouseUpdateRequset:
+    properties:
+      block_id:
+        type: string
+      id:
+        type: string
+      number:
+        type: string
+      status:
+        description: aktif / tidak aktif
+        type: string
+    type: object
+  request.IplPaymentCreateRequest:
+    properties:
+      amount:
+        type: number
+      house_id:
+        type: string
+      month:
+        type: integer
+      paid_at:
+        type: string
+      year:
+        type: integer
+    type: object
+  request.IplPaymentUpdateRequset:
+    properties:
+      amount:
+        type: number
+      house_id:
+        type: string
+      id:
+        type: string
+      month:
+        type: integer
+      paid_at:
+        type: string
+      year:
+        type: integer
+    type: object
   request.LoginInput:
     properties:
       email:
         type: string
       password:
         type: string
+    type: object
+  request.PostCommentCreateRequest:
+    properties:
+      comment:
+        type: string
+      post_id:
+        type: string
+      user_id:
+        type: string
+    type: object
+  request.PostCommentUpdateRequset:
+    properties:
+      comment:
+        type: string
+      id:
+        type: string
+      post_id:
+        type: string
+      user_id:
+        type: string
+    type: object
+  request.PostCreateRequest:
+    properties:
+      attachments:
+        items:
+          type: string
+        type: array
+      content:
+        type: string
+      title:
+        type: string
+      user_id:
+        type: string
+    type: object
+  request.PostUpdateRequset:
+    properties:
+      attachments:
+        items:
+          type: string
+        type: array
+      content:
+        type: string
+      id:
+        type: string
+      title:
+        type: string
+      user_id:
+        type: string
+    type: object
+  request.ResidentCreateRequest:
+    properties:
+      birth_date:
+        type: string
+      gender:
+        type: string
+      house_id:
+        type: string
+      is_head_of_family:
+        type: boolean
+      job:
+        type: string
+      name:
+        type: string
+      nik:
+        type: string
+      phone_number:
+        type: string
+    type: object
+  request.ResidentUpdateRequset:
+    properties:
+      birth_date:
+        type: string
+      gender:
+        type: string
+      house_id:
+        type: string
+      id:
+        type: string
+      is_head_of_family:
+        type: boolean
+      job:
+        type: string
+      name:
+        type: string
+      nik:
+        type: string
+      phone_number:
+        type: string
+    type: object
+  request.RondaActivityCreateRequest:
+    properties:
+      created_by:
+        type: string
+      date:
+        type: string
+      description:
+        type: string
+      ronda_group_id:
+        type: string
+    type: object
+  request.RondaActivityUpdateRequset:
+    properties:
+      created_by:
+        type: string
+      date:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      ronda_group_id:
+        type: string
+    type: object
+  request.RondaAttendanceCreateRequest:
+    properties:
+      note:
+        type: string
+      resident_id:
+        type: string
+      ronda_activity_id:
+        type: string
+      status:
+        description: hadir / tidak_hadir
+        type: string
+    type: object
+  request.RondaAttendanceUpdateRequset:
+    properties:
+      id:
+        type: string
+      note:
+        type: string
+      resident_id:
+        type: string
+      ronda_activity_id:
+        type: string
+      status:
+        description: hadir / tidak_hadir
+        type: string
+    type: object
+  request.RondaConstributionCreateRequest:
+    properties:
+      date:
+        type: string
+      name:
+        type: string
+      ronda_group_id:
+        type: string
+      total:
+        type: number
+      total_penalty:
+        type: number
+    type: object
+  request.RondaConstributionUpdateRequset:
+    properties:
+      date:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      ronda_group_id:
+        type: string
+      total:
+        type: number
+      total_penalty:
+        type: number
+    type: object
+  request.RondaGroupCreateRequest:
+    properties:
+      name:
+        type: string
+    type: object
+  request.RondaGroupMemberCreateRequest:
+    properties:
+      group_id:
+        type: string
+      resident_id:
+        type: string
+    type: object
+  request.RondaGroupMemberUpdateRequset:
+    properties:
+      group_id:
+        type: string
+      id:
+        type: string
+      resident_id:
+        type: string
+    type: object
+  request.RondaGroupUpdateRequset:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  request.RondaScheduleCreateRequest:
+    properties:
+      efektif_date:
+        type: string
+      group_id:
+        type: string
+    type: object
+  request.RondaScheduleUpdateRequset:
+    properties:
+      efektif_date:
+        type: string
+      group_id:
+        type: string
+      id:
+        type: string
+    type: object
+  request.ShopCreateRequest:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+      status:
+        description: aktif/nonaktif
+        type: string
+      user_id:
+        type: integer
+    type: object
+  request.ShopProductCreateRequest:
+    properties:
+      description:
+        type: string
+      image_url:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+      shop_id:
+        type: integer
+      stock:
+        type: integer
+    type: object
+  request.ShopProductUpdateRequset:
+    properties:
+      description:
+        type: string
+      id:
+        type: string
+      image_url:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+      shop_id:
+        type: integer
+      stock:
+        type: integer
+    type: object
+  request.ShopUpdateRequset:
+    properties:
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      status:
+        description: aktif/nonaktif
+        type: string
+      user_id:
+        type: integer
     type: object
   utils.ErrorDetails:
     properties:
@@ -355,6 +673,2151 @@ paths:
       summary: Get Paginated Block
       tags:
       - Block
+  /house:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get List House
+      tags:
+      - House
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create House
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.HouseCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Create House
+      tags:
+      - House
+  /house/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: House id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Delete House By ID
+      tags:
+      - House
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: House id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Find House By ID
+      tags:
+      - House
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update House
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.HouseUpdateRequset'
+      - description: House id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Update House
+      tags:
+      - House
+  /house/paginated:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: page_size
+        type: integer
+      - description: Order by
+        in: query
+        name: order_by
+        type: string
+      - description: Order
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get Paginated House
+      tags:
+      - House
+  /ipl-payment:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get List IplPayment
+      tags:
+      - IplPayment
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create IplPayment
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.IplPaymentCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Create IplPayment
+      tags:
+      - IplPayment
+  /ipl-payment/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: IplPayment id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Delete IplPayment By ID
+      tags:
+      - IplPayment
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: IplPayment id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Find IplPayment By ID
+      tags:
+      - IplPayment
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update IplPayment
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.IplPaymentUpdateRequset'
+      - description: IplPayment id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Update IplPayment
+      tags:
+      - IplPayment
+  /ipl-payment/paginated:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: page_size
+        type: integer
+      - description: Order by
+        in: query
+        name: order_by
+        type: string
+      - description: Order
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get Paginated IplPayment
+      tags:
+      - IplPayment
+  /post:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get List Post
+      tags:
+      - Post
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create Post
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.PostCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Create Post
+      tags:
+      - Post
+  /post-comment:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get List PostComment
+      tags:
+      - PostComment
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create PostComment
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.PostCommentCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Create PostComment
+      tags:
+      - PostComment
+  /post-comment/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: PostComment id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Delete PostComment By ID
+      tags:
+      - PostComment
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: PostComment id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Find PostComment By ID
+      tags:
+      - PostComment
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update PostComment
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.PostCommentUpdateRequset'
+      - description: PostComment id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Update PostComment
+      tags:
+      - PostComment
+  /post-comment/paginated:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: page_size
+        type: integer
+      - description: Order by
+        in: query
+        name: order_by
+        type: string
+      - description: Order
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get Paginated PostComment
+      tags:
+      - PostComment
+  /post/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Post id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Delete Post By ID
+      tags:
+      - Post
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Post id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Find Post By ID
+      tags:
+      - Post
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update Post
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.PostUpdateRequset'
+      - description: Post id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Update Post
+      tags:
+      - Post
+  /post/paginated:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: page_size
+        type: integer
+      - description: Order by
+        in: query
+        name: order_by
+        type: string
+      - description: Order
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get Paginated Post
+      tags:
+      - Post
+  /resident:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get List Resident
+      tags:
+      - Resident
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create Resident
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.ResidentCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Create Resident
+      tags:
+      - Resident
+  /resident/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Resident id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Delete Resident By ID
+      tags:
+      - Resident
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Resident id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Find Resident By ID
+      tags:
+      - Resident
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update Resident
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.ResidentUpdateRequset'
+      - description: Resident id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Update Resident
+      tags:
+      - Resident
+  /resident/paginated:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: page_size
+        type: integer
+      - description: Order by
+        in: query
+        name: order_by
+        type: string
+      - description: Order
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get Paginated Resident
+      tags:
+      - Resident
+  /ronda-activity:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get List RondaActivity
+      tags:
+      - RondaActivity
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create RondaActivity
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.RondaActivityCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Create RondaActivity
+      tags:
+      - RondaActivity
+  /ronda-activity/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: RondaActivity id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Delete RondaActivity By ID
+      tags:
+      - RondaActivity
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: RondaActivity id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Find RondaActivity By ID
+      tags:
+      - RondaActivity
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update RondaActivity
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.RondaActivityUpdateRequset'
+      - description: RondaActivity id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Update RondaActivity
+      tags:
+      - RondaActivity
+  /ronda-activity/paginated:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: page_size
+        type: integer
+      - description: Order by
+        in: query
+        name: order_by
+        type: string
+      - description: Order
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get Paginated RondaActivity
+      tags:
+      - RondaActivity
+  /ronda-attendance:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get List RondaAttendance
+      tags:
+      - RondaAttendance
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create RondaAttendance
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.RondaAttendanceCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Create RondaAttendance
+      tags:
+      - RondaAttendance
+  /ronda-attendance/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: RondaAttendance id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Delete RondaAttendance By ID
+      tags:
+      - RondaAttendance
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: RondaAttendance id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Find RondaAttendance By ID
+      tags:
+      - RondaAttendance
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update RondaAttendance
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.RondaAttendanceUpdateRequset'
+      - description: RondaAttendance id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Update RondaAttendance
+      tags:
+      - RondaAttendance
+  /ronda-attendance/paginated:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: page_size
+        type: integer
+      - description: Order by
+        in: query
+        name: order_by
+        type: string
+      - description: Order
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get Paginated RondaAttendance
+      tags:
+      - RondaAttendance
+  /ronda-constribution:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get List RondaConstribution
+      tags:
+      - RondaConstribution
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create RondaConstribution
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.RondaConstributionCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Create RondaConstribution
+      tags:
+      - RondaConstribution
+  /ronda-constribution/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: RondaConstribution id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Delete RondaConstribution By ID
+      tags:
+      - RondaConstribution
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: RondaConstribution id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Find RondaConstribution By ID
+      tags:
+      - RondaConstribution
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update RondaConstribution
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.RondaConstributionUpdateRequset'
+      - description: RondaConstribution id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Update RondaConstribution
+      tags:
+      - RondaConstribution
+  /ronda-constribution/paginated:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: page_size
+        type: integer
+      - description: Order by
+        in: query
+        name: order_by
+        type: string
+      - description: Order
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get Paginated RondaConstribution
+      tags:
+      - RondaConstribution
+  /ronda-group:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get List RondaGroup
+      tags:
+      - RondaGroup
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create RondaGroup
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.RondaGroupCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Create RondaGroup
+      tags:
+      - RondaGroup
+  /ronda-group-member:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get List RondaGroupMember
+      tags:
+      - RondaGroupMember
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create RondaGroupMember
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.RondaGroupMemberCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Create RondaGroupMember
+      tags:
+      - RondaGroupMember
+  /ronda-group-member/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: RondaGroupMember id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Delete RondaGroupMember By ID
+      tags:
+      - RondaGroupMember
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: RondaGroupMember id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Find RondaGroupMember By ID
+      tags:
+      - RondaGroupMember
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update RondaGroupMember
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.RondaGroupMemberUpdateRequset'
+      - description: RondaGroupMember id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Update RondaGroupMember
+      tags:
+      - RondaGroupMember
+  /ronda-group-member/paginated:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: page_size
+        type: integer
+      - description: Order by
+        in: query
+        name: order_by
+        type: string
+      - description: Order
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get Paginated RondaGroupMember
+      tags:
+      - RondaGroupMember
+  /ronda-group/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: RondaGroup id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Delete RondaGroup By ID
+      tags:
+      - RondaGroup
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: RondaGroup id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Find RondaGroup By ID
+      tags:
+      - RondaGroup
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update RondaGroup
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.RondaGroupUpdateRequset'
+      - description: RondaGroup id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Update RondaGroup
+      tags:
+      - RondaGroup
+  /ronda-group/paginated:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: page_size
+        type: integer
+      - description: Order by
+        in: query
+        name: order_by
+        type: string
+      - description: Order
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get Paginated RondaGroup
+      tags:
+      - RondaGroup
+  /ronda-schedule:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get List RondaSchedule
+      tags:
+      - RondaSchedule
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create RondaSchedule
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.RondaScheduleCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Create RondaSchedule
+      tags:
+      - RondaSchedule
+  /ronda-schedule/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: RondaSchedule id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Delete RondaSchedule By ID
+      tags:
+      - RondaSchedule
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: RondaSchedule id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Find RondaSchedule By ID
+      tags:
+      - RondaSchedule
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update RondaSchedule
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.RondaScheduleUpdateRequset'
+      - description: RondaSchedule id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Update RondaSchedule
+      tags:
+      - RondaSchedule
+  /ronda-schedule/paginated:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: page_size
+        type: integer
+      - description: Order by
+        in: query
+        name: order_by
+        type: string
+      - description: Order
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get Paginated RondaSchedule
+      tags:
+      - RondaSchedule
+  /shop:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get List Shop
+      tags:
+      - Shop
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create Shop
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.ShopCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Create Shop
+      tags:
+      - Shop
+  /shop-product:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get List ShopProduct
+      tags:
+      - ShopProduct
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create ShopProduct
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.ShopProductCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Create ShopProduct
+      tags:
+      - ShopProduct
+  /shop-product/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: ShopProduct id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Delete ShopProduct By ID
+      tags:
+      - ShopProduct
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: ShopProduct id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Find ShopProduct By ID
+      tags:
+      - ShopProduct
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update ShopProduct
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.ShopProductUpdateRequset'
+      - description: ShopProduct id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Update ShopProduct
+      tags:
+      - ShopProduct
+  /shop-product/paginated:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: page_size
+        type: integer
+      - description: Order by
+        in: query
+        name: order_by
+        type: string
+      - description: Order
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get Paginated ShopProduct
+      tags:
+      - ShopProduct
+  /shop/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Shop id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Delete Shop By ID
+      tags:
+      - Shop
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Shop id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Find Shop By ID
+      tags:
+      - Shop
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update Shop
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.ShopUpdateRequset'
+      - description: Shop id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Update Shop
+      tags:
+      - Shop
+  /shop/paginated:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: page_size
+        type: integer
+      - description: Order by
+        in: query
+        name: order_by
+        type: string
+      - description: Order
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get Paginated Shop
+      tags:
+      - Shop
 securityDefinitions:
   Bearer:
     description: Type "Bearer" followed by a space and JWT token.

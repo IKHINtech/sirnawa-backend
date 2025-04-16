@@ -9,25 +9,25 @@ import (
 	"gorm.io/gorm"
 )
 
-type BlockService interface {
-	Create(data request.BlockCreateRequest) (*response.BlockResponse, error)
-	Update(id string, data request.BlockUpdateRequset) (*response.BlockResponse, error)
-	FindByID(id string) (*response.BlockResponse, error)
+type RondaAttendanceService interface {
+	Create(data request.RondaAttendanceCreateRequest) (*response.RondaAttendanceResponse, error)
+	Update(id string, data request.RondaAttendanceUpdateRequset) (*response.RondaAttendanceResponse, error)
+	FindByID(id string) (*response.RondaAttendanceResponse, error)
 	Delete(id string) error
-	FindAll() (response.BlockResponses, error)
-	Paginated(pagination utils.Pagination) (*utils.Pagination, *response.BlockResponses, error)
+	FindAll() (response.RondaAttendanceResponses, error)
+	Paginated(pagination utils.Pagination) (*utils.Pagination, *response.RondaAttendanceResponses, error)
 }
 
-type blockServiceImpl struct {
-	repository repository.BlockRepository
+type rondaAttendanceServiceImpl struct {
+	repository repository.RondaAttendanceRepository
 	db         *gorm.DB
 }
 
-func NewBlockServices(repo repository.BlockRepository, db *gorm.DB) BlockService {
-	return &blockServiceImpl{repository: repo, db: db}
+func NewRondaAttendanceServices(repo repository.RondaAttendanceRepository, db *gorm.DB) RondaAttendanceService {
+	return &rondaAttendanceServiceImpl{repository: repo, db: db}
 }
 
-func (s *blockServiceImpl) withTransaction(fn func(tx *gorm.DB) error) error {
+func (s *rondaAttendanceServiceImpl) withTransaction(fn func(tx *gorm.DB) error) error {
 	tx := s.db.Begin()
 	if tx.Error != nil {
 		return tx.Error
@@ -52,11 +52,11 @@ func (s *blockServiceImpl) withTransaction(fn func(tx *gorm.DB) error) error {
 	return nil
 }
 
-func (s *blockServiceImpl) Create(data request.BlockCreateRequest) (*response.BlockResponse, error) {
-	var result *models.Block
+func (s *rondaAttendanceServiceImpl) Create(data request.RondaAttendanceCreateRequest) (*response.RondaAttendanceResponse, error) {
+	var result *models.RondaAttendance
 
 	err := s.withTransaction(func(tx *gorm.DB) error {
-		payload := request.BlockCreateRequestToBlockModel(data)
+		payload := request.RondaAttendanceCreateRequestToRondaAttendanceModel(data)
 
 		created, err := s.repository.Create(tx, payload)
 		if err != nil {
@@ -71,12 +71,12 @@ func (s *blockServiceImpl) Create(data request.BlockCreateRequest) (*response.Bl
 		return nil, err
 	}
 
-	res := response.BlockModelToBlockResponse(result)
+	res := response.RondaAttendanceModelToRondaAttendanceResponse(result)
 	return res, nil
 }
 
-func (s *blockServiceImpl) Update(id string, data request.BlockUpdateRequset) (*response.BlockResponse, error) {
-	var result *models.Block
+func (s *rondaAttendanceServiceImpl) Update(id string, data request.RondaAttendanceUpdateRequset) (*response.RondaAttendanceResponse, error) {
+	var result *models.RondaAttendance
 
 	err := s.withTransaction(func(tx *gorm.DB) error {
 		existing, err := s.repository.FindByID(id)
@@ -84,7 +84,7 @@ func (s *blockServiceImpl) Update(id string, data request.BlockUpdateRequset) (*
 			return err
 		}
 
-		payload := request.BlockUpdateRequsetToBlockModel(data)
+		payload := request.RondaAttendanceUpdateRequsetToRondaAttendanceModel(data)
 		payload.ID = existing.ID
 
 		updated, err := s.repository.Update(tx, payload.ID, payload)
@@ -100,41 +100,41 @@ func (s *blockServiceImpl) Update(id string, data request.BlockUpdateRequset) (*
 		return nil, err
 	}
 
-	res := response.BlockModelToBlockResponse(result)
+	res := response.RondaAttendanceModelToRondaAttendanceResponse(result)
 	return res, nil
 }
 
-func (s *blockServiceImpl) FindAll() (response.BlockResponses, error) {
+func (s *rondaAttendanceServiceImpl) FindAll() (response.RondaAttendanceResponses, error) {
 	result, err := s.repository.FindAll()
 	if err != nil {
 		return nil, err
 	}
 
-	resp := response.BlockListToResponse(result)
+	resp := response.RondaAttendanceListToResponse(result)
 	return resp, nil
 }
 
-func (s *blockServiceImpl) FindByID(id string) (*response.BlockResponse, error) {
+func (s *rondaAttendanceServiceImpl) FindByID(id string) (*response.RondaAttendanceResponse, error) {
 	result, err := s.repository.FindByID(id)
 	if err != nil {
 		return nil, err
 	}
 
-	resp := response.BlockModelToBlockResponse(result)
+	resp := response.RondaAttendanceModelToRondaAttendanceResponse(result)
 	return resp, err
 }
 
-func (s *blockServiceImpl) Paginated(pagination utils.Pagination) (*utils.Pagination, *response.BlockResponses, error) {
+func (s *rondaAttendanceServiceImpl) Paginated(pagination utils.Pagination) (*utils.Pagination, *response.RondaAttendanceResponses, error) {
 	paginated, data, err := s.repository.Paginated(pagination)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	resp := response.BlockListToResponse(data)
+	resp := response.RondaAttendanceListToResponse(data)
 	return paginated, &resp, err
 }
 
-func (s *blockServiceImpl) Delete(id string) error {
+func (s *rondaAttendanceServiceImpl) Delete(id string) error {
 	err := s.repository.Delete(id)
 	if err != nil {
 		return err
