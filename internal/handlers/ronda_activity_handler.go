@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"github.com/IKHINtech/sirnawa-backend/internal/dto/request"
+	"github.com/IKHINtech/sirnawa-backend/internal/dto/response"
 	"github.com/IKHINtech/sirnawa-backend/internal/middleware"
 	"github.com/IKHINtech/sirnawa-backend/internal/services"
 	"github.com/IKHINtech/sirnawa-backend/pkg/utils"
@@ -12,7 +13,6 @@ type RondaActivityHandler interface {
 	Create(ctx *fiber.Ctx) error
 	Update(ctx *fiber.Ctx) error
 	Paginated(ctx *fiber.Ctx) error
-	FindAll(ctx *fiber.Ctx) error
 	FindByID(ctx *fiber.Ctx) error
 	Delete(ctx *fiber.Ctx) error
 }
@@ -95,42 +95,37 @@ func (h *rondaActivityHandlerImpl) Update(ctx *fiber.Ctx) error {
 // @Accept json
 // @Produce json
 // @Security Bearer
+// @Param paginated query boolean false "Paginated"
 // @Param page query int false "Page number"
 // @Param page_size query int false "Page size"
 // @Param order_by query string false "Order by"
 // @Param order query string false "Order"
 // @Success 200 {object} utils.ResponseData
 // @Failure 400 {object} utils.ResponseData
-// @Router /ronda-activity/paginated [get]
+// @Router /ronda-activity [get]
 func (h *rondaActivityHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 	r := &utils.ResponseHandler{}
+	isPaginated := ctx.QueryBool("paginated", true)
+	var meta *utils.Pagination
+	var data *response.RondaActivityResponses
+	var err error
 
-	paginate := utils.GetPaginationParams(ctx)
+	if isPaginated {
+		paginate := utils.GetPaginationParams(ctx)
 
-	meta, data, err := h.services.Paginated(paginate)
-	if err != nil {
-		return r.BadRequest(ctx, []string{"error:" + err.Error()})
+		meta, data, err = h.services.Paginated(paginate)
+		if err != nil {
+			return r.BadRequest(ctx, []string{"error:" + err.Error()})
+		}
+	} else {
+
+		res, err := h.services.FindAll()
+		if err != nil {
+			return r.BadRequest(ctx, []string{"error:" + err.Error()})
+		}
+		data = &res
 	}
 	return r.Ok(ctx, data, "Successfully get data", meta)
-}
-
-// Get List RondaActivity
-// @Summary Get List RondaActivity
-// @Descrpiton Get List RondaActivity
-// @Tags Ronda Activity
-// @Accept json
-// @Produce json
-// @Security Bearer
-// @Success 200 {object} utils.ResponseData
-// @Failure 400 {object} utils.ResponseData
-// @Router /ronda-activity [get]
-func (h *rondaActivityHandlerImpl) FindAll(ctx *fiber.Ctx) error {
-	r := &utils.ResponseHandler{}
-	res, err := h.services.FindAll()
-	if err != nil {
-		return r.BadRequest(ctx, []string{"error:" + err.Error()})
-	}
-	return r.Ok(ctx, res, "Successfully get data", nil)
 }
 
 // Find RondaActivity By ID

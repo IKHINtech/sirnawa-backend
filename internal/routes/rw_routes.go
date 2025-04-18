@@ -13,8 +13,7 @@ func RwRoutes(route fiber.Router) {
 	services := services.NewRwServices(repository, database.DB)
 	handlers := handlers.NewRwHandler(services)
 
-	route.Get("/", handlers.FindAll)
-	route.Get("/paginated", handlers.Paginated)
+	route.Get("/", handlers.Paginated)
 	route.Get("/:id", handlers.FindByID)
 	route.Post("/", handlers.Create)
 	route.Delete("/:id", handlers.Delete)

@@ -715,6 +715,27 @@ paths:
     get:
       consumes:
       - application/json
+      parameters:
+      - description: Paginated
+        in: query
+        name: paginated
+        type: boolean
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: page_size
+        type: integer
+      - description: Order by
+        in: query
+        name: order_by
+        type: string
+      - description: Order
+        in: query
+        name: order
+        type: string
       produces:
       - application/json
       responses:
@@ -728,7 +749,7 @@ paths:
             $ref: '#/definitions/utils.ResponseData'
       security:
       - Bearer: []
-      summary: Get List House
+      summary: Get Paginated House
       tags:
       - House
     post:
@@ -839,11 +860,15 @@ paths:
       summary: Update House
       tags:
       - House
-  /house/paginated:
+  /ipl-payment:
     get:
       consumes:
       - application/json
       parameters:
+      - description: Paginated
+        in: query
+        name: paginated
+        type: boolean
       - description: Page number
         in: query
         name: page
@@ -873,27 +898,7 @@ paths:
             $ref: '#/definitions/utils.ResponseData'
       security:
       - Bearer: []
-      summary: Get Paginated House
-      tags:
-      - House
-  /ipl-payment:
-    get:
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-      security:
-      - Bearer: []
-      summary: Get List IplPayment
+      summary: Get Paginated IplPayment
       tags:
       - IPL Payment
     post:
@@ -1004,11 +1009,15 @@ paths:
       summary: Update IplPayment
       tags:
       - IPL Payment
-  /ipl-payment/paginated:
+  /post:
     get:
       consumes:
       - application/json
       parameters:
+      - description: Paginated
+        in: query
+        name: paginated
+        type: boolean
       - description: Page number
         in: query
         name: page
@@ -1038,27 +1047,7 @@ paths:
             $ref: '#/definitions/utils.ResponseData'
       security:
       - Bearer: []
-      summary: Get Paginated IplPayment
-      tags:
-      - IPL Payment
-  /post:
-    get:
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-      security:
-      - Bearer: []
-      summary: Get List Post
+      summary: Get Paginated Post
       tags:
       - Post
     post:
@@ -1091,6 +1080,27 @@ paths:
     get:
       consumes:
       - application/json
+      parameters:
+      - description: Paginated
+        in: query
+        name: paginated
+        type: boolean
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: page_size
+        type: integer
+      - description: Order by
+        in: query
+        name: order_by
+        type: string
+      - description: Order
+        in: query
+        name: order
+        type: string
       produces:
       - application/json
       responses:
@@ -1104,7 +1114,7 @@ paths:
             $ref: '#/definitions/utils.ResponseData'
       security:
       - Bearer: []
-      summary: Get List PostComment
+      summary: Get Paginated PostComment
       tags:
       - Post Comment
     post:
@@ -1215,43 +1225,6 @@ paths:
       summary: Update PostComment
       tags:
       - Post Comment
-  /post-comment/paginated:
-    get:
-      consumes:
-      - application/json
-      parameters:
-      - description: Page number
-        in: query
-        name: page
-        type: integer
-      - description: Page size
-        in: query
-        name: page_size
-        type: integer
-      - description: Order by
-        in: query
-        name: order_by
-        type: string
-      - description: Order
-        in: query
-        name: order
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-      security:
-      - Bearer: []
-      summary: Get Paginated PostComment
-      tags:
-      - Post Comment
   /post/{id}:
     delete:
       consumes:
@@ -1332,43 +1305,6 @@ paths:
       security:
       - Bearer: []
       summary: Update Post
-      tags:
-      - Post
-  /post/paginated:
-    get:
-      consumes:
-      - application/json
-      parameters:
-      - description: Page number
-        in: query
-        name: page
-        type: integer
-      - description: Page size
-        in: query
-        name: page_size
-        type: integer
-      - description: Order by
-        in: query
-        name: order_by
-        type: string
-      - description: Order
-        in: query
-        name: order
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-      security:
-      - Bearer: []
-      summary: Get Paginated Post
       tags:
       - Post
   /resident:
@@ -1499,11 +1435,15 @@ paths:
       summary: Update Resident
       tags:
       - Resident
-  /resident/paginated:
+  /ronda-activity:
     get:
       consumes:
       - application/json
       parameters:
+      - description: Paginated
+        in: query
+        name: paginated
+        type: boolean
       - description: Page number
         in: query
         name: page
@@ -1533,27 +1473,7 @@ paths:
             $ref: '#/definitions/utils.ResponseData'
       security:
       - Bearer: []
-      summary: Get Paginated Resident
-      tags:
-      - Resident
-  /ronda-activity:
-    get:
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-      security:
-      - Bearer: []
-      summary: Get List RondaActivity
+      summary: Get Paginated RondaActivity
       tags:
       - Ronda Activity
     post:
@@ -1664,11 +1584,15 @@ paths:
       summary: Update RondaActivity
       tags:
       - Ronda Activity
-  /ronda-activity/paginated:
+  /ronda-attendance:
     get:
       consumes:
       - application/json
       parameters:
+      - description: Paginated
+        in: query
+        name: paginated
+        type: boolean
       - description: Page number
         in: query
         name: page
@@ -1698,27 +1622,7 @@ paths:
             $ref: '#/definitions/utils.ResponseData'
       security:
       - Bearer: []
-      summary: Get Paginated RondaActivity
-      tags:
-      - Ronda Activity
-  /ronda-attendance:
-    get:
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-      security:
-      - Bearer: []
-      summary: Get List RondaAttendance
+      summary: Get Paginated RondaAttendance
       tags:
       - Ronda Attendance
     post:
@@ -1829,11 +1733,15 @@ paths:
       summary: Update RondaAttendance
       tags:
       - Ronda Attendance
-  /ronda-attendance/paginated:
+  /ronda-constribution:
     get:
       consumes:
       - application/json
       parameters:
+      - description: Paginated
+        in: query
+        name: paginated
+        type: boolean
       - description: Page number
         in: query
         name: page
@@ -1863,27 +1771,7 @@ paths:
             $ref: '#/definitions/utils.ResponseData'
       security:
       - Bearer: []
-      summary: Get Paginated RondaAttendance
-      tags:
-      - Ronda Attendance
-  /ronda-constribution:
-    get:
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-      security:
-      - Bearer: []
-      summary: Get List RondaConstribution
+      summary: Get Paginated RondaConstribution
       tags:
       - Ronda Constribution
     post:
@@ -1994,11 +1882,15 @@ paths:
       summary: Update RondaConstribution
       tags:
       - Ronda Constribution
-  /ronda-constribution/paginated:
+  /ronda-group:
     get:
       consumes:
       - application/json
       parameters:
+      - description: Paginated
+        in: query
+        name: paginated
+        type: boolean
       - description: Page number
         in: query
         name: page
@@ -2028,27 +1920,7 @@ paths:
             $ref: '#/definitions/utils.ResponseData'
       security:
       - Bearer: []
-      summary: Get Paginated RondaConstribution
-      tags:
-      - Ronda Constribution
-  /ronda-group:
-    get:
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-      security:
-      - Bearer: []
-      summary: Get List RondaGroup
+      summary: Get Paginated RondaGroup
       tags:
       - Ronda Group
     post:
@@ -2081,6 +1953,27 @@ paths:
     get:
       consumes:
       - application/json
+      parameters:
+      - description: Paginated
+        in: query
+        name: paginated
+        type: boolean
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: page_size
+        type: integer
+      - description: Order by
+        in: query
+        name: order_by
+        type: string
+      - description: Order
+        in: query
+        name: order
+        type: string
       produces:
       - application/json
       responses:
@@ -2094,7 +1987,7 @@ paths:
             $ref: '#/definitions/utils.ResponseData'
       security:
       - Bearer: []
-      summary: Get List RondaGroupMember
+      summary: Get Paginated RondaGroupMember
       tags:
       - Ronda Group Member
     post:
@@ -2205,43 +2098,6 @@ paths:
       summary: Update RondaGroupMember
       tags:
       - Ronda Group Member
-  /ronda-group-member/paginated:
-    get:
-      consumes:
-      - application/json
-      parameters:
-      - description: Page number
-        in: query
-        name: page
-        type: integer
-      - description: Page size
-        in: query
-        name: page_size
-        type: integer
-      - description: Order by
-        in: query
-        name: order_by
-        type: string
-      - description: Order
-        in: query
-        name: order
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-      security:
-      - Bearer: []
-      summary: Get Paginated RondaGroupMember
-      tags:
-      - Ronda Group Member
   /ronda-group/{id}:
     delete:
       consumes:
@@ -2324,11 +2180,15 @@ paths:
       summary: Update RondaGroup
       tags:
       - Ronda Group
-  /ronda-group/paginated:
+  /ronda-schedule:
     get:
       consumes:
       - application/json
       parameters:
+      - description: Paginated
+        in: query
+        name: paginated
+        type: boolean
       - description: Page number
         in: query
         name: page
@@ -2358,27 +2218,7 @@ paths:
             $ref: '#/definitions/utils.ResponseData'
       security:
       - Bearer: []
-      summary: Get Paginated RondaGroup
-      tags:
-      - Ronda Group
-  /ronda-schedule:
-    get:
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-      security:
-      - Bearer: []
-      summary: Get List RondaSchedule
+      summary: Get Paginated RondaSchedule
       tags:
       - Ronda Schedule
     post:
@@ -2489,11 +2329,15 @@ paths:
       summary: Update RondaSchedule
       tags:
       - Ronda Schedule
-  /ronda-schedule/paginated:
+  /rt:
     get:
       consumes:
       - application/json
       parameters:
+      - description: Paginated
+        in: query
+        name: paginated
+        type: boolean
       - description: Page number
         in: query
         name: page
@@ -2523,27 +2367,7 @@ paths:
             $ref: '#/definitions/utils.ResponseData'
       security:
       - Bearer: []
-      summary: Get Paginated RondaSchedule
-      tags:
-      - Ronda Schedule
-  /rt:
-    get:
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-      security:
-      - Bearer: []
-      summary: Get List Rt
+      summary: Get Paginated Rt
       tags:
       - Rt
     post:
@@ -2654,11 +2478,15 @@ paths:
       summary: Update Rt
       tags:
       - Rt
-  /rt/paginated:
+  /rw:
     get:
       consumes:
       - application/json
       parameters:
+      - description: Paginated
+        in: query
+        name: paginated
+        type: boolean
       - description: Page number
         in: query
         name: page
@@ -2688,27 +2516,7 @@ paths:
             $ref: '#/definitions/utils.ResponseData'
       security:
       - Bearer: []
-      summary: Get Paginated Rt
-      tags:
-      - Rt
-  /rw:
-    get:
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-      security:
-      - Bearer: []
-      summary: Get List Rw
+      summary: Get Paginated Rw
       tags:
       - Rw
     post:
@@ -2819,11 +2627,15 @@ paths:
       summary: Update Rw
       tags:
       - Rw
-  /rw/paginated:
+  /shop:
     get:
       consumes:
       - application/json
       parameters:
+      - description: Paginated
+        in: query
+        name: paginated
+        type: boolean
       - description: Page number
         in: query
         name: page
@@ -2853,27 +2665,7 @@ paths:
             $ref: '#/definitions/utils.ResponseData'
       security:
       - Bearer: []
-      summary: Get Paginated Rw
-      tags:
-      - Rw
-  /shop:
-    get:
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-      security:
-      - Bearer: []
-      summary: Get List Shop
+      summary: Get Paginated Shop
       tags:
       - Shop
     post:
@@ -2906,6 +2698,27 @@ paths:
     get:
       consumes:
       - application/json
+      parameters:
+      - description: Paginated
+        in: query
+        name: paginated
+        type: boolean
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: page_size
+        type: integer
+      - description: Order by
+        in: query
+        name: order_by
+        type: string
+      - description: Order
+        in: query
+        name: order
+        type: string
       produces:
       - application/json
       responses:
@@ -2919,7 +2732,7 @@ paths:
             $ref: '#/definitions/utils.ResponseData'
       security:
       - Bearer: []
-      summary: Get List ShopProduct
+      summary: Get Paginated ShopProduct
       tags:
       - Shop Product
     post:
@@ -3030,43 +2843,6 @@ paths:
       summary: Update ShopProduct
       tags:
       - Shop Product
-  /shop-product/paginated:
-    get:
-      consumes:
-      - application/json
-      parameters:
-      - description: Page number
-        in: query
-        name: page
-        type: integer
-      - description: Page size
-        in: query
-        name: page_size
-        type: integer
-      - description: Order by
-        in: query
-        name: order_by
-        type: string
-      - description: Order
-        in: query
-        name: order
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-      security:
-      - Bearer: []
-      summary: Get Paginated ShopProduct
-      tags:
-      - Shop Product
   /shop/{id}:
     delete:
       consumes:
@@ -3147,43 +2923,6 @@ paths:
       security:
       - Bearer: []
       summary: Update Shop
-      tags:
-      - Shop
-  /shop/paginated:
-    get:
-      consumes:
-      - application/json
-      parameters:
-      - description: Page number
-        in: query
-        name: page
-        type: integer
-      - description: Page size
-        in: query
-        name: page_size
-        type: integer
-      - description: Order by
-        in: query
-        name: order_by
-        type: string
-      - description: Order
-        in: query
-        name: order
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-      security:
-      - Bearer: []
-      summary: Get Paginated Shop
       tags:
       - Shop
 securityDefinitions:

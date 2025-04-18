@@ -13,8 +13,7 @@ func RondaActivityRoutes(route fiber.Router) {
 	services := services.NewRondaActivityServices(repository, database.DB)
 	handlers := handlers.NewRondaActivityHandler(services)
 
-	route.Get("/", handlers.FindAll)
-	route.Get("/paginated", handlers.Paginated)
+	route.Get("/", handlers.Paginated)
 	route.Get("/:id", handlers.FindByID)
 	route.Post("/", handlers.Create)
 	route.Delete("/:id", handlers.Delete)

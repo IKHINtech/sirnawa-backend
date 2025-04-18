@@ -13,8 +13,7 @@ func IplPaymentRoutes(route fiber.Router) {
 	services := services.NewIplPaymentServices(repository, database.DB)
 	handlers := handlers.NewIplPaymentHandler(services)
 
-	route.Get("/", handlers.FindAll)
-	route.Get("/paginated", handlers.Paginated)
+	route.Get("/", handlers.Paginated)
 	route.Get("/:id", handlers.FindByID)
 	route.Post("/", handlers.Create)
 	route.Delete("/:id", handlers.Delete)
