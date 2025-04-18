@@ -52,7 +52,13 @@ func (r *houseRepositoryImpl) Update(tx *gorm.DB, id string, data models.House) 
 func (r *houseRepositoryImpl) FindByID(id string) (*models.House, error) {
 	var data models.House
 
-	err := r.db.First(&data, "id = ?", id).Error
+	query := r.db.
+		Preload("Block").
+		Preload("Rt").
+		Preload("Rw").
+		Preload("Residents")
+
+	err := query.First(&data, "id = ?", id).Error
 	if err != nil {
 		return nil, err
 	}

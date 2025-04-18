@@ -145,6 +145,8 @@ definitions:
     properties:
       birth_date:
         type: string
+      email:
+        type: string
       gender:
         type: string
       house_id:
@@ -159,10 +161,15 @@ definitions:
         type: string
       phone_number:
         type: string
+      role:
+        example: warga;admin_rt;sekretaris;bendahara;wakil_rt
+        type: string
     type: object
   request.ResidentUpdateRequset:
     properties:
       birth_date:
+        type: string
+      email:
         type: string
       gender:
         type: string
@@ -179,6 +186,9 @@ definitions:
       nik:
         type: string
       phone_number:
+        type: string
+      role:
+        example: warga;admin_rt;sekretaris;bendahara;wakil_rt
         type: string
     type: object
   request.RondaActivityCreateRequest:

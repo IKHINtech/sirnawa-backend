@@ -30,6 +30,7 @@ func ResidentModelToResidentResponse(data *models.Resident) *ResidentResponse {
 	return &ResidentResponse{
 		Name:           data.Name,
 		NIK:            data.NIK,
+		HouseID:        data.HouseID,
 		PhoneNumber:    data.PhoneNumber,
 		BirthDate:      data.BirthDate,
 		Gender:         data.Gender,

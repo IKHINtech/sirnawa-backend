@@ -5,7 +5,7 @@ type User struct {
 	Email      string    `gorm:"uniqueIndex" json:"email"`
 	Password   string    `gorm:"not null" json:"-"`
 	Role       Role      `gorm:"type:role;not null" json:"role"`
-	ResidentID *uint     `gorm:"null" json:"resident_id"` // nullable
+	ResidentID *string   `gorm:"null" json:"resident_id"` // nullable
 	Resident   *Resident `gorm:"foreignKey:ResidentID" json:"resident,omitempty"`
 }
 

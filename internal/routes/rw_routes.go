@@ -8,11 +8,10 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func ResidentRoutes(route fiber.Router) {
-	repo := repository.NewResidentRepository(database.DB)
-	userRepository := repository.NewUserRepository(database.DB)
-	services := services.NewResidentServices(repo, userRepository, database.DB)
-	handlers := handlers.NewResidentHandler(services)
+func RwRoutes(route fiber.Router) {
+	repository := repository.NewRwRepository(database.DB)
+	services := services.NewRwServices(repository, database.DB)
+	handlers := handlers.NewRwHandler(services)
 
 	route.Get("/", handlers.FindAll)
 	route.Get("/paginated", handlers.Paginated)

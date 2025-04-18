@@ -4649,6 +4649,9 @@ const docTemplate = `{
                 "birth_date": {
                     "type": "string"
                 },
+                "email": {
+                    "type": "string"
+                },
                 "gender": {
                     "type": "string"
                 },
@@ -4669,6 +4672,10 @@ const docTemplate = `{
                 },
                 "phone_number": {
                     "type": "string"
+                },
+                "role": {
+                    "type": "string",
+                    "example": "warga;admin_rt;sekretaris;bendahara;wakil_rt"
                 }
             }
         },
@@ -4676,6 +4683,9 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "birth_date": {
+                    "type": "string"
+                },
+                "email": {
                     "type": "string"
                 },
                 "gender": {
@@ -4701,6 +4711,10 @@ const docTemplate = `{
                 },
                 "phone_number": {
                     "type": "string"
+                },
+                "role": {
+                    "type": "string",
+                    "example": "warga;admin_rt;sekretaris;bendahara;wakil_rt"
                 }
             }
         },

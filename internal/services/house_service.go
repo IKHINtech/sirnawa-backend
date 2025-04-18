@@ -12,7 +12,7 @@ import (
 type HouseService interface {
 	Create(data request.HouseCreateRequest) (*response.HouseResponse, error)
 	Update(id string, data request.HouseUpdateRequset) (*response.HouseResponse, error)
-	FindByID(id string) (*response.HouseResponse, error)
+	FindByID(id string) (*response.HouseResponseDetail, error)
 	Delete(id string) error
 	FindAll() (response.HouseResponses, error)
 	Paginated(pagination utils.Pagination) (*utils.Pagination, *response.HouseResponses, error)
@@ -114,13 +114,13 @@ func (s *houseServiceImpl) FindAll() (response.HouseResponses, error) {
 	return resp, nil
 }
 
-func (s *houseServiceImpl) FindByID(id string) (*response.HouseResponse, error) {
+func (s *houseServiceImpl) FindByID(id string) (*response.HouseResponseDetail, error) {
 	result, err := s.repository.FindByID(id)
 	if err != nil {
 		return nil, err
 	}
 
-	resp := response.HouseModelToHouseResponse(result)
+	resp := response.MapHouseDetailResponse(result)
 	return resp, err
 }
 

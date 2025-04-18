@@ -4643,6 +4643,9 @@
                 "birth_date": {
                     "type": "string"
                 },
+                "email": {
+                    "type": "string"
+                },
                 "gender": {
                     "type": "string"
                 },
@@ -4663,6 +4666,10 @@
                 },
                 "phone_number": {
                     "type": "string"
+                },
+                "role": {
+                    "type": "string",
+                    "example": "warga;admin_rt;sekretaris;bendahara;wakil_rt"
                 }
             }
         },
@@ -4670,6 +4677,9 @@
             "type": "object",
             "properties": {
                 "birth_date": {
+                    "type": "string"
+                },
+                "email": {
                     "type": "string"
                 },
                 "gender": {
@@ -4695,6 +4705,10 @@
                 },
                 "phone_number": {
                     "type": "string"
+                },
+                "role": {
+                    "type": "string",
+                    "example": "warga;admin_rt;sekretaris;bendahara;wakil_rt"
                 }
             }
         },

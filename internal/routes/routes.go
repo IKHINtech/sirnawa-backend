@@ -10,6 +10,8 @@ import (
 func SetupRoutesApp(app *fiber.App) {
 	AuthRoutes(app.Group("/auth"))
 	BlockRoutes(app.Group("/block", middleware.Protected()))
+	RtRoutes(app.Group("/rt", middleware.Protected()))
+	RwRoutes(app.Group("/rw", middleware.Protected()))
 	HouseRoutes(app.Group("/house", middleware.Protected()))
 	IplPaymentRoutes(app.Group("/ipl-payment", middleware.Protected()))
 	PostCommentRoutes(app.Group("/post-comment", middleware.Protected()))
