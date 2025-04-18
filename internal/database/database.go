@@ -40,6 +40,8 @@ func Migrate() error {
 		&models.RondaGroupMember{},
 		&models.RondaConstribution{},
 		&models.RondaContributionItem{},
+		&models.Rw{},
+		&models.Rt{},
 		&models.Shop{},
 		&models.ShopProduct{},
 	)

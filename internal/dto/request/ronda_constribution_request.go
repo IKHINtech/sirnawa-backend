@@ -7,11 +7,11 @@ import (
 )
 
 type RondaConstributionCreateRequest struct {
-	Name         string    `json:"name"`
-	Date         time.Time `json:"date"`
-	RondaGroupID string    `json:"ronda_group_id"`
-	Total        float64   `json:"total"`
-	TotalPenalty float64   `json:"total_penalty"`
+	Date            time.Time `json:"date"`
+	RondaGroupID    string    `json:"ronda_group_id"`
+	Total           float64   `json:"total"`
+	TotalPenalty    float64   `json:"total_penalty"`
+	RondaActivityID string    `json:"ronda_activity_id"`
 }
 
 type RondaConstributionUpdateRequset struct {
@@ -24,11 +24,21 @@ func RondaConstributionUpdateRequsetToRondaConstributionModel(data RondaConstrib
 		ID: data.ID,
 	}
 	return models.RondaConstribution{
-		BaseModel: base,
-		// TODO:
+		BaseModel:       base,
+		RondaGroupID:    data.RondaGroupID,
+		Date:            data.Date,
+		Total:           data.Total,
+		TotalPenalty:    data.TotalPenalty,
+		RondaActivityID: data.RondaActivityID,
 	}
 }
 
 func RondaConstributionCreateRequestToRondaConstributionModel(data RondaConstributionCreateRequest) models.RondaConstribution {
-	return models.RondaConstribution{}
+	return models.RondaConstribution{
+		RondaGroupID:    data.RondaGroupID,
+		Date:            data.Date,
+		Total:           data.Total,
+		TotalPenalty:    data.TotalPenalty,
+		RondaActivityID: data.RondaActivityID,
+	}
 }

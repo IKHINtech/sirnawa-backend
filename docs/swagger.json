@@ -3914,6 +3914,9 @@
             "properties": {
                 "name": {
                     "type": "string"
+                },
+                "rt_id": {
+                    "type": "string"
                 }
             }
         },
@@ -3925,6 +3928,9 @@
                 },
                 "name": {
                     "type": "string"
+                },
+                "rt_id": {
+                    "type": "string"
                 }
             }
         },
@@ -3935,6 +3941,12 @@
                     "type": "string"
                 },
                 "number": {
+                    "type": "string"
+                },
+                "rt_id": {
+                    "type": "string"
+                },
+                "rw_id": {
                     "type": "string"
                 },
                 "status": {
@@ -3953,6 +3965,12 @@
                     "type": "string"
                 },
                 "number": {
+                    "type": "string"
+                },
+                "rt_id": {
+                    "type": "string"
+                },
+                "rw_id": {
                     "type": "string"
                 },
                 "status": {
@@ -4232,7 +4250,7 @@
                 "date": {
                     "type": "string"
                 },
-                "name": {
+                "ronda_activity_id": {
                     "type": "string"
                 },
                 "ronda_group_id": {
@@ -4255,7 +4273,7 @@
                 "id": {
                     "type": "string"
                 },
-                "name": {
+                "ronda_activity_id": {
                     "type": "string"
                 },
                 "ronda_group_id": {
@@ -4273,6 +4291,9 @@
             "type": "object",
             "properties": {
                 "name": {
+                    "type": "string"
+                },
+                "rt_id": {
                     "type": "string"
                 }
             }
@@ -4309,6 +4330,9 @@
                     "type": "string"
                 },
                 "name": {
+                    "type": "string"
+                },
+                "rt_id": {
                     "type": "string"
                 }
             }

@@ -3920,6 +3920,9 @@ const docTemplate = `{
             "properties": {
                 "name": {
                     "type": "string"
+                },
+                "rt_id": {
+                    "type": "string"
                 }
             }
         },
@@ -3931,6 +3934,9 @@ const docTemplate = `{
                 },
                 "name": {
                     "type": "string"
+                },
+                "rt_id": {
+                    "type": "string"
                 }
             }
         },
@@ -3941,6 +3947,12 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "number": {
+                    "type": "string"
+                },
+                "rt_id": {
+                    "type": "string"
+                },
+                "rw_id": {
                     "type": "string"
                 },
                 "status": {
@@ -3959,6 +3971,12 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "number": {
+                    "type": "string"
+                },
+                "rt_id": {
+                    "type": "string"
+                },
+                "rw_id": {
                     "type": "string"
                 },
                 "status": {
@@ -4238,7 +4256,7 @@ const docTemplate = `{
                 "date": {
                     "type": "string"
                 },
-                "name": {
+                "ronda_activity_id": {
                     "type": "string"
                 },
                 "ronda_group_id": {
@@ -4261,7 +4279,7 @@ const docTemplate = `{
                 "id": {
                     "type": "string"
                 },
-                "name": {
+                "ronda_activity_id": {
                     "type": "string"
                 },
                 "ronda_group_id": {
@@ -4279,6 +4297,9 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "name": {
+                    "type": "string"
+                },
+                "rt_id": {
                     "type": "string"
                 }
             }
@@ -4315,6 +4336,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "name": {
+                    "type": "string"
+                },
+                "rt_id": {
                     "type": "string"
                 }
             }

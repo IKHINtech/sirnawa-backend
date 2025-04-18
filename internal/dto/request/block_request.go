@@ -4,6 +4,7 @@ import "github.com/IKHINtech/sirnawa-backend/internal/models"
 
 type BlockCreateRequest struct {
 	Name string `json:"name"`
+	RtID string `json:"rt_id"`
 }
 
 type BlockUpdateRequset struct {
@@ -17,6 +18,7 @@ func BlockUpdateRequsetToBlockModel(data BlockUpdateRequset) models.Block {
 	}
 	return models.Block{
 		Name:      data.Name,
+		RtID:      data.RtID,
 		BaseModel: base,
 	}
 }
@@ -24,5 +26,6 @@ func BlockUpdateRequsetToBlockModel(data BlockUpdateRequset) models.Block {
 func BlockCreateRequestToBlockModel(data BlockCreateRequest) models.Block {
 	return models.Block{
 		Name: data.Name,
+		RtID: data.RtID,
 	}
 }

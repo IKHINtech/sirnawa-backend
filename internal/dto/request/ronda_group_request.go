@@ -4,6 +4,7 @@ import "github.com/IKHINtech/sirnawa-backend/internal/models"
 
 type RondaGroupCreateRequest struct {
 	Name string `json:"name"`
+	RtID string `json:"rt_id"`
 }
 
 type RondaGroupUpdateRequset struct {
@@ -17,6 +18,7 @@ func RondaGroupUpdateRequsetToRondaGroupModel(data RondaGroupUpdateRequset) mode
 	}
 	return models.RondaGroup{
 		Name:      data.Name,
+		RtID:      data.RtID,
 		BaseModel: base,
 	}
 }
@@ -24,5 +26,6 @@ func RondaGroupUpdateRequsetToRondaGroupModel(data RondaGroupUpdateRequset) mode
 func RondaGroupCreateRequestToRondaGroupModel(data RondaGroupCreateRequest) models.RondaGroup {
 	return models.RondaGroup{
 		Name: data.Name,
+		RtID: data.RtID,
 	}
 }

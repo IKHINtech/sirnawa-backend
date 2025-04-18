@@ -16,6 +16,8 @@ definitions:
     properties:
       name:
         type: string
+      rt_id:
+        type: string
     type: object
   request.BlockUpdateRequset:
     properties:
@@ -23,12 +25,18 @@ definitions:
         type: string
       name:
         type: string
+      rt_id:
+        type: string
     type: object
   request.HouseCreateRequest:
     properties:
       block_id:
         type: string
       number:
+        type: string
+      rt_id:
+        type: string
+      rw_id:
         type: string
       status:
         description: aktif / tidak aktif
@@ -41,6 +49,10 @@ definitions:
       id:
         type: string
       number:
+        type: string
+      rt_id:
+        type: string
+      rw_id:
         type: string
       status:
         description: aktif / tidak aktif
@@ -223,7 +235,7 @@ definitions:
     properties:
       date:
         type: string
-      name:
+      ronda_activity_id:
         type: string
       ronda_group_id:
         type: string
@@ -238,7 +250,7 @@ definitions:
         type: string
       id:
         type: string
-      name:
+      ronda_activity_id:
         type: string
       ronda_group_id:
         type: string
@@ -250,6 +262,8 @@ definitions:
   request.RondaGroupCreateRequest:
     properties:
       name:
+        type: string
+      rt_id:
         type: string
     type: object
   request.RondaGroupMemberCreateRequest:
@@ -273,6 +287,8 @@ definitions:
       id:
         type: string
       name:
+        type: string
+      rt_id:
         type: string
     type: object
   request.RondaScheduleCreateRequest:
