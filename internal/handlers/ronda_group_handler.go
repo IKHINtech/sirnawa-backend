@@ -28,7 +28,7 @@ func NewRondaGroupHandler(services services.RondaGroupService) RondaGroupHandler
 // Create RondaGroup
 // @Summary Create RondaGroup
 // @Descrpiton Create RondaGroup
-// @Tags RondaGroup
+// @Tags Ronda Group
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -56,7 +56,7 @@ func (h *rondaGroupHandlerImpl) Create(ctx *fiber.Ctx) error {
 // Update RondaGroup
 // @Summary Update RondaGroup
 // @Descrpiton Update RondaGroup
-// @Tags RondaGroup
+// @Tags Ronda Group
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -91,7 +91,7 @@ func (h *rondaGroupHandlerImpl) Update(ctx *fiber.Ctx) error {
 // Get Pagination RondaGroup
 // @Summary Get Paginated RondaGroup
 // @Descrpiton Get Paginated RondaGroup
-// @Tags RondaGroup
+// @Tags Ronda Group
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -117,7 +117,7 @@ func (h *rondaGroupHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 // Get List RondaGroup
 // @Summary Get List RondaGroup
 // @Descrpiton Get List RondaGroup
-// @Tags RondaGroup
+// @Tags Ronda Group
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -136,7 +136,7 @@ func (h *rondaGroupHandlerImpl) FindAll(ctx *fiber.Ctx) error {
 // Find RondaGroup By ID
 // @Summary Find RondaGroup By ID
 // @Descrpiton Find RondaGroup By ID
-// @Tags RondaGroup
+// @Tags Ronda Group
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -161,7 +161,7 @@ func (h *rondaGroupHandlerImpl) FindByID(ctx *fiber.Ctx) error {
 // Delete RondaGroup By ID
 // @Summary Delete RondaGroup By ID
 // @Descrpiton Delete RondaGroup By ID
-// @Tags RondaGroup
+// @Tags Ronda Group
 // @Accept json
 // @Produce json
 // @Security Bearer

@@ -28,7 +28,7 @@ func NewRondaAttendanceHandler(services services.RondaAttendanceService) RondaAt
 // Create RondaAttendance
 // @Summary Create RondaAttendance
 // @Descrpiton Create RondaAttendance
-// @Tags RondaAttendance
+// @Tags Ronda Attendance
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -56,7 +56,7 @@ func (h *rondaAttendanceHandlerImpl) Create(ctx *fiber.Ctx) error {
 // Update RondaAttendance
 // @Summary Update RondaAttendance
 // @Descrpiton Update RondaAttendance
-// @Tags RondaAttendance
+// @Tags Ronda Attendance
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -91,7 +91,7 @@ func (h *rondaAttendanceHandlerImpl) Update(ctx *fiber.Ctx) error {
 // Get Pagination RondaAttendance
 // @Summary Get Paginated RondaAttendance
 // @Descrpiton Get Paginated RondaAttendance
-// @Tags RondaAttendance
+// @Tags Ronda Attendance
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -117,7 +117,7 @@ func (h *rondaAttendanceHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 // Get List RondaAttendance
 // @Summary Get List RondaAttendance
 // @Descrpiton Get List RondaAttendance
-// @Tags RondaAttendance
+// @Tags Ronda Attendance
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -136,7 +136,7 @@ func (h *rondaAttendanceHandlerImpl) FindAll(ctx *fiber.Ctx) error {
 // Find RondaAttendance By ID
 // @Summary Find RondaAttendance By ID
 // @Descrpiton Find RondaAttendance By ID
-// @Tags RondaAttendance
+// @Tags Ronda Attendance
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -161,7 +161,7 @@ func (h *rondaAttendanceHandlerImpl) FindByID(ctx *fiber.Ctx) error {
 // Delete RondaAttendance By ID
 // @Summary Delete RondaAttendance By ID
 // @Descrpiton Delete RondaAttendance By ID
-// @Tags RondaAttendance
+// @Tags Ronda Attendance
 // @Accept json
 // @Produce json
 // @Security Bearer

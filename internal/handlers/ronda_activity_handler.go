@@ -28,7 +28,7 @@ func NewRondaActivityHandler(services services.RondaActivityService) RondaActivi
 // Create RondaActivity
 // @Summary Create RondaActivity
 // @Descrpiton Create RondaActivity
-// @Tags RondaActivity
+// @Tags Ronda Activity
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -56,7 +56,7 @@ func (h *rondaActivityHandlerImpl) Create(ctx *fiber.Ctx) error {
 // Update RondaActivity
 // @Summary Update RondaActivity
 // @Descrpiton Update RondaActivity
-// @Tags RondaActivity
+// @Tags Ronda Activity
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -91,7 +91,7 @@ func (h *rondaActivityHandlerImpl) Update(ctx *fiber.Ctx) error {
 // Get Pagination RondaActivity
 // @Summary Get Paginated RondaActivity
 // @Descrpiton Get Paginated RondaActivity
-// @Tags RondaActivity
+// @Tags Ronda Activity
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -117,7 +117,7 @@ func (h *rondaActivityHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 // Get List RondaActivity
 // @Summary Get List RondaActivity
 // @Descrpiton Get List RondaActivity
-// @Tags RondaActivity
+// @Tags Ronda Activity
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -136,7 +136,7 @@ func (h *rondaActivityHandlerImpl) FindAll(ctx *fiber.Ctx) error {
 // Find RondaActivity By ID
 // @Summary Find RondaActivity By ID
 // @Descrpiton Find RondaActivity By ID
-// @Tags RondaActivity
+// @Tags Ronda Activity
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -161,7 +161,7 @@ func (h *rondaActivityHandlerImpl) FindByID(ctx *fiber.Ctx) error {
 // Delete RondaActivity By ID
 // @Summary Delete RondaActivity By ID
 // @Descrpiton Delete RondaActivity By ID
-// @Tags RondaActivity
+// @Tags Ronda Activity
 // @Accept json
 // @Produce json
 // @Security Bearer

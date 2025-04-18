@@ -28,7 +28,7 @@ func NewIplPaymentHandler(services services.IplPaymentService) IplPaymentHandler
 // Create IplPayment
 // @Summary Create IplPayment
 // @Descrpiton Create IplPayment
-// @Tags IplPayment
+// @Tags IPL Payment
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -56,7 +56,7 @@ func (h *iplPaymentHandlerImpl) Create(ctx *fiber.Ctx) error {
 // Update IplPayment
 // @Summary Update IplPayment
 // @Descrpiton Update IplPayment
-// @Tags IplPayment
+// @Tags IPL Payment
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -91,7 +91,7 @@ func (h *iplPaymentHandlerImpl) Update(ctx *fiber.Ctx) error {
 // Get Pagination IplPayment
 // @Summary Get Paginated IplPayment
 // @Descrpiton Get Paginated IplPayment
-// @Tags IplPayment
+// @Tags IPL Payment
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -117,7 +117,7 @@ func (h *iplPaymentHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 // Get List IplPayment
 // @Summary Get List IplPayment
 // @Descrpiton Get List IplPayment
-// @Tags IplPayment
+// @Tags IPL Payment
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -136,7 +136,7 @@ func (h *iplPaymentHandlerImpl) FindAll(ctx *fiber.Ctx) error {
 // Find IplPayment By ID
 // @Summary Find IplPayment By ID
 // @Descrpiton Find IplPayment By ID
-// @Tags IplPayment
+// @Tags IPL Payment
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -161,7 +161,7 @@ func (h *iplPaymentHandlerImpl) FindByID(ctx *fiber.Ctx) error {
 // Delete IplPayment By ID
 // @Summary Delete IplPayment By ID
 // @Descrpiton Delete IplPayment By ID
-// @Tags IplPayment
+// @Tags IPL Payment
 // @Accept json
 // @Produce json
 // @Security Bearer

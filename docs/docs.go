@@ -730,7 +730,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "IplPayment"
+                    "IPL Payment"
                 ],
                 "summary": "Get List IplPayment",
                 "responses": {
@@ -761,7 +761,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "IplPayment"
+                    "IPL Payment"
                 ],
                 "summary": "Create IplPayment",
                 "parameters": [
@@ -805,7 +805,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "IplPayment"
+                    "IPL Payment"
                 ],
                 "summary": "Get Paginated IplPayment",
                 "parameters": [
@@ -864,7 +864,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "IplPayment"
+                    "IPL Payment"
                 ],
                 "summary": "Find IplPayment By ID",
                 "parameters": [
@@ -904,7 +904,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "IplPayment"
+                    "IPL Payment"
                 ],
                 "summary": "Update IplPayment",
                 "parameters": [
@@ -953,7 +953,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "IplPayment"
+                    "IPL Payment"
                 ],
                 "summary": "Delete IplPayment By ID",
                 "parameters": [
@@ -1070,7 +1070,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "PostComment"
+                    "Post Comment"
                 ],
                 "summary": "Get List PostComment",
                 "responses": {
@@ -1101,7 +1101,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "PostComment"
+                    "Post Comment"
                 ],
                 "summary": "Create PostComment",
                 "parameters": [
@@ -1145,7 +1145,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "PostComment"
+                    "Post Comment"
                 ],
                 "summary": "Get Paginated PostComment",
                 "parameters": [
@@ -1204,7 +1204,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "PostComment"
+                    "Post Comment"
                 ],
                 "summary": "Find PostComment By ID",
                 "parameters": [
@@ -1244,7 +1244,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "PostComment"
+                    "Post Comment"
                 ],
                 "summary": "Update PostComment",
                 "parameters": [
@@ -1293,7 +1293,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "PostComment"
+                    "Post Comment"
                 ],
                 "summary": "Delete PostComment By ID",
                 "parameters": [
@@ -1790,7 +1790,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaActivity"
+                    "Ronda Activity"
                 ],
                 "summary": "Get List RondaActivity",
                 "responses": {
@@ -1821,7 +1821,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaActivity"
+                    "Ronda Activity"
                 ],
                 "summary": "Create RondaActivity",
                 "parameters": [
@@ -1865,7 +1865,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaActivity"
+                    "Ronda Activity"
                 ],
                 "summary": "Get Paginated RondaActivity",
                 "parameters": [
@@ -1924,7 +1924,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaActivity"
+                    "Ronda Activity"
                 ],
                 "summary": "Find RondaActivity By ID",
                 "parameters": [
@@ -1964,7 +1964,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaActivity"
+                    "Ronda Activity"
                 ],
                 "summary": "Update RondaActivity",
                 "parameters": [
@@ -2013,7 +2013,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaActivity"
+                    "Ronda Activity"
                 ],
                 "summary": "Delete RondaActivity By ID",
                 "parameters": [
@@ -2055,7 +2055,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaAttendance"
+                    "Ronda Attendance"
                 ],
                 "summary": "Get List RondaAttendance",
                 "responses": {
@@ -2086,7 +2086,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaAttendance"
+                    "Ronda Attendance"
                 ],
                 "summary": "Create RondaAttendance",
                 "parameters": [
@@ -2130,7 +2130,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaAttendance"
+                    "Ronda Attendance"
                 ],
                 "summary": "Get Paginated RondaAttendance",
                 "parameters": [
@@ -2189,7 +2189,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaAttendance"
+                    "Ronda Attendance"
                 ],
                 "summary": "Find RondaAttendance By ID",
                 "parameters": [
@@ -2229,7 +2229,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaAttendance"
+                    "Ronda Attendance"
                 ],
                 "summary": "Update RondaAttendance",
                 "parameters": [
@@ -2278,7 +2278,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaAttendance"
+                    "Ronda Attendance"
                 ],
                 "summary": "Delete RondaAttendance By ID",
                 "parameters": [
@@ -2320,7 +2320,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaConstribution"
+                    "Ronda Constribution"
                 ],
                 "summary": "Get List RondaConstribution",
                 "responses": {
@@ -2351,7 +2351,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaConstribution"
+                    "Ronda Constribution"
                 ],
                 "summary": "Create RondaConstribution",
                 "parameters": [
@@ -2395,7 +2395,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaConstribution"
+                    "Ronda Constribution"
                 ],
                 "summary": "Get Paginated RondaConstribution",
                 "parameters": [
@@ -2454,7 +2454,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaConstribution"
+                    "Ronda Constribution"
                 ],
                 "summary": "Find RondaConstribution By ID",
                 "parameters": [
@@ -2494,7 +2494,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaConstribution"
+                    "Ronda Constribution"
                 ],
                 "summary": "Update RondaConstribution",
                 "parameters": [
@@ -2543,7 +2543,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaConstribution"
+                    "Ronda Constribution"
                 ],
                 "summary": "Delete RondaConstribution By ID",
                 "parameters": [
@@ -2585,7 +2585,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaGroup"
+                    "Ronda Group"
                 ],
                 "summary": "Get List RondaGroup",
                 "responses": {
@@ -2616,7 +2616,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaGroup"
+                    "Ronda Group"
                 ],
                 "summary": "Create RondaGroup",
                 "parameters": [
@@ -2660,7 +2660,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaGroupMember"
+                    "Ronda Group Member"
                 ],
                 "summary": "Get List RondaGroupMember",
                 "responses": {
@@ -2691,7 +2691,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaGroupMember"
+                    "Ronda Group Member"
                 ],
                 "summary": "Create RondaGroupMember",
                 "parameters": [
@@ -2735,7 +2735,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaGroupMember"
+                    "Ronda Group Member"
                 ],
                 "summary": "Get Paginated RondaGroupMember",
                 "parameters": [
@@ -2794,7 +2794,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaGroupMember"
+                    "Ronda Group Member"
                 ],
                 "summary": "Find RondaGroupMember By ID",
                 "parameters": [
@@ -2834,7 +2834,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaGroupMember"
+                    "Ronda Group Member"
                 ],
                 "summary": "Update RondaGroupMember",
                 "parameters": [
@@ -2883,7 +2883,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaGroupMember"
+                    "Ronda Group Member"
                 ],
                 "summary": "Delete RondaGroupMember By ID",
                 "parameters": [
@@ -2925,7 +2925,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaGroup"
+                    "Ronda Group"
                 ],
                 "summary": "Get Paginated RondaGroup",
                 "parameters": [
@@ -2984,7 +2984,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaGroup"
+                    "Ronda Group"
                 ],
                 "summary": "Find RondaGroup By ID",
                 "parameters": [
@@ -3024,7 +3024,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaGroup"
+                    "Ronda Group"
                 ],
                 "summary": "Update RondaGroup",
                 "parameters": [
@@ -3073,7 +3073,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaGroup"
+                    "Ronda Group"
                 ],
                 "summary": "Delete RondaGroup By ID",
                 "parameters": [
@@ -3115,7 +3115,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaSchedule"
+                    "Ronda Schedule"
                 ],
                 "summary": "Get List RondaSchedule",
                 "responses": {
@@ -3146,7 +3146,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaSchedule"
+                    "Ronda Schedule"
                 ],
                 "summary": "Create RondaSchedule",
                 "parameters": [
@@ -3190,7 +3190,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaSchedule"
+                    "Ronda Schedule"
                 ],
                 "summary": "Get Paginated RondaSchedule",
                 "parameters": [
@@ -3249,7 +3249,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaSchedule"
+                    "Ronda Schedule"
                 ],
                 "summary": "Find RondaSchedule By ID",
                 "parameters": [
@@ -3289,7 +3289,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaSchedule"
+                    "Ronda Schedule"
                 ],
                 "summary": "Update RondaSchedule",
                 "parameters": [
@@ -3338,13 +3338,543 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RondaSchedule"
+                    "Ronda Schedule"
                 ],
                 "summary": "Delete RondaSchedule By ID",
                 "parameters": [
                     {
                         "type": "string",
                         "description": "RondaSchedule id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            }
+        },
+        "/rt": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Rt"
+                ],
+                "summary": "Get List Rt",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Rt"
+                ],
+                "summary": "Create Rt",
+                "parameters": [
+                    {
+                        "description": "Create Rt",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.RtCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            }
+        },
+        "/rt/paginated": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Rt"
+                ],
+                "summary": "Get Paginated Rt",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page size",
+                        "name": "page_size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Order by",
+                        "name": "order_by",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Order",
+                        "name": "order",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            }
+        },
+        "/rt/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Rt"
+                ],
+                "summary": "Find Rt By ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Rt id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Rt"
+                ],
+                "summary": "Update Rt",
+                "parameters": [
+                    {
+                        "description": "Update Rt",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.RtUpdateRequset"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Rt id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Rt"
+                ],
+                "summary": "Delete Rt By ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Rt id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            }
+        },
+        "/rw": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Rw"
+                ],
+                "summary": "Get List Rw",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Rw"
+                ],
+                "summary": "Create Rw",
+                "parameters": [
+                    {
+                        "description": "Create Rw",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.RwCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            }
+        },
+        "/rw/paginated": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Rw"
+                ],
+                "summary": "Get Paginated Rw",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page size",
+                        "name": "page_size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Order by",
+                        "name": "order_by",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Order",
+                        "name": "order",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            }
+        },
+        "/rw/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Rw"
+                ],
+                "summary": "Find Rw By ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Rw id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Rw"
+                ],
+                "summary": "Update Rw",
+                "parameters": [
+                    {
+                        "description": "Update Rw",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.RwUpdateRequset"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Rw id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Rw"
+                ],
+                "summary": "Delete Rw By ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Rw id",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -3455,7 +3985,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "ShopProduct"
+                    "Shop Product"
                 ],
                 "summary": "Get List ShopProduct",
                 "responses": {
@@ -3486,9 +4016,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "ShopProduct"
+                    "Shop Product"
                 ],
-                "summary": "Create ShopProduct",
+                "summary": "Create Shop Product",
                 "parameters": [
                     {
                         "description": "Create ShopProduct",
@@ -3530,7 +4060,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "ShopProduct"
+                    "Shop Product"
                 ],
                 "summary": "Get Paginated ShopProduct",
                 "parameters": [
@@ -3589,7 +4119,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "ShopProduct"
+                    "Shop Product"
                 ],
                 "summary": "Find ShopProduct By ID",
                 "parameters": [
@@ -3629,7 +4159,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "ShopProduct"
+                    "Shop Product"
                 ],
                 "summary": "Update ShopProduct",
                 "parameters": [
@@ -3678,7 +4208,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "ShopProduct"
+                    "Shop Product"
                 ],
                 "summary": "Delete ShopProduct By ID",
                 "parameters": [
@@ -4364,6 +4894,50 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "id": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.RtCreateRequest": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "rw_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.RtUpdateRequset": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "rw_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.RwCreateRequest": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.RwUpdateRequset": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
                     "type": "string"
                 }
             }

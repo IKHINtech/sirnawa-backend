@@ -307,6 +307,34 @@ definitions:
       id:
         type: string
     type: object
+  request.RtCreateRequest:
+    properties:
+      name:
+        type: string
+      rw_id:
+        type: string
+    type: object
+  request.RtUpdateRequset:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      rw_id:
+        type: string
+    type: object
+  request.RwCreateRequest:
+    properties:
+      name:
+        type: string
+    type: object
+  request.RwUpdateRequset:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    type: object
   request.ShopCreateRequest:
     properties:
       description:
@@ -873,7 +901,7 @@ paths:
       - Bearer: []
       summary: Get List IplPayment
       tags:
-      - IplPayment
+      - IPL Payment
     post:
       consumes:
       - application/json
@@ -899,7 +927,7 @@ paths:
       - Bearer: []
       summary: Create IplPayment
       tags:
-      - IplPayment
+      - IPL Payment
   /ipl-payment/{id}:
     delete:
       consumes:
@@ -925,7 +953,7 @@ paths:
       - Bearer: []
       summary: Delete IplPayment By ID
       tags:
-      - IplPayment
+      - IPL Payment
     get:
       consumes:
       - application/json
@@ -950,7 +978,7 @@ paths:
       - Bearer: []
       summary: Find IplPayment By ID
       tags:
-      - IplPayment
+      - IPL Payment
     put:
       consumes:
       - application/json
@@ -981,7 +1009,7 @@ paths:
       - Bearer: []
       summary: Update IplPayment
       tags:
-      - IplPayment
+      - IPL Payment
   /ipl-payment/paginated:
     get:
       consumes:
@@ -1018,7 +1046,7 @@ paths:
       - Bearer: []
       summary: Get Paginated IplPayment
       tags:
-      - IplPayment
+      - IPL Payment
   /post:
     get:
       consumes:
@@ -1084,7 +1112,7 @@ paths:
       - Bearer: []
       summary: Get List PostComment
       tags:
-      - PostComment
+      - Post Comment
     post:
       consumes:
       - application/json
@@ -1110,7 +1138,7 @@ paths:
       - Bearer: []
       summary: Create PostComment
       tags:
-      - PostComment
+      - Post Comment
   /post-comment/{id}:
     delete:
       consumes:
@@ -1136,7 +1164,7 @@ paths:
       - Bearer: []
       summary: Delete PostComment By ID
       tags:
-      - PostComment
+      - Post Comment
     get:
       consumes:
       - application/json
@@ -1161,7 +1189,7 @@ paths:
       - Bearer: []
       summary: Find PostComment By ID
       tags:
-      - PostComment
+      - Post Comment
     put:
       consumes:
       - application/json
@@ -1192,7 +1220,7 @@ paths:
       - Bearer: []
       summary: Update PostComment
       tags:
-      - PostComment
+      - Post Comment
   /post-comment/paginated:
     get:
       consumes:
@@ -1229,7 +1257,7 @@ paths:
       - Bearer: []
       summary: Get Paginated PostComment
       tags:
-      - PostComment
+      - Post Comment
   /post/{id}:
     delete:
       consumes:
@@ -1533,7 +1561,7 @@ paths:
       - Bearer: []
       summary: Get List RondaActivity
       tags:
-      - RondaActivity
+      - Ronda Activity
     post:
       consumes:
       - application/json
@@ -1559,7 +1587,7 @@ paths:
       - Bearer: []
       summary: Create RondaActivity
       tags:
-      - RondaActivity
+      - Ronda Activity
   /ronda-activity/{id}:
     delete:
       consumes:
@@ -1585,7 +1613,7 @@ paths:
       - Bearer: []
       summary: Delete RondaActivity By ID
       tags:
-      - RondaActivity
+      - Ronda Activity
     get:
       consumes:
       - application/json
@@ -1610,7 +1638,7 @@ paths:
       - Bearer: []
       summary: Find RondaActivity By ID
       tags:
-      - RondaActivity
+      - Ronda Activity
     put:
       consumes:
       - application/json
@@ -1641,7 +1669,7 @@ paths:
       - Bearer: []
       summary: Update RondaActivity
       tags:
-      - RondaActivity
+      - Ronda Activity
   /ronda-activity/paginated:
     get:
       consumes:
@@ -1678,7 +1706,7 @@ paths:
       - Bearer: []
       summary: Get Paginated RondaActivity
       tags:
-      - RondaActivity
+      - Ronda Activity
   /ronda-attendance:
     get:
       consumes:
@@ -1698,7 +1726,7 @@ paths:
       - Bearer: []
       summary: Get List RondaAttendance
       tags:
-      - RondaAttendance
+      - Ronda Attendance
     post:
       consumes:
       - application/json
@@ -1724,7 +1752,7 @@ paths:
       - Bearer: []
       summary: Create RondaAttendance
       tags:
-      - RondaAttendance
+      - Ronda Attendance
   /ronda-attendance/{id}:
     delete:
       consumes:
@@ -1750,7 +1778,7 @@ paths:
       - Bearer: []
       summary: Delete RondaAttendance By ID
       tags:
-      - RondaAttendance
+      - Ronda Attendance
     get:
       consumes:
       - application/json
@@ -1775,7 +1803,7 @@ paths:
       - Bearer: []
       summary: Find RondaAttendance By ID
       tags:
-      - RondaAttendance
+      - Ronda Attendance
     put:
       consumes:
       - application/json
@@ -1806,7 +1834,7 @@ paths:
       - Bearer: []
       summary: Update RondaAttendance
       tags:
-      - RondaAttendance
+      - Ronda Attendance
   /ronda-attendance/paginated:
     get:
       consumes:
@@ -1843,7 +1871,7 @@ paths:
       - Bearer: []
       summary: Get Paginated RondaAttendance
       tags:
-      - RondaAttendance
+      - Ronda Attendance
   /ronda-constribution:
     get:
       consumes:
@@ -1863,7 +1891,7 @@ paths:
       - Bearer: []
       summary: Get List RondaConstribution
       tags:
-      - RondaConstribution
+      - Ronda Constribution
     post:
       consumes:
       - application/json
@@ -1889,7 +1917,7 @@ paths:
       - Bearer: []
       summary: Create RondaConstribution
       tags:
-      - RondaConstribution
+      - Ronda Constribution
   /ronda-constribution/{id}:
     delete:
       consumes:
@@ -1915,7 +1943,7 @@ paths:
       - Bearer: []
       summary: Delete RondaConstribution By ID
       tags:
-      - RondaConstribution
+      - Ronda Constribution
     get:
       consumes:
       - application/json
@@ -1940,7 +1968,7 @@ paths:
       - Bearer: []
       summary: Find RondaConstribution By ID
       tags:
-      - RondaConstribution
+      - Ronda Constribution
     put:
       consumes:
       - application/json
@@ -1971,7 +1999,7 @@ paths:
       - Bearer: []
       summary: Update RondaConstribution
       tags:
-      - RondaConstribution
+      - Ronda Constribution
   /ronda-constribution/paginated:
     get:
       consumes:
@@ -2008,7 +2036,7 @@ paths:
       - Bearer: []
       summary: Get Paginated RondaConstribution
       tags:
-      - RondaConstribution
+      - Ronda Constribution
   /ronda-group:
     get:
       consumes:
@@ -2028,7 +2056,7 @@ paths:
       - Bearer: []
       summary: Get List RondaGroup
       tags:
-      - RondaGroup
+      - Ronda Group
     post:
       consumes:
       - application/json
@@ -2054,7 +2082,7 @@ paths:
       - Bearer: []
       summary: Create RondaGroup
       tags:
-      - RondaGroup
+      - Ronda Group
   /ronda-group-member:
     get:
       consumes:
@@ -2074,7 +2102,7 @@ paths:
       - Bearer: []
       summary: Get List RondaGroupMember
       tags:
-      - RondaGroupMember
+      - Ronda Group Member
     post:
       consumes:
       - application/json
@@ -2100,7 +2128,7 @@ paths:
       - Bearer: []
       summary: Create RondaGroupMember
       tags:
-      - RondaGroupMember
+      - Ronda Group Member
   /ronda-group-member/{id}:
     delete:
       consumes:
@@ -2126,7 +2154,7 @@ paths:
       - Bearer: []
       summary: Delete RondaGroupMember By ID
       tags:
-      - RondaGroupMember
+      - Ronda Group Member
     get:
       consumes:
       - application/json
@@ -2151,7 +2179,7 @@ paths:
       - Bearer: []
       summary: Find RondaGroupMember By ID
       tags:
-      - RondaGroupMember
+      - Ronda Group Member
     put:
       consumes:
       - application/json
@@ -2182,7 +2210,7 @@ paths:
       - Bearer: []
       summary: Update RondaGroupMember
       tags:
-      - RondaGroupMember
+      - Ronda Group Member
   /ronda-group-member/paginated:
     get:
       consumes:
@@ -2219,7 +2247,7 @@ paths:
       - Bearer: []
       summary: Get Paginated RondaGroupMember
       tags:
-      - RondaGroupMember
+      - Ronda Group Member
   /ronda-group/{id}:
     delete:
       consumes:
@@ -2245,7 +2273,7 @@ paths:
       - Bearer: []
       summary: Delete RondaGroup By ID
       tags:
-      - RondaGroup
+      - Ronda Group
     get:
       consumes:
       - application/json
@@ -2270,7 +2298,7 @@ paths:
       - Bearer: []
       summary: Find RondaGroup By ID
       tags:
-      - RondaGroup
+      - Ronda Group
     put:
       consumes:
       - application/json
@@ -2301,7 +2329,7 @@ paths:
       - Bearer: []
       summary: Update RondaGroup
       tags:
-      - RondaGroup
+      - Ronda Group
   /ronda-group/paginated:
     get:
       consumes:
@@ -2338,7 +2366,7 @@ paths:
       - Bearer: []
       summary: Get Paginated RondaGroup
       tags:
-      - RondaGroup
+      - Ronda Group
   /ronda-schedule:
     get:
       consumes:
@@ -2358,7 +2386,7 @@ paths:
       - Bearer: []
       summary: Get List RondaSchedule
       tags:
-      - RondaSchedule
+      - Ronda Schedule
     post:
       consumes:
       - application/json
@@ -2384,7 +2412,7 @@ paths:
       - Bearer: []
       summary: Create RondaSchedule
       tags:
-      - RondaSchedule
+      - Ronda Schedule
   /ronda-schedule/{id}:
     delete:
       consumes:
@@ -2410,7 +2438,7 @@ paths:
       - Bearer: []
       summary: Delete RondaSchedule By ID
       tags:
-      - RondaSchedule
+      - Ronda Schedule
     get:
       consumes:
       - application/json
@@ -2435,7 +2463,7 @@ paths:
       - Bearer: []
       summary: Find RondaSchedule By ID
       tags:
-      - RondaSchedule
+      - Ronda Schedule
     put:
       consumes:
       - application/json
@@ -2466,7 +2494,7 @@ paths:
       - Bearer: []
       summary: Update RondaSchedule
       tags:
-      - RondaSchedule
+      - Ronda Schedule
   /ronda-schedule/paginated:
     get:
       consumes:
@@ -2503,7 +2531,337 @@ paths:
       - Bearer: []
       summary: Get Paginated RondaSchedule
       tags:
-      - RondaSchedule
+      - Ronda Schedule
+  /rt:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get List Rt
+      tags:
+      - Rt
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create Rt
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.RtCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Create Rt
+      tags:
+      - Rt
+  /rt/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Rt id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Delete Rt By ID
+      tags:
+      - Rt
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Rt id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Find Rt By ID
+      tags:
+      - Rt
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update Rt
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.RtUpdateRequset'
+      - description: Rt id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Update Rt
+      tags:
+      - Rt
+  /rt/paginated:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: page_size
+        type: integer
+      - description: Order by
+        in: query
+        name: order_by
+        type: string
+      - description: Order
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get Paginated Rt
+      tags:
+      - Rt
+  /rw:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get List Rw
+      tags:
+      - Rw
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create Rw
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.RwCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Create Rw
+      tags:
+      - Rw
+  /rw/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Rw id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Delete Rw By ID
+      tags:
+      - Rw
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Rw id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Find Rw By ID
+      tags:
+      - Rw
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update Rw
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.RwUpdateRequset'
+      - description: Rw id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Update Rw
+      tags:
+      - Rw
+  /rw/paginated:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: page_size
+        type: integer
+      - description: Order by
+        in: query
+        name: order_by
+        type: string
+      - description: Order
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get Paginated Rw
+      tags:
+      - Rw
   /shop:
     get:
       consumes:
@@ -2569,7 +2927,7 @@ paths:
       - Bearer: []
       summary: Get List ShopProduct
       tags:
-      - ShopProduct
+      - Shop Product
     post:
       consumes:
       - application/json
@@ -2593,9 +2951,9 @@ paths:
             $ref: '#/definitions/utils.ResponseData'
       security:
       - Bearer: []
-      summary: Create ShopProduct
+      summary: Create Shop Product
       tags:
-      - ShopProduct
+      - Shop Product
   /shop-product/{id}:
     delete:
       consumes:
@@ -2621,7 +2979,7 @@ paths:
       - Bearer: []
       summary: Delete ShopProduct By ID
       tags:
-      - ShopProduct
+      - Shop Product
     get:
       consumes:
       - application/json
@@ -2646,7 +3004,7 @@ paths:
       - Bearer: []
       summary: Find ShopProduct By ID
       tags:
-      - ShopProduct
+      - Shop Product
     put:
       consumes:
       - application/json
@@ -2677,7 +3035,7 @@ paths:
       - Bearer: []
       summary: Update ShopProduct
       tags:
-      - ShopProduct
+      - Shop Product
   /shop-product/paginated:
     get:
       consumes:
@@ -2714,7 +3072,7 @@ paths:
       - Bearer: []
       summary: Get Paginated ShopProduct
       tags:
-      - ShopProduct
+      - Shop Product
   /shop/{id}:
     delete:
       consumes:

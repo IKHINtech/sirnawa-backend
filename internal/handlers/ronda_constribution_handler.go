@@ -28,7 +28,7 @@ func NewRondaConstributionHandler(services services.RondaConstributionService) R
 // Create RondaConstribution
 // @Summary Create RondaConstribution
 // @Descrpiton Create RondaConstribution
-// @Tags RondaConstribution
+// @Tags Ronda Constribution
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -56,7 +56,7 @@ func (h *rondaConstributionHandlerImpl) Create(ctx *fiber.Ctx) error {
 // Update RondaConstribution
 // @Summary Update RondaConstribution
 // @Descrpiton Update RondaConstribution
-// @Tags RondaConstribution
+// @Tags Ronda Constribution
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -91,7 +91,7 @@ func (h *rondaConstributionHandlerImpl) Update(ctx *fiber.Ctx) error {
 // Get Pagination RondaConstribution
 // @Summary Get Paginated RondaConstribution
 // @Descrpiton Get Paginated RondaConstribution
-// @Tags RondaConstribution
+// @Tags Ronda Constribution
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -117,7 +117,7 @@ func (h *rondaConstributionHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 // Get List RondaConstribution
 // @Summary Get List RondaConstribution
 // @Descrpiton Get List RondaConstribution
-// @Tags RondaConstribution
+// @Tags Ronda Constribution
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -136,7 +136,7 @@ func (h *rondaConstributionHandlerImpl) FindAll(ctx *fiber.Ctx) error {
 // Find RondaConstribution By ID
 // @Summary Find RondaConstribution By ID
 // @Descrpiton Find RondaConstribution By ID
-// @Tags RondaConstribution
+// @Tags Ronda Constribution
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -161,7 +161,7 @@ func (h *rondaConstributionHandlerImpl) FindByID(ctx *fiber.Ctx) error {
 // Delete RondaConstribution By ID
 // @Summary Delete RondaConstribution By ID
 // @Descrpiton Delete RondaConstribution By ID
-// @Tags RondaConstribution
+// @Tags Ronda Constribution
 // @Accept json
 // @Produce json
 // @Security Bearer

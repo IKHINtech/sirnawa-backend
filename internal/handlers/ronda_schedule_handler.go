@@ -28,7 +28,7 @@ func NewRondaScheduleHandler(services services.RondaScheduleService) RondaSchedu
 // Create RondaSchedule
 // @Summary Create RondaSchedule
 // @Descrpiton Create RondaSchedule
-// @Tags RondaSchedule
+// @Tags Ronda Schedule
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -56,7 +56,7 @@ func (h *rondaScheduleHandlerImpl) Create(ctx *fiber.Ctx) error {
 // Update RondaSchedule
 // @Summary Update RondaSchedule
 // @Descrpiton Update RondaSchedule
-// @Tags RondaSchedule
+// @Tags Ronda Schedule
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -91,7 +91,7 @@ func (h *rondaScheduleHandlerImpl) Update(ctx *fiber.Ctx) error {
 // Get Pagination RondaSchedule
 // @Summary Get Paginated RondaSchedule
 // @Descrpiton Get Paginated RondaSchedule
-// @Tags RondaSchedule
+// @Tags Ronda Schedule
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -117,7 +117,7 @@ func (h *rondaScheduleHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 // Get List RondaSchedule
 // @Summary Get List RondaSchedule
 // @Descrpiton Get List RondaSchedule
-// @Tags RondaSchedule
+// @Tags Ronda Schedule
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -136,7 +136,7 @@ func (h *rondaScheduleHandlerImpl) FindAll(ctx *fiber.Ctx) error {
 // Find RondaSchedule By ID
 // @Summary Find RondaSchedule By ID
 // @Descrpiton Find RondaSchedule By ID
-// @Tags RondaSchedule
+// @Tags Ronda Schedule
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -161,7 +161,7 @@ func (h *rondaScheduleHandlerImpl) FindByID(ctx *fiber.Ctx) error {
 // Delete RondaSchedule By ID
 // @Summary Delete RondaSchedule By ID
 // @Descrpiton Delete RondaSchedule By ID
-// @Tags RondaSchedule
+// @Tags Ronda Schedule
 // @Accept json
 // @Produce json
 // @Security Bearer

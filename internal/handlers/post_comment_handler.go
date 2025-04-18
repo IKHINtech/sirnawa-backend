@@ -28,7 +28,7 @@ func NewPostCommentHandler(services services.PostCommentService) PostCommentHand
 // Create PostComment
 // @Summary Create PostComment
 // @Descrpiton Create PostComment
-// @Tags PostComment
+// @Tags Post Comment
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -56,7 +56,7 @@ func (h *postCommentHandlerImpl) Create(ctx *fiber.Ctx) error {
 // Update PostComment
 // @Summary Update PostComment
 // @Descrpiton Update PostComment
-// @Tags PostComment
+// @Tags Post Comment
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -91,7 +91,7 @@ func (h *postCommentHandlerImpl) Update(ctx *fiber.Ctx) error {
 // Get Pagination PostComment
 // @Summary Get Paginated PostComment
 // @Descrpiton Get Paginated PostComment
-// @Tags PostComment
+// @Tags Post Comment
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -117,7 +117,7 @@ func (h *postCommentHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 // Get List PostComment
 // @Summary Get List PostComment
 // @Descrpiton Get List PostComment
-// @Tags PostComment
+// @Tags Post Comment
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -136,7 +136,7 @@ func (h *postCommentHandlerImpl) FindAll(ctx *fiber.Ctx) error {
 // Find PostComment By ID
 // @Summary Find PostComment By ID
 // @Descrpiton Find PostComment By ID
-// @Tags PostComment
+// @Tags Post Comment
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -161,7 +161,7 @@ func (h *postCommentHandlerImpl) FindByID(ctx *fiber.Ctx) error {
 // Delete PostComment By ID
 // @Summary Delete PostComment By ID
 // @Descrpiton Delete PostComment By ID
-// @Tags PostComment
+// @Tags Post Comment
 // @Accept json
 // @Produce json
 // @Security Bearer

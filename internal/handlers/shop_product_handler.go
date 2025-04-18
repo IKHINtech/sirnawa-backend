@@ -26,9 +26,9 @@ func NewShopProductHandler(services services.ShopProductService) ShopProductHand
 }
 
 // Create ShopProduct
-// @Summary Create ShopProduct
-// @Descrpiton Create ShopProduct
-// @Tags ShopProduct
+// @Summary Create Shop Product
+// @Descrpiton Create Shop Product
+// @Tags Shop Product
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -56,7 +56,7 @@ func (h *shopProductHandlerImpl) Create(ctx *fiber.Ctx) error {
 // Update ShopProduct
 // @Summary Update ShopProduct
 // @Descrpiton Update ShopProduct
-// @Tags ShopProduct
+// @Tags Shop Product
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -91,7 +91,7 @@ func (h *shopProductHandlerImpl) Update(ctx *fiber.Ctx) error {
 // Get Pagination ShopProduct
 // @Summary Get Paginated ShopProduct
 // @Descrpiton Get Paginated ShopProduct
-// @Tags ShopProduct
+// @Tags Shop Product
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -117,7 +117,7 @@ func (h *shopProductHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 // Get List ShopProduct
 // @Summary Get List ShopProduct
 // @Descrpiton Get List ShopProduct
-// @Tags ShopProduct
+// @Tags Shop Product
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -136,7 +136,7 @@ func (h *shopProductHandlerImpl) FindAll(ctx *fiber.Ctx) error {
 // Find ShopProduct By ID
 // @Summary Find ShopProduct By ID
 // @Descrpiton Find ShopProduct By ID
-// @Tags ShopProduct
+// @Tags Shop Product
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -161,7 +161,7 @@ func (h *shopProductHandlerImpl) FindByID(ctx *fiber.Ctx) error {
 // Delete ShopProduct By ID
 // @Summary Delete ShopProduct By ID
 // @Descrpiton Delete ShopProduct By ID
-// @Tags ShopProduct
+// @Tags Shop Product
 // @Accept json
 // @Produce json
 // @Security Bearer

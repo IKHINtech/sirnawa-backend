@@ -8,7 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-type RondaGroupMemberHandler interface {
+type RwHandler interface {
 	Create(ctx *fiber.Ctx) error
 	Update(ctx *fiber.Ctx) error
 	Paginated(ctx *fiber.Ctx) error
@@ -17,28 +17,28 @@ type RondaGroupMemberHandler interface {
 	Delete(ctx *fiber.Ctx) error
 }
 
-type rondaGroupMemberHandlerImpl struct {
-	services services.RondaGroupMemberService
+type rwHandlerImpl struct {
+	services services.RwService
 }
 
-func NewRondaGroupMemberHandler(services services.RondaGroupMemberService) RondaGroupMemberHandler {
-	return &rondaGroupMemberHandlerImpl{services: services}
+func NewRwHandler(services services.RwService) RwHandler {
+	return &rwHandlerImpl{services: services}
 }
 
-// Create RondaGroupMember
-// @Summary Create RondaGroupMember
-// @Descrpiton Create RondaGroupMember
-// @Tags Ronda Group Member
+// Create Rw
+// @Summary Create Rw
+// @Descrpiton Create Rw
+// @Tags Rw
 // @Accept json
 // @Produce json
 // @Security Bearer
-// @Param data body request.RondaGroupMemberCreateRequest true "Create RondaGroupMember"
+// @Param data body request.RwCreateRequest true "Create Rw"
 // @Success 200 {object} utils.ResponseData
 // @Failure 400 {object} utils.ResponseData
-// @Router /ronda-group-member [post]
-func (h *rondaGroupMemberHandlerImpl) Create(ctx *fiber.Ctx) error {
+// @Router /rw [post]
+func (h *rwHandlerImpl) Create(ctx *fiber.Ctx) error {
 	r := &utils.ResponseHandler{}
-	var req request.RondaGroupMemberCreateRequest
+	var req request.RwCreateRequest
 	if err := ctx.BodyParser(&req); err != nil {
 		return r.BadRequest(ctx, []string{"Body is not valid"})
 	}
@@ -53,26 +53,26 @@ func (h *rondaGroupMemberHandlerImpl) Create(ctx *fiber.Ctx) error {
 	return r.Created(ctx, res, "Successfully created")
 }
 
-// Update RondaGroupMember
-// @Summary Update RondaGroupMember
-// @Descrpiton Update RondaGroupMember
-// @Tags Ronda Group Member
+// Update Rw
+// @Summary Update Rw
+// @Descrpiton Update Rw
+// @Tags Rw
 // @Accept json
 // @Produce json
 // @Security Bearer
-// @Param data body request.RondaGroupMemberUpdateRequset true "Update RondaGroupMember"
-// @Param id path string true "RondaGroupMember id"
+// @Param data body request.RwUpdateRequset true "Update Rw"
+// @Param id path string true "Rw id"
 // @Success 200 {object} utils.ResponseData
 // @Failure 400 {object} utils.ResponseData
-// @Router /ronda-group-member/{id} [put]
-func (h *rondaGroupMemberHandlerImpl) Update(ctx *fiber.Ctx) error {
+// @Router /rw/{id} [put]
+func (h *rwHandlerImpl) Update(ctx *fiber.Ctx) error {
 	r := &utils.ResponseHandler{}
 	id := ctx.Params("id")
 	if id == "" {
 		return r.BadRequest(ctx, []string{"id is required"})
 	}
 
-	req := new(request.RondaGroupMemberUpdateRequset)
+	req := new(request.RwUpdateRequset)
 
 	if err := ctx.BodyParser(&req); err != nil {
 		return r.BadRequest(ctx, []string{"Body is not valid"})
@@ -88,10 +88,10 @@ func (h *rondaGroupMemberHandlerImpl) Update(ctx *fiber.Ctx) error {
 	return r.Created(ctx, res, "Successfully created")
 }
 
-// Get Pagination RondaGroupMember
-// @Summary Get Paginated RondaGroupMember
-// @Descrpiton Get Paginated RondaGroupMember
-// @Tags Ronda Group Member
+// Get Pagination Rw
+// @Summary Get Paginated Rw
+// @Descrpiton Get Paginated Rw
+// @Tags Rw
 // @Accept json
 // @Produce json
 // @Security Bearer
@@ -101,8 +101,8 @@ func (h *rondaGroupMemberHandlerImpl) Update(ctx *fiber.Ctx) error {
 // @Param order query string false "Order"
 // @Success 200 {object} utils.ResponseData
 // @Failure 400 {object} utils.ResponseData
-// @Router /ronda-group-member/paginated [get]
-func (h *rondaGroupMemberHandlerImpl) Paginated(ctx *fiber.Ctx) error {
+// @Router /rw/paginated [get]
+func (h *rwHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 	r := &utils.ResponseHandler{}
 
 	paginate := utils.GetPaginationParams(ctx)
@@ -114,17 +114,17 @@ func (h *rondaGroupMemberHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 	return r.Ok(ctx, data, "Successfully get data", meta)
 }
 
-// Get List RondaGroupMember
-// @Summary Get List RondaGroupMember
-// @Descrpiton Get List RondaGroupMember
-// @Tags Ronda Group Member
+// Get List Rw
+// @Summary Get List Rw
+// @Descrpiton Get List Rw
+// @Tags Rw
 // @Accept json
 // @Produce json
 // @Security Bearer
 // @Success 200 {object} utils.ResponseData
 // @Failure 400 {object} utils.ResponseData
-// @Router /ronda-group-member [get]
-func (h *rondaGroupMemberHandlerImpl) FindAll(ctx *fiber.Ctx) error {
+// @Router /rw [get]
+func (h *rwHandlerImpl) FindAll(ctx *fiber.Ctx) error {
 	r := &utils.ResponseHandler{}
 	res, err := h.services.FindAll()
 	if err != nil {
@@ -133,18 +133,18 @@ func (h *rondaGroupMemberHandlerImpl) FindAll(ctx *fiber.Ctx) error {
 	return r.Ok(ctx, res, "Successfully get data", nil)
 }
 
-// Find RondaGroupMember By ID
-// @Summary Find RondaGroupMember By ID
-// @Descrpiton Find RondaGroupMember By ID
-// @Tags Ronda Group Member
+// Find Rw By ID
+// @Summary Find Rw By ID
+// @Descrpiton Find Rw By ID
+// @Tags Rw
 // @Accept json
 // @Produce json
 // @Security Bearer
-// @Param id path string true "RondaGroupMember id"
+// @Param id path string true "Rw id"
 // @Success 200 {object} utils.ResponseData
 // @Failure 400 {object} utils.ResponseData
-// @Router /ronda-group-member/{id} [get]
-func (h *rondaGroupMemberHandlerImpl) FindByID(ctx *fiber.Ctx) error {
+// @Router /rw/{id} [get]
+func (h *rwHandlerImpl) FindByID(ctx *fiber.Ctx) error {
 	r := &utils.ResponseHandler{}
 	id := ctx.Params("id")
 	if id == "" {
@@ -158,18 +158,18 @@ func (h *rondaGroupMemberHandlerImpl) FindByID(ctx *fiber.Ctx) error {
 	return r.Ok(ctx, res, "Successfully get data", nil)
 }
 
-// Delete RondaGroupMember By ID
-// @Summary Delete RondaGroupMember By ID
-// @Descrpiton Delete RondaGroupMember By ID
-// @Tags Ronda Group Member
+// Delete Rw By ID
+// @Summary Delete Rw By ID
+// @Descrpiton Delete Rw By ID
+// @Tags Rw
 // @Accept json
 // @Produce json
 // @Security Bearer
-// @Param id path string true "RondaGroupMember id"
+// @Param id path string true "Rw id"
 // @Success 200 {object} utils.ResponseData
 // @Failure 400 {object} utils.ResponseData
-// @Router /ronda-group-member/{id} [delete]
-func (h *rondaGroupMemberHandlerImpl) Delete(ctx *fiber.Ctx) error {
+// @Router /rw/{id} [delete]
+func (h *rwHandlerImpl) Delete(ctx *fiber.Ctx) error {
 	r := &utils.ResponseHandler{}
 	id := ctx.Params("id")
 	if id == "" {
