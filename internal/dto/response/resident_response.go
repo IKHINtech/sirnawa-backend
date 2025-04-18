@@ -8,7 +8,6 @@ import (
 
 type ResidentResponse struct {
 	BaseResponse
-
 	HouseID        string    `json:"house_id"`
 	Name           string    `json:"name"`
 	NIK            string    `json:"nik"`
@@ -17,6 +16,11 @@ type ResidentResponse struct {
 	Gender         string    `json:"gender"`
 	Job            string    `json:"job"`
 	IsHeadOfFamily bool      `json:"is_head_of_family"`
+}
+
+type ResidentDetailResponse struct {
+	ResidentResponse
+	House HouseResponse `json:"house"`
 }
 
 type ResidentResponses []ResidentResponse
@@ -46,4 +50,14 @@ func ResidentListToResponse(data models.Residents) ResidentResponses {
 		res = append(res, *ResidentModelToResidentResponse(&v))
 	}
 	return res
+}
+
+func MapResidentDetailResponse(data *models.Resident) *ResidentDetailResponse {
+	if data == nil {
+		return nil
+	}
+	return &ResidentDetailResponse{
+		ResidentResponse: *ResidentModelToResidentResponse(data),
+		House:            *HouseModelToHouseResponse(&data.House),
+	}
 }
