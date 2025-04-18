@@ -566,6 +566,27 @@ paths:
     get:
       consumes:
       - application/json
+      parameters:
+      - description: Paginated
+        in: query
+        name: paginated
+        type: boolean
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: page_size
+        type: integer
+      - description: Order by
+        in: query
+        name: order_by
+        type: string
+      - description: Order
+        in: query
+        name: order
+        type: string
       produces:
       - application/json
       responses:
@@ -579,7 +600,7 @@ paths:
             $ref: '#/definitions/utils.ResponseData'
       security:
       - Bearer: []
-      summary: Get List Block
+      summary: Get Block
       tags:
       - Block
     post:
@@ -688,43 +709,6 @@ paths:
       security:
       - Bearer: []
       summary: Update Block
-      tags:
-      - Block
-  /block/paginated:
-    get:
-      consumes:
-      - application/json
-      parameters:
-      - description: Page number
-        in: query
-        name: page
-        type: integer
-      - description: Page size
-        in: query
-        name: page_size
-        type: integer
-      - description: Order by
-        in: query
-        name: order_by
-        type: string
-      - description: Order
-        in: query
-        name: order
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-      security:
-      - Bearer: []
-      summary: Get Paginated Block
       tags:
       - Block
   /house:

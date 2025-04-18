@@ -202,7 +202,39 @@ const docTemplate = `{
                 "tags": [
                     "Block"
                 ],
-                "summary": "Get List Block",
+                "summary": "Get Block",
+                "parameters": [
+                    {
+                        "type": "boolean",
+                        "description": "Paginated",
+                        "name": "paginated",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page size",
+                        "name": "page_size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Order by",
+                        "name": "order_by",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Order",
+                        "name": "order",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -243,65 +275,6 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/request.BlockCreateRequest"
                         }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/utils.ResponseData"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/utils.ResponseData"
-                        }
-                    }
-                }
-            }
-        },
-        "/block/paginated": {
-            "get": {
-                "security": [
-                    {
-                        "Bearer": []
-                    }
-                ],
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Block"
-                ],
-                "summary": "Get Paginated Block",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Page number",
-                        "name": "page",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "Page size",
-                        "name": "page_size",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "Order by",
-                        "name": "order_by",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "Order",
-                        "name": "order",
-                        "in": "query"
                     }
                 ],
                 "responses": {
