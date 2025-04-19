@@ -135,7 +135,8 @@ func Me(c *fiber.Ctx) error {
 	if userData == nil {
 		return h.NotFound(c, []string{"User not found"})
 	}
-	return h.Ok(c, userData, "Success get user data", nil)
+	userResponse := response.UserToResponse(userData)
+	return h.Ok(c, userResponse, "Success get user data", nil)
 }
 
 // Register handles user registration godoc
