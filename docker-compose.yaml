@@ -1,0 +1,19 @@
+version: "2"
+
+services:
+  sirnawa-service:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: "sirnawa-backend"
+    networks:
+      - sirnawa-network
+    ports:
+      - 5050:5050
+    env_file:
+      - ./.env
+    restart: on-failure
+
+networks:
+  sirnawa-network:
+    driver: bridge
