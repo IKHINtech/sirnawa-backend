@@ -3,3 +3,6 @@ generate-doc:
 
 run:
 	go run cmd/main.go
+
+app-build:
+	docker-compose up --build
