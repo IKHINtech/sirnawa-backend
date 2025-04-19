@@ -26,6 +26,9 @@ type ResidentDetailResponse struct {
 type ResidentResponses []ResidentResponse
 
 func ResidentModelToResidentResponse(data *models.Resident) *ResidentResponse {
+	if data == nil {
+		return nil
+	}
 	base := BaseResponse{
 		ID:        data.ID,
 		CreatedAt: data.CreatedAt,
