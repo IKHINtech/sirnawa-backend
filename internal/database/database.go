@@ -44,5 +44,9 @@ func Migrate() error {
 		&models.Rt{},
 		&models.Shop{},
 		&models.ShopProduct{},
+		&models.HousingArea{},
+		&models.Ipl{},
+		&models.IplDetail{},
+		&models.ResidentHouse{},
 	)
 }

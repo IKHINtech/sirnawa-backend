@@ -43,7 +43,7 @@ func GetNextGroup(currentGroupID string, groups []*models.RondaGroup) (*models.R
 
 func GenerateListSchedule(startDate, endDate time.Time, lastSchedule models.RondaSchedule, groups []*models.RondaGroup) []models.RondaSchedule {
 	generatedSchedules := []models.RondaSchedule{}
-	currentDate := lastSchedule.EfektifDate.AddDate(0, 0, 7)
+	currentDate := lastSchedule.Date.AddDate(0, 0, 7)
 	currentGroupID := lastSchedule.GroupID
 
 	for !currentDate.After(endDate) {
@@ -51,9 +51,9 @@ func GenerateListSchedule(startDate, endDate time.Time, lastSchedule models.Rond
 			nextGroup, found := GetNextGroup(currentGroupID, groups)
 			if found {
 				generatedSchedules = append(generatedSchedules, models.RondaSchedule{
-					EfektifDate: currentDate,
-					GroupID:     nextGroup.ID,
-					Group:       *nextGroup,
+					Date:    currentDate,
+					GroupID: nextGroup.ID,
+					Group:   *nextGroup,
 				})
 				currentGroupID = nextGroup.ID // Update ID grup saat ini untuk iterasi berikutnya
 			}

@@ -34,7 +34,6 @@ func ResidentUpdateRequsetToResidentModel(data ResidentUpdateRequset) models.Res
 		PhoneNumber:    data.PhoneNumber,
 		BirthDate:      data.BirthDate,
 		Gender:         data.Gender,
-		HouseID:        data.HouseID,
 		Job:            data.Job,
 		IsHeadOfFamily: data.IsHeadOfFamily,
 		BaseModel:      base,
@@ -48,7 +47,6 @@ func ResidentCreateRequestToResidentModel(data ResidentCreateRequest) models.Res
 		PhoneNumber:    data.PhoneNumber,
 		BirthDate:      data.BirthDate,
 		Gender:         data.Gender,
-		HouseID:        data.HouseID,
 		Job:            data.Job,
 		IsHeadOfFamily: data.IsHeadOfFamily,
 	}

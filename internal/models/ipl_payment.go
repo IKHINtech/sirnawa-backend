@@ -9,6 +9,8 @@ type IplPayment struct {
 	Month   int              `gorm:"not null" json:"month"`
 	Year    int              `gorm:"not null" json:"year"`
 	Amount  float64          `gorm:"not null" json:"amount"`
+	IplID   string           `gorm:"not null" json:"ipl_id"`
+	Ipl     Ipl              `gorm:"foreignKey:IplID" json:"ipl"`
 	Status  IplPaymentStatus `gorm:"default:unpaid;type:ipl_payment_status" json:"status"` // paid/unpaid
 	PaidAt  *time.Time       `gorm:"null" json:"paid_at,omitempty"`
 }

@@ -54,6 +54,5 @@ func MapHouseDetailResponse(data *models.House) *HouseResponseDetail {
 		Rt:            *RtModelToRtResponse(&data.Rt),
 		Rw:            *RwModelToRwResponse(&data.Rw),
 		Block:         *BlockModelToBlockResponse(&data.Block),
-		Residents:     ResidentListToResponse(data.Residents),
 	}
 }

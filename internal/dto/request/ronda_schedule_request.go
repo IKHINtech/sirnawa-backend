@@ -7,8 +7,8 @@ import (
 )
 
 type RondaScheduleCreateRequest struct {
-	EfektifDate time.Time `json:"efektif_date"`
-	GroupID     string    `json:"group_id"`
+	Date    time.Time `json:"date"`
+	GroupID string    `json:"group_id"`
 }
 
 type RondaScheduleUpdateRequset struct {
@@ -21,15 +21,15 @@ func RondaScheduleUpdateRequsetToRondaScheduleModel(data RondaScheduleUpdateRequ
 		ID: data.ID,
 	}
 	return models.RondaSchedule{
-		BaseModel:   base,
-		EfektifDate: data.EfektifDate,
-		GroupID:     data.GroupID,
+		BaseModel: base,
+		Date:      data.Date,
+		GroupID:   data.GroupID,
 	}
 }
 
 func RondaScheduleCreateRequestToRondaScheduleModel(data RondaScheduleCreateRequest) models.RondaSchedule {
 	return models.RondaSchedule{
-		EfektifDate: data.EfektifDate,
-		GroupID:     data.GroupID,
+		Date:    data.Date,
+		GroupID: data.GroupID,
 	}
 }

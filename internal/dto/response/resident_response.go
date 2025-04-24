@@ -20,7 +20,7 @@ type ResidentResponse struct {
 
 type ResidentDetailResponse struct {
 	ResidentResponse
-	House HouseResponse `json:"house"`
+	Houses HouseResponses `json:"houses"`
 }
 
 type ResidentResponses []ResidentResponse
@@ -37,7 +37,6 @@ func ResidentModelToResidentResponse(data *models.Resident) *ResidentResponse {
 	return &ResidentResponse{
 		Name:           data.Name,
 		NIK:            data.NIK,
-		HouseID:        data.HouseID,
 		PhoneNumber:    data.PhoneNumber,
 		BirthDate:      data.BirthDate,
 		Gender:         data.Gender,
@@ -61,6 +60,5 @@ func MapResidentDetailResponse(data *models.Resident) *ResidentDetailResponse {
 	}
 	return &ResidentDetailResponse{
 		ResidentResponse: *ResidentModelToResidentResponse(data),
-		House:            *HouseModelToHouseResponse(&data.House),
 	}
 }

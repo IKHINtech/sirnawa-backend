@@ -8,8 +8,8 @@ import (
 
 type RondaScheduleResponse struct {
 	BaseResponse
-	EfektifDate time.Time `json:"efektif_date"`
-	GroupID     string    `json:"group_id"`
+	Date    time.Time `json:"date"`
+	GroupID string    `json:"group_id"`
 }
 
 type RondaScheduleResponses []RondaScheduleResponse
@@ -22,7 +22,7 @@ func RondaScheduleModelToRondaScheduleResponse(data *models.RondaSchedule) *Rond
 	}
 	return &RondaScheduleResponse{
 		BaseResponse: base,
-		EfektifDate:  data.EfektifDate,
+		Date:         data.Date,
 		GroupID:      data.GroupID,
 	}
 }

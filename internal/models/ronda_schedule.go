@@ -4,9 +4,11 @@ import "time"
 
 type RondaSchedule struct {
 	BaseModel
-	EfektifDate time.Time  `gorm:"not null" json:"efektif_date"`
-	GroupID     string     `gorm:"not null" json:"group_id"`
-	Group       RondaGroup `gorm:"foreignKey:GroupID" json:"group"`
+	RtID    string     `gorm:"not null" json:"rt_id"`
+	Rt      Rt         `gorm:"foreignKey:RtID" json:"rt"`
+	Date    time.Time  `gorm:"not null" json:"date"`
+	GroupID string     `gorm:"not null" json:"group_id"`
+	Group   RondaGroup `gorm:"foreignKey:GroupID" json:"group"`
 }
 
 type RondaSchedules []RondaSchedule
