@@ -12,6 +12,10 @@ definitions:
     - email
     - password
     type: object
+  request.AnnouncementCreateRequest:
+    type: object
+  request.AnnouncementUpdateRequset:
+    type: object
   request.BlockCreateRequest:
     properties:
       name:
@@ -58,6 +62,46 @@ definitions:
         description: aktif / tidak aktif
         type: string
     type: object
+  request.HousingAreaCreateRequest:
+    properties:
+      name:
+        type: string
+      rt_id:
+        type: string
+    type: object
+  request.HousingAreaUpdateRequset:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      rt_id:
+        type: string
+    type: object
+  request.IplCreateRequest:
+    properties:
+      amount:
+        type: number
+      is_active:
+        type: boolean
+      items:
+        items:
+          $ref: '#/definitions/request.IplDetailCreateRequest'
+        type: array
+      note:
+        type: string
+      rt_id:
+        type: string
+    type: object
+  request.IplDetailCreateRequest:
+    properties:
+      ipl_id:
+        type: string
+      note:
+        type: string
+      sub_amount:
+        type: number
+    type: object
   request.IplPaymentCreateRequest:
     properties:
       amount:
@@ -85,6 +129,23 @@ definitions:
         type: string
       year:
         type: integer
+    type: object
+  request.IplUpdateRequset:
+    properties:
+      amount:
+        type: number
+      id:
+        type: string
+      is_active:
+        type: boolean
+      items:
+        items:
+          $ref: '#/definitions/request.IplDetailCreateRequest'
+        type: array
+      note:
+        type: string
+      rt_id:
+        type: string
     type: object
   request.LoginInput:
     properties:
@@ -303,14 +364,14 @@ definitions:
     type: object
   request.RondaScheduleCreateRequest:
     properties:
-      efektif_date:
+      date:
         type: string
       group_id:
         type: string
     type: object
   request.RondaScheduleUpdateRequset:
     properties:
-      efektif_date:
+      date:
         type: string
       group_id:
         type: string
@@ -457,6 +518,155 @@ info:
   title: SIRNAWA API
   version: "1.0"
 paths:
+  /announcement:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Paginated
+        in: query
+        name: paginated
+        type: boolean
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: page_size
+        type: integer
+      - description: Order by
+        in: query
+        name: order_by
+        type: string
+      - description: Order
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get Announcement
+      tags:
+      - Announcement
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create Announcement
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.AnnouncementCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Create Announcement
+      tags:
+      - Announcement
+  /announcement/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Announcement id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Delete Announcement By ID
+      tags:
+      - Announcement
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Announcement id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Find Announcement By ID
+      tags:
+      - Announcement
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update Announcement
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.AnnouncementUpdateRequset'
+      - description: Announcement id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Update Announcement
+      tags:
+      - Announcement
   /auth/login:
     post:
       consumes:
@@ -860,6 +1070,222 @@ paths:
       summary: Update House
       tags:
       - House
+  /housing-area:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Paginated
+        in: query
+        name: paginated
+        type: boolean
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: page_size
+        type: integer
+      - description: Order by
+        in: query
+        name: order_by
+        type: string
+      - description: Order
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get Paginated HousingArea
+      tags:
+      - Housing Area
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create HousingArea
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.HousingAreaCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Create HousingArea
+      tags:
+      - Housing Area
+  /housing-area/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: HousingArea id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Delete HousingArea By ID
+      tags:
+      - Housing Area
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: HousingArea id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Find HousingArea By ID
+      tags:
+      - Housing Area
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update HousingArea
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.HousingAreaUpdateRequset'
+      - description: HousingArea id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Update HousingArea
+      tags:
+      - Housing Area
+  /ipl:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Paginated
+        in: query
+        name: paginated
+        type: boolean
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: page_size
+        type: integer
+      - description: Order by
+        in: query
+        name: order_by
+        type: string
+      - description: Order
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get Ipl
+      tags:
+      - Ipl
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create Ipl
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.IplCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Create Ipl
+      tags:
+      - Ipl
   /ipl-payment:
     get:
       consumes:
@@ -1009,6 +1435,88 @@ paths:
       summary: Update IplPayment
       tags:
       - IPL Payment
+  /ipl/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Ipl id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Delete Ipl By ID
+      tags:
+      - Ipl
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Ipl id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Find Ipl By ID
+      tags:
+      - Ipl
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update Ipl
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.IplUpdateRequset'
+      - description: Ipl id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Update Ipl
+      tags:
+      - Ipl
   /post:
     get:
       consumes:
