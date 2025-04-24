@@ -9,9 +9,9 @@ import (
 type IplRepository interface {
 	Create(tx *gorm.DB, data models.Ipl) (*models.Ipl, error)
 	Update(tx *gorm.DB, id string, data models.Ipl) (*models.Ipl, error)
-	FindAll() (models.Ipls, error)
+	FindAll(rtID string) (models.Ipls, error)
 	ChangeIsActiveByRtID(tx *gorm.DB, rtID string) error
-	Paginated(pagination utils.Pagination) (*utils.Pagination, models.Ipls, error)
+	Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, models.Ipls, error)
 	FindByID(id string) (*models.Ipl, error)
 	Delete(id string) error
 }
@@ -24,9 +24,13 @@ func NewIplRepository(db *gorm.DB) IplRepository {
 	return &iplRepositoryImpl{db: db}
 }
 
-func (r *iplRepositoryImpl) Paginated(pagination utils.Pagination) (*utils.Pagination, models.Ipls, error) {
+func (r *iplRepositoryImpl) Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, models.Ipls, error) {
 	var datas models.Ipls
 	query := r.db
+
+	if rtID != "" {
+		query = query.Where("rt_id = ?", rtID)
+	}
 	err := query.Scopes(utils.Paginate(datas, &pagination, query)).Find(&datas).Error
 	return &pagination, datas, err
 }
@@ -68,9 +72,14 @@ func (r *iplRepositoryImpl) FindByID(id string) (*models.Ipl, error) {
 	return &data, err
 }
 
-func (r *iplRepositoryImpl) FindAll() (models.Ipls, error) {
+func (r *iplRepositoryImpl) FindAll(rtID string) (models.Ipls, error) {
+	query := r.db
+
+	if rtID != "" {
+		query = query.Where("rt_id = ?", rtID)
+	}
 	var data models.Ipls
-	err := r.db.Find(&data).Error
+	err := query.Find(&data).Error
 	return data, err
 }
 

@@ -14,8 +14,8 @@ type BlockService interface {
 	Update(id string, data request.BlockUpdateRequset) (*response.BlockResponse, error)
 	FindByID(id string) (*response.BlockResponse, error)
 	Delete(id string) error
-	FindAll() (response.BlockResponses, error)
-	Paginated(pagination utils.Pagination) (*utils.Pagination, *response.BlockResponses, error)
+	FindAll(rtID string) (response.BlockResponses, error)
+	Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, *response.BlockResponses, error)
 }
 
 type blockServiceImpl struct {
@@ -104,8 +104,8 @@ func (s *blockServiceImpl) Update(id string, data request.BlockUpdateRequset) (*
 	return res, nil
 }
 
-func (s *blockServiceImpl) FindAll() (response.BlockResponses, error) {
-	result, err := s.repository.FindAll()
+func (s *blockServiceImpl) FindAll(rtID string) (response.BlockResponses, error) {
+	result, err := s.repository.FindAll(rtID)
 	if err != nil {
 		return nil, err
 	}
@@ -124,8 +124,8 @@ func (s *blockServiceImpl) FindByID(id string) (*response.BlockResponse, error) 
 	return resp, err
 }
 
-func (s *blockServiceImpl) Paginated(pagination utils.Pagination) (*utils.Pagination, *response.BlockResponses, error) {
-	paginated, data, err := s.repository.Paginated(pagination)
+func (s *blockServiceImpl) Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, *response.BlockResponses, error) {
+	paginated, data, err := s.repository.Paginated(pagination, rtID)
 	if err != nil {
 		return nil, nil, err
 	}

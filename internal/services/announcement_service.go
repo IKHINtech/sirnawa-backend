@@ -14,8 +14,8 @@ type AnnouncementService interface {
 	Update(id string, data request.AnnouncementUpdateRequset) (*response.AnnouncementResponse, error)
 	FindByID(id string) (*response.AnnouncementResponse, error)
 	Delete(id string) error
-	FindAll() (response.AnnouncementResponses, error)
-	Paginated(pagination utils.Pagination) (*utils.Pagination, *response.AnnouncementResponses, error)
+	FindAll(rtID string) (response.AnnouncementResponses, error)
+	Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, *response.AnnouncementResponses, error)
 }
 
 type announcementServiceImpl struct {
@@ -104,8 +104,8 @@ func (s *announcementServiceImpl) Update(id string, data request.AnnouncementUpd
 	return res, nil
 }
 
-func (s *announcementServiceImpl) FindAll() (response.AnnouncementResponses, error) {
-	result, err := s.repository.FindAll()
+func (s *announcementServiceImpl) FindAll(rtID string) (response.AnnouncementResponses, error) {
+	result, err := s.repository.FindAll(rtID)
 	if err != nil {
 		return nil, err
 	}
@@ -124,8 +124,8 @@ func (s *announcementServiceImpl) FindByID(id string) (*response.AnnouncementRes
 	return resp, err
 }
 
-func (s *announcementServiceImpl) Paginated(pagination utils.Pagination) (*utils.Pagination, *response.AnnouncementResponses, error) {
-	paginated, data, err := s.repository.Paginated(pagination)
+func (s *announcementServiceImpl) Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, *response.AnnouncementResponses, error) {
+	paginated, data, err := s.repository.Paginated(pagination, rtID)
 	if err != nil {
 		return nil, nil, err
 	}

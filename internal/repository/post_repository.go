@@ -9,8 +9,8 @@ import (
 type PostRepository interface {
 	Create(tx *gorm.DB, data models.Post) (*models.Post, error)
 	Update(tx *gorm.DB, id string, data models.Post) (*models.Post, error)
-	FindAll() (models.Posts, error)
-	Paginated(pagination utils.Pagination) (*utils.Pagination, models.Posts, error)
+	FindAll(rtID string) (models.Posts, error)
+	Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, models.Posts, error)
 	FindByID(id string) (*models.Post, error)
 	Delete(id string) error
 }
@@ -23,9 +23,13 @@ func NewPostRepository(db *gorm.DB) PostRepository {
 	return &postRepositoryImpl{db: db}
 }
 
-func (r *postRepositoryImpl) Paginated(pagination utils.Pagination) (*utils.Pagination, models.Posts, error) {
+func (r *postRepositoryImpl) Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, models.Posts, error) {
 	var datas models.Posts
 	query := r.db
+
+	if rtID != "" {
+		query = query.Where("rt_id = ?", rtID)
+	}
 	err := query.Scopes(utils.Paginate(datas, &pagination, query)).Find(&datas).Error
 	return &pagination, datas, err
 }
@@ -59,9 +63,14 @@ func (r *postRepositoryImpl) FindByID(id string) (*models.Post, error) {
 	return &data, err
 }
 
-func (r *postRepositoryImpl) FindAll() (models.Posts, error) {
+func (r *postRepositoryImpl) FindAll(rtID string) (models.Posts, error) {
 	var data models.Posts
-	err := r.db.Find(&data).Error
+	query := r.db
+
+	if rtID != "" {
+		query = query.Where("rt_id = ?", rtID)
+	}
+	err := query.Find(&data).Error
 	return data, err
 }
 

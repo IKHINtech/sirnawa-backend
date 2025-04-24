@@ -14,8 +14,8 @@ type ShopService interface {
 	Update(id string, data request.ShopUpdateRequset) (*response.ShopResponse, error)
 	FindByID(id string) (*response.ShopResponse, error)
 	Delete(id string) error
-	FindAll() (response.ShopResponses, error)
-	Paginated(pagination utils.Pagination) (*utils.Pagination, *response.ShopResponses, error)
+	FindAll(rtID string) (response.ShopResponses, error)
+	Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, *response.ShopResponses, error)
 }
 
 type shopServiceImpl struct {
@@ -104,8 +104,8 @@ func (s *shopServiceImpl) Update(id string, data request.ShopUpdateRequset) (*re
 	return res, nil
 }
 
-func (s *shopServiceImpl) FindAll() (response.ShopResponses, error) {
-	result, err := s.repository.FindAll()
+func (s *shopServiceImpl) FindAll(rtID string) (response.ShopResponses, error) {
+	result, err := s.repository.FindAll(rtID)
 	if err != nil {
 		return nil, err
 	}
@@ -124,8 +124,8 @@ func (s *shopServiceImpl) FindByID(id string) (*response.ShopResponse, error) {
 	return resp, err
 }
 
-func (s *shopServiceImpl) Paginated(pagination utils.Pagination) (*utils.Pagination, *response.ShopResponses, error) {
-	paginated, data, err := s.repository.Paginated(pagination)
+func (s *shopServiceImpl) Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, *response.ShopResponses, error) {
+	paginated, data, err := s.repository.Paginated(pagination, rtID)
 	if err != nil {
 		return nil, nil, err
 	}

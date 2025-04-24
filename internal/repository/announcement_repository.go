@@ -9,8 +9,8 @@ import (
 type AnnouncementRepository interface {
 	Create(tx *gorm.DB, data models.Announcement) (*models.Announcement, error)
 	Update(tx *gorm.DB, id string, data models.Announcement) (*models.Announcement, error)
-	FindAll() (models.Announcements, error)
-	Paginated(pagination utils.Pagination) (*utils.Pagination, models.Announcements, error)
+	FindAll(rtID string) (models.Announcements, error)
+	Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, models.Announcements, error)
 	FindByID(id string) (*models.Announcement, error)
 	Delete(id string) error
 }
@@ -23,9 +23,13 @@ func NewAnnouncementRepository(db *gorm.DB) AnnouncementRepository {
 	return &announcementRepositoryImpl{db: db}
 }
 
-func (r *announcementRepositoryImpl) Paginated(pagination utils.Pagination) (*utils.Pagination, models.Announcements, error) {
+func (r *announcementRepositoryImpl) Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, models.Announcements, error) {
 	var datas models.Announcements
 	query := r.db
+
+	if rtID != "" {
+		query = query.Where("rt_id = ?", rtID)
+	}
 	err := query.Scopes(utils.Paginate(datas, &pagination, query)).Find(&datas).Error
 	return &pagination, datas, err
 }
@@ -59,9 +63,14 @@ func (r *announcementRepositoryImpl) FindByID(id string) (*models.Announcement, 
 	return &data, err
 }
 
-func (r *announcementRepositoryImpl) FindAll() (models.Announcements, error) {
+func (r *announcementRepositoryImpl) FindAll(rtID string) (models.Announcements, error) {
 	var data models.Announcements
-	err := r.db.Find(&data).Error
+
+	query := r.db
+	if rtID != "" {
+		query = query.Where("rt_id = ?", rtID)
+	}
+	err := query.Find(&data).Error
 	return data, err
 }
 

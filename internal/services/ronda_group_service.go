@@ -14,8 +14,8 @@ type RondaGroupService interface {
 	Update(id string, data request.RondaGroupUpdateRequset) (*response.RondaGroupResponse, error)
 	FindByID(id string) (*response.RondaGroupResponse, error)
 	Delete(id string) error
-	FindAll() (response.RondaGroupResponses, error)
-	Paginated(pagination utils.Pagination) (*utils.Pagination, *response.RondaGroupResponses, error)
+	FindAll(rtID string) (response.RondaGroupResponses, error)
+	Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, *response.RondaGroupResponses, error)
 }
 
 type rondaGroupServiceImpl struct {
@@ -104,8 +104,8 @@ func (s *rondaGroupServiceImpl) Update(id string, data request.RondaGroupUpdateR
 	return res, nil
 }
 
-func (s *rondaGroupServiceImpl) FindAll() (response.RondaGroupResponses, error) {
-	result, err := s.repository.FindAll()
+func (s *rondaGroupServiceImpl) FindAll(rtID string) (response.RondaGroupResponses, error) {
+	result, err := s.repository.FindAll(rtID)
 	if err != nil {
 		return nil, err
 	}
@@ -124,8 +124,8 @@ func (s *rondaGroupServiceImpl) FindByID(id string) (*response.RondaGroupRespons
 	return resp, err
 }
 
-func (s *rondaGroupServiceImpl) Paginated(pagination utils.Pagination) (*utils.Pagination, *response.RondaGroupResponses, error) {
-	paginated, data, err := s.repository.Paginated(pagination)
+func (s *rondaGroupServiceImpl) Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, *response.RondaGroupResponses, error) {
+	paginated, data, err := s.repository.Paginated(pagination, rtID)
 	if err != nil {
 		return nil, nil, err
 	}

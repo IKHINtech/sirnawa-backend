@@ -14,3 +14,5 @@ type Announcement struct {
 }
 
 type Announcements []Announcement
+
+//DISINI

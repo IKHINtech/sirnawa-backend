@@ -14,3 +14,5 @@ type Post struct {
 }
 
 type Posts []Post
+
+//DISINI

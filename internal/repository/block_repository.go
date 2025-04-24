@@ -9,8 +9,8 @@ import (
 type BlockRepository interface {
 	Create(tx *gorm.DB, data models.Block) (*models.Block, error)
 	Update(tx *gorm.DB, id string, data models.Block) (*models.Block, error)
-	FindAll() (models.Blocks, error)
-	Paginated(pagination utils.Pagination) (*utils.Pagination, models.Blocks, error)
+	FindAll(rtID string) (models.Blocks, error)
+	Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, models.Blocks, error)
 	FindByID(id string) (*models.Block, error)
 	Delete(id string) error
 }
@@ -23,9 +23,13 @@ func NewBlockRepository(db *gorm.DB) BlockRepository {
 	return &blockRepositoryImpl{db: db}
 }
 
-func (r *blockRepositoryImpl) Paginated(pagination utils.Pagination) (*utils.Pagination, models.Blocks, error) {
+func (r *blockRepositoryImpl) Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, models.Blocks, error) {
 	var datas models.Blocks
 	query := r.db
+
+	if rtID != "" {
+		query = query.Where("rt_id = ?", rtID)
+	}
 	err := query.Scopes(utils.Paginate(datas, &pagination, query)).Find(&datas).Error
 	return &pagination, datas, err
 }
@@ -59,9 +63,14 @@ func (r *blockRepositoryImpl) FindByID(id string) (*models.Block, error) {
 	return &data, err
 }
 
-func (r *blockRepositoryImpl) FindAll() (models.Blocks, error) {
+func (r *blockRepositoryImpl) FindAll(rtID string) (models.Blocks, error) {
+	query := r.db
+
+	if rtID != "" {
+		query = query.Where("rt_id = ?", rtID)
+	}
 	var data models.Blocks
-	err := r.db.Find(&data).Error
+	err := query.Find(&data).Error
 	return data, err
 }
 

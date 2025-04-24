@@ -12,3 +12,5 @@ type RondaSchedule struct {
 }
 
 type RondaSchedules []RondaSchedule
+
+//DISINI

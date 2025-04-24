@@ -10,3 +10,5 @@ type RondaGroup struct {
 }
 
 type RondaGroups []RondaGroup
+
+//DISINI

@@ -9,8 +9,8 @@ import (
 type HouseRepository interface {
 	Create(tx *gorm.DB, data models.House) (*models.House, error)
 	Update(tx *gorm.DB, id string, data models.House) (*models.House, error)
-	FindAll() (models.Houses, error)
-	Paginated(pagination utils.Pagination) (*utils.Pagination, models.Houses, error)
+	FindAll(rtID string) (models.Houses, error)
+	Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, models.Houses, error)
 	FindByID(id string) (*models.House, error)
 	Delete(id string) error
 }
@@ -23,9 +23,13 @@ func NewHouseRepository(db *gorm.DB) HouseRepository {
 	return &houseRepositoryImpl{db: db}
 }
 
-func (r *houseRepositoryImpl) Paginated(pagination utils.Pagination) (*utils.Pagination, models.Houses, error) {
+func (r *houseRepositoryImpl) Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, models.Houses, error) {
 	var datas models.Houses
 	query := r.db
+
+	if rtID != "" {
+		query = query.Where("rt_id = ?", rtID)
+	}
 	err := query.Scopes(utils.Paginate(datas, &pagination, query)).Find(&datas).Error
 	return &pagination, datas, err
 }
@@ -65,9 +69,14 @@ func (r *houseRepositoryImpl) FindByID(id string) (*models.House, error) {
 	return &data, err
 }
 
-func (r *houseRepositoryImpl) FindAll() (models.Houses, error) {
+func (r *houseRepositoryImpl) FindAll(rtID string) (models.Houses, error) {
 	var data models.Houses
-	err := r.db.Find(&data).Error
+	query := r.db
+	if rtID != "" {
+		query = query.Where("rt_id = ?", rtID)
+	}
+
+	err := query.Find(&data).Error
 	return data, err
 }
 

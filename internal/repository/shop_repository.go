@@ -9,8 +9,8 @@ import (
 type ShopRepository interface {
 	Create(tx *gorm.DB, data models.Shop) (*models.Shop, error)
 	Update(tx *gorm.DB, id string, data models.Shop) (*models.Shop, error)
-	FindAll() (models.Shops, error)
-	Paginated(pagination utils.Pagination) (*utils.Pagination, models.Shops, error)
+	FindAll(rtID string) (models.Shops, error)
+	Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, models.Shops, error)
 	FindByID(id string) (*models.Shop, error)
 	Delete(id string) error
 }
@@ -23,9 +23,13 @@ func NewShopRepository(db *gorm.DB) ShopRepository {
 	return &shopRepositoryImpl{db: db}
 }
 
-func (r *shopRepositoryImpl) Paginated(pagination utils.Pagination) (*utils.Pagination, models.Shops, error) {
+func (r *shopRepositoryImpl) Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, models.Shops, error) {
 	var datas models.Shops
 	query := r.db
+
+	if rtID != "" {
+		query = query.Where("rt_id = ?", rtID)
+	}
 	err := query.Scopes(utils.Paginate(datas, &pagination, query)).Find(&datas).Error
 	return &pagination, datas, err
 }
@@ -59,9 +63,14 @@ func (r *shopRepositoryImpl) FindByID(id string) (*models.Shop, error) {
 	return &data, err
 }
 
-func (r *shopRepositoryImpl) FindAll() (models.Shops, error) {
+func (r *shopRepositoryImpl) FindAll(rtID string) (models.Shops, error) {
 	var data models.Shops
-	err := r.db.Find(&data).Error
+	query := r.db
+
+	if rtID != "" {
+		query = query.Where("rt_id = ?", rtID)
+	}
+	err := query.Find(&data).Error
 	return data, err
 }
 

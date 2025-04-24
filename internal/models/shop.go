@@ -11,3 +11,5 @@ type Shop struct {
 	Products    []ShopProduct `gorm:"foreignKey:ShopID" json:"products,omitempty"`
 }
 type Shops []Shop
+
+//DISINI

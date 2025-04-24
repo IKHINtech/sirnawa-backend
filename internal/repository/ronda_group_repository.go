@@ -9,8 +9,8 @@ import (
 type RondaGroupRepository interface {
 	Create(tx *gorm.DB, data models.RondaGroup) (*models.RondaGroup, error)
 	Update(tx *gorm.DB, id string, data models.RondaGroup) (*models.RondaGroup, error)
-	FindAll() (models.RondaGroups, error)
-	Paginated(pagination utils.Pagination) (*utils.Pagination, models.RondaGroups, error)
+	FindAll(rtID string) (models.RondaGroups, error)
+	Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, models.RondaGroups, error)
 	FindByID(id string) (*models.RondaGroup, error)
 	Delete(id string) error
 }
@@ -23,9 +23,13 @@ func NewRondaGroupRepository(db *gorm.DB) RondaGroupRepository {
 	return &rondaGroupRepositoryImpl{db: db}
 }
 
-func (r *rondaGroupRepositoryImpl) Paginated(pagination utils.Pagination) (*utils.Pagination, models.RondaGroups, error) {
+func (r *rondaGroupRepositoryImpl) Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, models.RondaGroups, error) {
 	var datas models.RondaGroups
 	query := r.db
+
+	if rtID != "" {
+		query = query.Where("rt_id = ?", rtID)
+	}
 	err := query.Scopes(utils.Paginate(datas, &pagination, query)).Find(&datas).Error
 	return &pagination, datas, err
 }
@@ -59,9 +63,14 @@ func (r *rondaGroupRepositoryImpl) FindByID(id string) (*models.RondaGroup, erro
 	return &data, err
 }
 
-func (r *rondaGroupRepositoryImpl) FindAll() (models.RondaGroups, error) {
+func (r *rondaGroupRepositoryImpl) FindAll(rtID string) (models.RondaGroups, error) {
 	var data models.RondaGroups
-	err := r.db.Find(&data).Error
+	query := r.db
+
+	if rtID != "" {
+		query = query.Where("rt_id = ?", rtID)
+	}
+	err := query.Find(&data).Error
 	return data, err
 }
 

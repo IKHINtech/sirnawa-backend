@@ -14,8 +14,8 @@ type PostService interface {
 	Update(id string, data request.PostUpdateRequset) (*response.PostResponse, error)
 	FindByID(id string) (*response.PostResponse, error)
 	Delete(id string) error
-	FindAll() (response.PostResponses, error)
-	Paginated(pagination utils.Pagination) (*utils.Pagination, *response.PostResponses, error)
+	FindAll(rtID string) (response.PostResponses, error)
+	Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, *response.PostResponses, error)
 }
 
 type postServiceImpl struct {
@@ -104,8 +104,8 @@ func (s *postServiceImpl) Update(id string, data request.PostUpdateRequset) (*re
 	return res, nil
 }
 
-func (s *postServiceImpl) FindAll() (response.PostResponses, error) {
-	result, err := s.repository.FindAll()
+func (s *postServiceImpl) FindAll(rtID string) (response.PostResponses, error) {
+	result, err := s.repository.FindAll(rtID)
 	if err != nil {
 		return nil, err
 	}
@@ -124,8 +124,8 @@ func (s *postServiceImpl) FindByID(id string) (*response.PostResponse, error) {
 	return resp, err
 }
 
-func (s *postServiceImpl) Paginated(pagination utils.Pagination) (*utils.Pagination, *response.PostResponses, error) {
-	paginated, data, err := s.repository.Paginated(pagination)
+func (s *postServiceImpl) Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, *response.PostResponses, error) {
+	paginated, data, err := s.repository.Paginated(pagination, rtID)
 	if err != nil {
 		return nil, nil, err
 	}
