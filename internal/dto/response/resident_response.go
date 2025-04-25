@@ -8,7 +8,6 @@ import (
 
 type ResidentResponse struct {
 	BaseResponse
-	HouseID        string    `json:"house_id"`
 	Name           string    `json:"name"`
 	NIK            string    `json:"nik"`
 	PhoneNumber    *string   `json:"phone_number"`
@@ -20,7 +19,7 @@ type ResidentResponse struct {
 
 type ResidentDetailResponse struct {
 	ResidentResponse
-	Houses HouseResponses `json:"houses"`
+	ResidentHouses []ResidentHouseFullResponse `json:"resident_houses"`
 }
 
 type ResidentResponses []ResidentResponse
@@ -58,7 +57,15 @@ func MapResidentDetailResponse(data *models.Resident) *ResidentDetailResponse {
 	if data == nil {
 		return nil
 	}
+
+	residentHouse := make([]ResidentHouseFullResponse, len(data.ResidentHouses))
+
+	for i, house := range data.ResidentHouses {
+		residentHouse[i] = MapResidentHouseFullResponse(house)
+	}
+
 	return &ResidentDetailResponse{
 		ResidentResponse: *ResidentModelToResidentResponse(data),
+		ResidentHouses:   residentHouse,
 	}
 }

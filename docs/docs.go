@@ -674,6 +674,40 @@ const docTemplate = `{
                 }
             }
         },
+        "/dashboard/mobile": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Get Data DashboardMobile",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Dashboard"
+                ],
+                "summary": "Get Data DashboardMobile",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/house": {
             "get": {
                 "security": [
@@ -2195,6 +2229,132 @@ const docTemplate = `{
                 }
             }
         },
+        "/resident-house": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Resident House"
+                ],
+                "summary": "Create ResidentHouse",
+                "parameters": [
+                    {
+                        "description": "Create ResidentHouse",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.ResidentHouseCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            }
+        },
+        "/resident-house/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Resident House"
+                ],
+                "summary": "Change To Primary By ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ResidentHouse id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Resident House"
+                ],
+                "summary": "Delete ResidentHouse By ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ResidentHouse id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            }
+        },
         "/resident/{id}": {
             "get": {
                 "security": [
@@ -3062,6 +3222,12 @@ const docTemplate = `{
                         "type": "boolean",
                         "description": "Paginated",
                         "name": "paginated",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "RT ID",
+                        "name": "rt_id",
                         "in": "query"
                     },
                     {
@@ -4768,6 +4934,9 @@ const docTemplate = `{
                 "block_id": {
                     "type": "string"
                 },
+                "housing_area_id": {
+                    "type": "string"
+                },
                 "number": {
                     "type": "string"
                 },
@@ -4787,6 +4956,9 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "block_id": {
+                    "type": "string"
+                },
+                "housing_area_id": {
                     "type": "string"
                 },
                 "id": {
@@ -4812,9 +4984,6 @@ const docTemplate = `{
             "properties": {
                 "name": {
                     "type": "string"
-                },
-                "rt_id": {
-                    "type": "string"
                 }
             }
         },
@@ -4825,9 +4994,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "name": {
-                    "type": "string"
-                },
-                "rt_id": {
                     "type": "string"
                 }
             }
@@ -5035,9 +5201,6 @@ const docTemplate = `{
                 "gender": {
                     "type": "string"
                 },
-                "house_id": {
-                    "type": "string"
-                },
                 "is_head_of_family": {
                     "type": "boolean"
                 },
@@ -5059,6 +5222,21 @@ const docTemplate = `{
                 }
             }
         },
+        "request.ResidentHouseCreateRequest": {
+            "type": "object",
+            "properties": {
+                "house_id": {
+                    "type": "string"
+                },
+                "is_primary": {
+                    "description": "Apakah ini rumah utama",
+                    "type": "boolean"
+                },
+                "resident_id": {
+                    "type": "string"
+                }
+            }
+        },
         "request.ResidentUpdateRequset": {
             "type": "object",
             "properties": {
@@ -5069,9 +5247,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "gender": {
-                    "type": "string"
-                },
-                "house_id": {
                     "type": "string"
                 },
                 "id": {
@@ -5295,6 +5470,9 @@ const docTemplate = `{
         "request.RtCreateRequest": {
             "type": "object",
             "properties": {
+                "housing_area_id": {
+                    "type": "string"
+                },
                 "name": {
                     "type": "string"
                 },
@@ -5306,6 +5484,9 @@ const docTemplate = `{
         "request.RtUpdateRequset": {
             "type": "object",
             "properties": {
+                "housing_area_id": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "string"
                 },
@@ -5320,6 +5501,9 @@ const docTemplate = `{
         "request.RwCreateRequest": {
             "type": "object",
             "properties": {
+                "housing_area_id": {
+                    "type": "string"
+                },
                 "name": {
                     "type": "string"
                 }
@@ -5328,6 +5512,9 @@ const docTemplate = `{
         "request.RwUpdateRequset": {
             "type": "object",
             "properties": {
+                "housing_area_id": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "string"
                 },

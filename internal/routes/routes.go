@@ -9,6 +9,7 @@ import (
 
 func SetupRoutesApp(app *fiber.App) {
 	AuthRoutes(app.Group("/auth"))
+	DashboardRoutes(app.Group("/dashboard"))
 	BlockRoutes(app.Group("/block", middleware.Protected()))
 	RtRoutes(app.Group("/rt", middleware.Protected()))
 	RwRoutes(app.Group("/rw", middleware.Protected()))
@@ -27,6 +28,7 @@ func SetupRoutesApp(app *fiber.App) {
 	HousingAreaRoutes(app.Group("/housing-area", middleware.Protected()))
 	IplRoutes(app.Group("/ipl", middleware.Protected()))
 	AnnouncementRoutes(app.Group("/announcement", middleware.Protected()))
+	ResidentHouseRoutes(app.Group("/resident-house", middleware.Protected()))
 
 	// Default route
 	app.Get("/", func(c *fiber.Ctx) error {

@@ -36,6 +36,8 @@ definitions:
     properties:
       block_id:
         type: string
+      housing_area_id:
+        type: string
       number:
         type: string
       rt_id:
@@ -49,6 +51,8 @@ definitions:
   request.HouseUpdateRequset:
     properties:
       block_id:
+        type: string
+      housing_area_id:
         type: string
       id:
         type: string
@@ -66,16 +70,12 @@ definitions:
     properties:
       name:
         type: string
-      rt_id:
-        type: string
     type: object
   request.HousingAreaUpdateRequset:
     properties:
       id:
         type: string
       name:
-        type: string
-      rt_id:
         type: string
     type: object
   request.IplCreateRequest:
@@ -210,8 +210,6 @@ definitions:
         type: string
       gender:
         type: string
-      house_id:
-        type: string
       is_head_of_family:
         type: boolean
       job:
@@ -226,6 +224,16 @@ definitions:
         example: warga;admin_rt;sekretaris;bendahara;wakil_rt
         type: string
     type: object
+  request.ResidentHouseCreateRequest:
+    properties:
+      house_id:
+        type: string
+      is_primary:
+        description: Apakah ini rumah utama
+        type: boolean
+      resident_id:
+        type: string
+    type: object
   request.ResidentUpdateRequset:
     properties:
       birth_date:
@@ -233,8 +241,6 @@ definitions:
       email:
         type: string
       gender:
-        type: string
-      house_id:
         type: string
       id:
         type: string
@@ -380,6 +386,8 @@ definitions:
     type: object
   request.RtCreateRequest:
     properties:
+      housing_area_id:
+        type: string
       name:
         type: string
       rw_id:
@@ -387,6 +395,8 @@ definitions:
     type: object
   request.RtUpdateRequset:
     properties:
+      housing_area_id:
+        type: string
       id:
         type: string
       name:
@@ -396,11 +406,15 @@ definitions:
     type: object
   request.RwCreateRequest:
     properties:
+      housing_area_id:
+        type: string
       name:
         type: string
     type: object
   request.RwUpdateRequset:
     properties:
+      housing_area_id:
+        type: string
       id:
         type: string
       name:
@@ -929,6 +943,27 @@ paths:
       summary: Update Block
       tags:
       - Block
+  /dashboard/mobile:
+    get:
+      consumes:
+      - application/json
+      description: Get Data DashboardMobile
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: Get Data DashboardMobile
+      tags:
+      - Dashboard
   /house:
     get:
       consumes:
@@ -1881,6 +1916,84 @@ paths:
       summary: Create Resident
       tags:
       - Resident
+  /resident-house:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create ResidentHouse
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.ResidentHouseCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Create ResidentHouse
+      tags:
+      - Resident House
+  /resident-house/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: ResidentHouse id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Delete ResidentHouse By ID
+      tags:
+      - Resident House
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: ResidentHouse id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Change To Primary By ID
+      tags:
+      - Resident House
   /resident/{id}:
     delete:
       consumes:
@@ -2419,6 +2532,10 @@ paths:
         in: query
         name: paginated
         type: boolean
+      - description: RT ID
+        in: query
+        name: rt_id
+        type: string
       - description: Page number
         in: query
         name: page

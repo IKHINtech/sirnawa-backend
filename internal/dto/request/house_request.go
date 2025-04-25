@@ -3,11 +3,12 @@ package request
 import "github.com/IKHINtech/sirnawa-backend/internal/models"
 
 type HouseCreateRequest struct {
-	BlockID string `json:"block_id"`
-	Number  string `json:"number"`
-	RtID    string `json:"rt_id"`
-	RwID    string `json:"rw_id"`
-	Status  string `json:"status"` // aktif / tidak aktif
+	BlockID       string `json:"block_id"`
+	Number        string `json:"number"`
+	RtID          string `json:"rt_id"`
+	RwID          string `json:"rw_id"`
+	Status        string `json:"status"` // aktif / tidak aktif
+	HousingAreaID string `json:"housing_area_id"`
 }
 
 type HouseUpdateRequset struct {
@@ -20,20 +21,23 @@ func HouseUpdateRequsetToHouseModel(data HouseUpdateRequset) models.House {
 		ID: data.ID,
 	}
 	return models.House{
-		BaseModel: base,
-		Number:    data.Number,
-		RtID:      data.RtID,
-		RwID:      data.RwID,
-		Status:    models.HouseStatus(data.Status),
+		BaseModel:     base,
+		Number:        data.Number,
+		RtID:          data.RtID,
+		RwID:          data.RwID,
+		BlockID:       data.BlockID,
+		Status:        models.HouseStatus(data.Status),
+		HousingAreaID: data.HousingAreaID,
 	}
 }
 
 func HouseCreateRequestToHouseModel(data HouseCreateRequest) models.House {
 	return models.House{
-		Number:  data.Number,
-		Status:  models.HouseStatus(data.Status),
-		BlockID: data.BlockID,
-		RtID:    data.RtID,
-		RwID:    data.RwID,
+		Number:        data.Number,
+		Status:        models.HouseStatus(data.Status),
+		BlockID:       data.BlockID,
+		RtID:          data.RtID,
+		RwID:          data.RwID,
+		HousingAreaID: data.HousingAreaID,
 	}
 }

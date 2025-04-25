@@ -60,7 +60,7 @@ func (r *houseRepositoryImpl) FindByID(id string) (*models.House, error) {
 		Preload("Block").
 		Preload("Rt").
 		Preload("Rw").
-		Preload("Residents")
+		Preload("HousingArea")
 
 	err := query.First(&data, "id = ?", id).Error
 	if err != nil {

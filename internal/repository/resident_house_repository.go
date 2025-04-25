@@ -71,7 +71,7 @@ func (r *residentHouseRepositoryImpl) Update(tx *gorm.DB, id string, data models
 func (r *residentHouseRepositoryImpl) FindByResidentID(residentID string) (models.ResidentHouses, error) {
 	var data models.ResidentHouses
 
-	err := r.db.First(&data, "resident_id = ?", residentID).Error
+	err := r.db.Find(&data, "resident_id = ?", residentID).Error
 	if err != nil {
 		return nil, err
 	}

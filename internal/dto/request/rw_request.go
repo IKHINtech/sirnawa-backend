@@ -3,7 +3,8 @@ package request
 import "github.com/IKHINtech/sirnawa-backend/internal/models"
 
 type RwCreateRequest struct {
-	Name string `json:"name"`
+	Name          string `json:"name"`
+	HousingAreaID string `json:"housing_area_id"`
 }
 
 type RwUpdateRequset struct {
@@ -16,13 +17,15 @@ func RwUpdateRequsetToRwModel(data RwUpdateRequset) models.Rw {
 		ID: data.ID,
 	}
 	return models.Rw{
-		Name:      data.Name,
-		BaseModel: base,
+		Name:          data.Name,
+		HousingAreaID: data.HousingAreaID,
+		BaseModel:     base,
 	}
 }
 
 func RwCreateRequestToRwModel(data RwCreateRequest) models.Rw {
 	return models.Rw{
-		Name: data.Name,
+		Name:          data.Name,
+		HousingAreaID: data.HousingAreaID,
 	}
 }

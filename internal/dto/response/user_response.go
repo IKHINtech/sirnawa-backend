@@ -11,7 +11,7 @@ type UserResponse struct {
 
 type UserDetailResponse struct {
 	UserResponse
-	Resident *ResidentResponse `json:"resident"`
+	Resident *ResidentDetailResponse `json:"resident"`
 }
 
 func UserToResponse(user *models.User) *UserDetailResponse {
@@ -25,6 +25,6 @@ func UserToResponse(user *models.User) *UserDetailResponse {
 			Role:       string(user.Role),
 			ResidentID: user.ResidentID,
 		},
-		Resident: ResidentModelToResidentResponse(user.Resident),
+		Resident: MapResidentDetailResponse(user.Resident),
 	}
 }

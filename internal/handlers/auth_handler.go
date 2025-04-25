@@ -27,7 +27,15 @@ func CheckPasswordHash(password, hash string) bool {
 }
 
 func getUserByUserID(e string) (*models.User, error) {
-	db := database.DB.Preload("Resident")
+	db := database.DB.
+		Preload("Resident").
+		Preload("Resident.ResidentHouses").
+		Preload("Resident.ResidentHouses.House").
+		Preload("Resident.ResidentHouses.House.Rw").
+		Preload("Resident.ResidentHouses.House.Rt").
+		Preload("Resident.ResidentHouses.House.Block").
+		Preload("Resident.ResidentHouses.House.HousingArea")
+
 	var user models.User
 	if err := db.Where("id = ?", e).First(&user).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {

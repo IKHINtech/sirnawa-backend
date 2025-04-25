@@ -9,6 +9,11 @@ type ResidentHouseResponse struct {
 	IsPrimary  bool   `json:"is_primary"` // Apakah ini rumah utama
 }
 
+type ResidentHouseFullResponse struct {
+	ResidentHouseResponse
+	House HouseResponseDetail `json:"house"`
+}
+
 type ResidentHouseResponses []ResidentHouseResponse
 
 func ResidentHouseModelToResidentHouseResponse(data *models.ResidentHouse) *ResidentHouseResponse {
@@ -31,4 +36,11 @@ func ResidentHouseListToResponse(data models.ResidentHouses) ResidentHouseRespon
 		res = append(res, *ResidentHouseModelToResidentHouseResponse(&v))
 	}
 	return res
+}
+
+func MapResidentHouseFullResponse(data models.ResidentHouse) ResidentHouseFullResponse {
+	return ResidentHouseFullResponse{
+		ResidentHouseResponse: *ResidentHouseModelToResidentHouseResponse(&data),
+		House:                 *MapHouseDetailResponse(&data.House),
+	}
 }

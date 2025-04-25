@@ -7,7 +7,6 @@ import (
 )
 
 type ResidentCreateRequest struct {
-	HouseID        string    `json:"house_id"`
 	Name           string    `json:"name"`
 	Email          *string   `json:"email"`
 	Role           string    `json:"role" example:"warga;admin_rt;sekretaris;bendahara;wakil_rt"`

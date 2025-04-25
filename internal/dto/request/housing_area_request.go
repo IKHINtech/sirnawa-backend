@@ -4,7 +4,6 @@ import "github.com/IKHINtech/sirnawa-backend/internal/models"
 
 type HousingAreaCreateRequest struct {
 	Name string `json:"name"`
-	RtID string `json:"rt_id"`
 }
 
 type HousingAreaUpdateRequset struct {
