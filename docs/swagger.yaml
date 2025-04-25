@@ -13,8 +13,36 @@ definitions:
     - password
     type: object
   request.AnnouncementCreateRequest:
+    properties:
+      attachments:
+        items:
+          type: string
+        type: array
+      content:
+        type: string
+      created_by:
+        type: string
+      rt_id:
+        type: string
+      title:
+        type: string
     type: object
   request.AnnouncementUpdateRequset:
+    properties:
+      attachments:
+        items:
+          type: string
+        type: array
+      content:
+        type: string
+      created_by:
+        type: string
+      id:
+        type: string
+      rt_id:
+        type: string
+      title:
+        type: string
     type: object
   request.BlockCreateRequest:
     properties:
@@ -426,6 +454,8 @@ definitions:
         type: string
       name:
         type: string
+      rt_id:
+        type: string
       status:
         description: aktif/nonaktif
         type: string
@@ -471,6 +501,8 @@ definitions:
       id:
         type: string
       name:
+        type: string
+      rt_id:
         type: string
       status:
         description: aktif/nonaktif

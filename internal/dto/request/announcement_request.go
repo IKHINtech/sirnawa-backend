@@ -2,15 +2,14 @@ package request
 
 import (
 	"github.com/IKHINtech/sirnawa-backend/internal/models"
-	"github.com/lib/pq"
 )
 
 type AnnouncementCreateRequest struct {
-	RtID        string         `json:"rt_id"`
-	Title       string         `json:"title"`
-	Content     string         `json:"content"`
-	CreatedBy   string         `json:"created_by"`
-	Attachments pq.StringArray `json:"attachments"`
+	RtID        string   `json:"rt_id"`
+	Title       string   `json:"title"`
+	Content     string   `json:"content"`
+	CreatedBy   string   `json:"created_by"`
+	Attachments []string `json:"attachments"`
 }
 
 type AnnouncementUpdateRequset struct {

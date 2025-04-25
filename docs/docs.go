@@ -4898,10 +4898,53 @@ const docTemplate = `{
             }
         },
         "request.AnnouncementCreateRequest": {
-            "type": "object"
+            "type": "object",
+            "properties": {
+                "attachments": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "content": {
+                    "type": "string"
+                },
+                "created_by": {
+                    "type": "string"
+                },
+                "rt_id": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
         },
         "request.AnnouncementUpdateRequset": {
-            "type": "object"
+            "type": "object",
+            "properties": {
+                "attachments": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "content": {
+                    "type": "string"
+                },
+                "created_by": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "rt_id": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
         },
         "request.BlockCreateRequest": {
             "type": "object",
@@ -5532,6 +5575,9 @@ const docTemplate = `{
                 "name": {
                     "type": "string"
                 },
+                "rt_id": {
+                    "type": "string"
+                },
                 "status": {
                     "description": "aktif/nonaktif",
                     "type": "string"
@@ -5600,6 +5646,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "name": {
+                    "type": "string"
+                },
+                "rt_id": {
                     "type": "string"
                 },
                 "status": {
