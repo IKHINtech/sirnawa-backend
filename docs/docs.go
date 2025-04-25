@@ -48,6 +48,12 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
+                        "type": "string",
+                        "description": "RT ID",
+                        "name": "rt_id",
+                        "in": "query"
+                    },
+                    {
                         "type": "integer",
                         "description": "Page number",
                         "name": "page",
@@ -449,6 +455,12 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
+                        "type": "string",
+                        "description": "RT ID",
+                        "name": "rt_id",
+                        "in": "query"
+                    },
+                    {
                         "type": "integer",
                         "description": "Page number",
                         "name": "page",
@@ -684,6 +696,12 @@ const docTemplate = `{
                         "type": "boolean",
                         "description": "Paginated",
                         "name": "paginated",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "RT ID",
+                        "name": "rt_id",
                         "in": "query"
                     },
                     {
@@ -1163,6 +1181,12 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
+                        "type": "string",
+                        "description": "RT ID",
+                        "name": "rt_id",
+                        "in": "query"
+                    },
+                    {
                         "type": "integer",
                         "description": "Page number",
                         "name": "page",
@@ -1636,6 +1660,12 @@ const docTemplate = `{
                         "type": "boolean",
                         "description": "Paginated",
                         "name": "paginated",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "RT ID",
+                        "name": "rt_id",
                         "in": "query"
                     },
                     {
@@ -4222,6 +4252,12 @@ const docTemplate = `{
                         "type": "boolean",
                         "description": "Paginated",
                         "name": "paginated",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "RT ID",
+                        "name": "rt_id",
                         "in": "query"
                     },
                     {

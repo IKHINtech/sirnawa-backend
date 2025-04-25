@@ -527,6 +527,10 @@ paths:
         in: query
         name: paginated
         type: boolean
+      - description: RT ID
+        in: query
+        name: rt_id
+        type: string
       - description: Page number
         in: query
         name: page
@@ -781,6 +785,10 @@ paths:
         in: query
         name: paginated
         type: boolean
+      - description: RT ID
+        in: query
+        name: rt_id
+        type: string
       - description: Page number
         in: query
         name: page
@@ -930,6 +938,10 @@ paths:
         in: query
         name: paginated
         type: boolean
+      - description: RT ID
+        in: query
+        name: rt_id
+        type: string
       - description: Page number
         in: query
         name: page
@@ -1228,6 +1240,10 @@ paths:
         in: query
         name: paginated
         type: boolean
+      - description: RT ID
+        in: query
+        name: rt_id
+        type: string
       - description: Page number
         in: query
         name: page
@@ -1526,6 +1542,10 @@ paths:
         in: query
         name: paginated
         type: boolean
+      - description: RT ID
+        in: query
+        name: rt_id
+        type: string
       - description: Page number
         in: query
         name: page
@@ -3144,6 +3164,10 @@ paths:
         in: query
         name: paginated
         type: boolean
+      - description: RT ID
+        in: query
+        name: rt_id
+        type: string
       - description: Page number
         in: query
         name: page

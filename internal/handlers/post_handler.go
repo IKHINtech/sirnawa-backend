@@ -96,6 +96,7 @@ func (h *postHandlerImpl) Update(ctx *fiber.Ctx) error {
 // @Produce json
 // @Security Bearer
 // @Param paginated query boolean false "Paginated"
+// @Param rt_id query string false "RT ID"
 // @Param page query int false "Page number"
 // @Param page_size query int false "Page size"
 // @Param order_by query string false "Order by"
@@ -106,7 +107,7 @@ func (h *postHandlerImpl) Update(ctx *fiber.Ctx) error {
 func (h *postHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 	r := &utils.ResponseHandler{}
 	isPaginated := ctx.QueryBool("paginated", true)
-
+	rtID := ctx.Query("rt_id")
 	var meta *utils.Pagination
 	var data *response.PostResponses
 	var err error
@@ -114,13 +115,13 @@ func (h *postHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 	if isPaginated {
 		paginate := utils.GetPaginationParams(ctx)
 
-		meta, data, err = h.services.Paginated(paginate)
+		meta, data, err = h.services.Paginated(paginate, rtID)
 		if err != nil {
 			return r.BadRequest(ctx, []string{"error:" + err.Error()})
 		}
 	} else {
 
-		res, err := h.services.FindAll()
+		res, err := h.services.FindAll(rtID)
 		if err != nil {
 			return r.BadRequest(ctx, []string{"error:" + err.Error()})
 		}
