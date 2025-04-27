@@ -4,7 +4,8 @@ import "github.com/IKHINtech/sirnawa-backend/internal/models"
 
 type RwResponse struct {
 	BaseResponse
-	Name string `json:"name"`
+	Name          string `json:"name"`
+	HousingAreaID string `json:"housing_area_id"`
 }
 
 type RwResponses []RwResponse
@@ -16,8 +17,9 @@ func RwModelToRwResponse(data *models.Rw) *RwResponse {
 		UpdatedAt: data.UpdatedAt,
 	}
 	return &RwResponse{
-		Name:         data.Name,
-		BaseResponse: base,
+		Name:          data.Name,
+		HousingAreaID: data.HousingAreaID,
+		BaseResponse:  base,
 	}
 }
 
