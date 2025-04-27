@@ -14,8 +14,7 @@ func ResidentRoutes(route fiber.Router) {
 	services := services.NewResidentServices(repo, userRepository, database.DB)
 	handlers := handlers.NewResidentHandler(services)
 
-	route.Get("/", handlers.FindAll)
-	route.Get("/paginated", handlers.Paginated)
+	route.Get("/", handlers.Paginated)
 	route.Get("/:id", handlers.FindByID)
 	route.Post("/", handlers.Create)
 	route.Delete("/:id", handlers.Delete)

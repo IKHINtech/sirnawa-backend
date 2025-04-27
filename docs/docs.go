@@ -2170,7 +2170,39 @@ const docTemplate = `{
                 "tags": [
                     "Resident"
                 ],
-                "summary": "Get List Resident",
+                "summary": "Get Paginated Resident",
+                "parameters": [
+                    {
+                        "type": "boolean",
+                        "description": "Paginated",
+                        "name": "paginated",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page size",
+                        "name": "page_size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Order by",
+                        "name": "order_by",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Order",
+                        "name": "order",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",

@@ -13,7 +13,6 @@ type ResidentHandler interface {
 	Create(ctx *fiber.Ctx) error
 	Update(ctx *fiber.Ctx) error
 	Paginated(ctx *fiber.Ctx) error
-	FindAll(ctx *fiber.Ctx) error
 	FindByID(ctx *fiber.Ctx) error
 	Delete(ctx *fiber.Ctx) error
 }
@@ -126,25 +125,6 @@ func (h *residentHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 		data = &res
 	}
 	return r.Ok(ctx, data, "Successfully get data", meta)
-}
-
-// Get List Resident
-// @Summary Get List Resident
-// @Descrpiton Get List Resident
-// @Tags Resident
-// @Accept json
-// @Produce json
-// @Security Bearer
-// @Success 200 {object} utils.ResponseData
-// @Failure 400 {object} utils.ResponseData
-// @Router /resident [get]
-func (h *residentHandlerImpl) FindAll(ctx *fiber.Ctx) error {
-	r := &utils.ResponseHandler{}
-	res, err := h.services.FindAll()
-	if err != nil {
-		return r.BadRequest(ctx, []string{"error:" + err.Error()})
-	}
-	return r.Ok(ctx, res, "Successfully get data", nil)
 }
 
 // Find Resident By ID

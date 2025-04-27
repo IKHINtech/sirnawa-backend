@@ -5,6 +5,7 @@ import "github.com/IKHINtech/sirnawa-backend/internal/models"
 type BlockResponse struct {
 	BaseResponse
 	Name string `json:"name"`
+	RtID string `json:"rt_id"`
 }
 
 type BlockResponses []BlockResponse
@@ -17,6 +18,7 @@ func BlockModelToBlockResponse(data *models.Block) *BlockResponse {
 	}
 	return &BlockResponse{
 		Name:         data.Name,
+		RtID:         data.RtID,
 		BaseResponse: base,
 	}
 }
