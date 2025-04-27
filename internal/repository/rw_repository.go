@@ -12,6 +12,7 @@ type RwRepository interface {
 	FindAll() (models.Rws, error)
 	Paginated(pagination utils.Pagination) (*utils.Pagination, models.Rws, error)
 	FindByID(id string) (*models.Rw, error)
+	FindByRtID(rtID string) (*models.Rw, error)
 	Delete(id string) error
 }
 
@@ -55,6 +56,20 @@ func (r *rwRepositoryImpl) FindByID(id string) (*models.Rw, error) {
 	err := r.db.First(&data, "id = ?", id).Error
 	if err != nil {
 		return nil, err
+	}
+	return &data, err
+}
+
+func (r *rwRepositoryImpl) FindByRtID(rtID string) (*models.Rw, error) {
+	var data models.Rw
+
+	err := r.db.First(&data, "rt_id = ?", rtID).Error
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return nil, nil
+		} else {
+			return nil, err
+		}
 	}
 	return &data, err
 }

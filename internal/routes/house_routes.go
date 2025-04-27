@@ -9,12 +9,14 @@ import (
 )
 
 func HouseRoutes(route fiber.Router) {
-	repository := repository.NewHouseRepository(database.DB)
-	services := services.NewHouseServices(repository, database.DB)
+	repo := repository.NewHouseRepository(database.DB)
+	rwRepository := repository.NewRwRepository(database.DB)
+	services := services.NewHouseServices(repo, rwRepository, database.DB)
 	handlers := handlers.NewHouseHandler(services)
 
 	route.Get("/", handlers.Paginated)
 	route.Get("/:id", handlers.FindByID)
 	route.Post("/", handlers.Create)
+	route.Put("/:id", handlers.Update)
 	route.Delete("/:id", handlers.Delete)
 }

@@ -17,5 +17,6 @@ func IplRoutes(route fiber.Router) {
 	route.Get("/", handlers.Paginated)
 	route.Get("/:id", handlers.FindByID)
 	route.Post("/", handlers.Create)
+	route.Post("/:id", handlers.Update)
 	route.Delete("/:id", handlers.Delete)
 }

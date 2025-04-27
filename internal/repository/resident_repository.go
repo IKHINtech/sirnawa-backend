@@ -12,6 +12,7 @@ type ResidentRepository interface {
 	FindAll() (models.Residents, error)
 	Paginated(pagination utils.Pagination) (*utils.Pagination, models.Residents, error)
 	FindByID(id string) (*models.Resident, error)
+	FindByNIK(nik string) (*models.Resident, error)
 	Delete(id string) error
 }
 
@@ -55,6 +56,20 @@ func (r *residentRepositoryImpl) FindByID(id string) (*models.Resident, error) {
 	err := r.db.First(&data, "id = ?", id).Error
 	if err != nil {
 		return nil, err
+	}
+	return &data, err
+}
+
+func (r *residentRepositoryImpl) FindByNIK(nik string) (*models.Resident, error) {
+	var data models.Resident
+
+	err := r.db.First(&data, "nik = ?", nik).Error
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return nil, nil
+		} else {
+			return nil, err
+		}
 	}
 	return &data, err
 }

@@ -1,6 +1,8 @@
 package services
 
 import (
+	"errors"
+
 	"github.com/IKHINtech/sirnawa-backend/internal/config"
 	"github.com/IKHINtech/sirnawa-backend/internal/dto/request"
 	"github.com/IKHINtech/sirnawa-backend/internal/dto/response"
@@ -67,6 +69,16 @@ func (s *residentServiceImpl) Create(data request.ResidentCreateRequest) (*respo
 	var result *models.Resident
 
 	err := s.withTransaction(func(tx *gorm.DB) error {
+		// cari dulu apakah nik sudah terdaftar
+		existingNik, err := s.repository.FindByNIK(data.NIK)
+		if err != nil {
+			return err
+		}
+		if existingNik != nil {
+			// kalau sudah ter register maka return
+			return errors.New("NIK already registered")
+		}
+
 		payload := request.ResidentCreateRequestToResidentModel(data)
 
 		created, err := s.repository.Create(tx, payload)

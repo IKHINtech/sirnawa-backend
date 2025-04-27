@@ -1,6 +1,8 @@
 package services
 
 import (
+	"errors"
+
 	"github.com/IKHINtech/sirnawa-backend/internal/dto/request"
 	"github.com/IKHINtech/sirnawa-backend/internal/dto/response"
 	"github.com/IKHINtech/sirnawa-backend/internal/models"
@@ -20,11 +22,20 @@ type HouseService interface {
 
 type houseServiceImpl struct {
 	repository repository.HouseRepository
+	rwRepo     repository.RwRepository
 	db         *gorm.DB
 }
 
-func NewHouseServices(repo repository.HouseRepository, db *gorm.DB) HouseService {
-	return &houseServiceImpl{repository: repo, db: db}
+func NewHouseServices(
+	repo repository.HouseRepository,
+	rwRepo repository.RwRepository,
+	db *gorm.DB,
+) HouseService {
+	return &houseServiceImpl{
+		repository: repo,
+		rwRepo:     rwRepo,
+		db:         db,
+	}
 }
 
 func (s *houseServiceImpl) withTransaction(fn func(tx *gorm.DB) error) error {
@@ -56,7 +67,16 @@ func (s *houseServiceImpl) Create(data request.HouseCreateRequest) (*response.Ho
 	var result *models.House
 
 	err := s.withTransaction(func(tx *gorm.DB) error {
-		payload := request.HouseCreateRequestToHouseModel(data)
+		rw, err := s.rwRepo.FindByRtID(data.RtID)
+		if err != nil {
+			return err
+		}
+
+		if rw == nil {
+			return errors.New("rw not found")
+		}
+
+		payload := request.HouseCreateRequestToHouseModel(data, rw.ID, rw.HousingAreaID)
 
 		created, err := s.repository.Create(tx, payload)
 		if err != nil {
@@ -84,7 +104,7 @@ func (s *houseServiceImpl) Update(id string, data request.HouseUpdateRequset) (*
 			return err
 		}
 
-		payload := request.HouseUpdateRequsetToHouseModel(data)
+		payload := request.HouseUpdateRequsetToHouseModel(data, existing.RwID, existing.HousingAreaID)
 		payload.ID = existing.ID
 
 		updated, err := s.repository.Update(tx, payload.ID, payload)
