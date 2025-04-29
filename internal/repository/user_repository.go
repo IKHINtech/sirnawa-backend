@@ -12,6 +12,7 @@ type UserRepository interface {
 	FindAll() (models.Users, error)
 	Paginated(pagination utils.Pagination) (*utils.Pagination, models.Users, error)
 	FindByID(id string) (*models.User, error)
+	FindByEmail(email string) (*models.User, error)
 	Delete(id string) error
 }
 
@@ -46,6 +47,20 @@ func (r *userRepositoryImpl) Update(tx *gorm.DB, id string, data models.User) (*
 		tx = r.db
 	}
 	err := tx.Model(&models.User{}).Where("id = ?", id).Updates(data).Error
+	return &data, err
+}
+
+func (r *userRepositoryImpl) FindByEmail(email string) (*models.User, error) {
+	var data models.User
+
+	err := r.db.First(&data, "email = ?", email).Error
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return nil, nil
+		} else {
+			return nil, err
+		}
+	}
 	return &data, err
 }
 

@@ -13,16 +13,19 @@ func (r Role) ToString() string {
 }
 
 const (
-	RoleAdminRT    Role = "admin_rt"
-	RoleWakilRT    Role = "wakil_rt"
-	RoleSekretaris Role = "sekretaris"
-	RoleBendahara  Role = "bendahara"
-	RoleWarga      Role = "warga"
+	RoleAdminRT     Role = "admin_rt"
+	RoleWakilRT     Role = "wakil_rt"
+	RoleKetuaRT     Role = "ketua_rt"
+	RoleSekretaris  Role = "sekretaris"
+	RoleBendahara   Role = "bendahara"
+	RoleKoordinator Role = "koordinator"
+	RoleWarga       Role = "warga"
 )
 
 const (
 	HouseStatusActive   HouseStatus = "aktif"
 	HouseStatusInactive HouseStatus = "tidak aktif"
+	HouseStatusContract HouseStatus = "kontrak"
 )
 
 const (

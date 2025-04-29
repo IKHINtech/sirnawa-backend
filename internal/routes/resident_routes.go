@@ -11,7 +11,8 @@ import (
 func ResidentRoutes(route fiber.Router) {
 	repo := repository.NewResidentRepository(database.DB)
 	userRepository := repository.NewUserRepository(database.DB)
-	services := services.NewResidentServices(repo, userRepository, database.DB)
+	userRtRepository := repository.NewUserRTRepository(database.DB)
+	services := services.NewResidentServices(repo, userRepository, userRtRepository, database.DB)
 	handlers := handlers.NewResidentHandler(services)
 
 	route.Get("/", handlers.Paginated)

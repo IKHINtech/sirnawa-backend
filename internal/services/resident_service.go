@@ -25,17 +25,20 @@ type ResidentService interface {
 type residentServiceImpl struct {
 	repository      repository.ResidentRepository
 	userRepostitory repository.UserRepository
+	userRt          repository.UserRTRepository
 	db              *gorm.DB
 }
 
 func NewResidentServices(
 	repo repository.ResidentRepository,
 	userRepostitory repository.UserRepository,
+	userRt repository.UserRTRepository,
 	db *gorm.DB,
 ) ResidentService {
 	return &residentServiceImpl{
 		repository:      repo,
 		userRepostitory: userRepostitory,
+		userRt:          userRt,
 		db:              db,
 	}
 }
@@ -74,39 +77,57 @@ func (s *residentServiceImpl) Create(data request.ResidentCreateRequest) (*respo
 		if err != nil {
 			return err
 		}
-		if existingNik != nil {
-			// kalau sudah ter register maka return
-			return errors.New("NIK already registered")
-		}
 
-		payload := request.ResidentCreateRequestToResidentModel(data)
-
-		created, err := s.repository.Create(tx, payload)
-		if err != nil {
-			return err
+		if existingNik == nil {
+			payload := request.ResidentCreateRequestToResidentModel(data)
+			created, err := s.repository.Create(tx, payload)
+			if err != nil {
+				return err
+			}
+			existingNik = created
 		}
 
 		if data.Email != nil {
-			hashedPassword, err := bcrypt.GenerateFromPassword([]byte(config.AppConfig.DEFAULT_PASSWORD), bcrypt.DefaultCost)
+			// carikan user dengan email yang dikirimkan
+			existingUser, err := s.userRepostitory.FindByEmail(*data.Email)
 			if err != nil {
 				return err
 			}
 
-			// ada data email pada resident request, buatkan user
-			payloadUser := models.User{
-				Email:      *data.Email,
-				Password:   string(hashedPassword),
-				Role:       models.Role(data.Role),
-				ResidentID: &created.ID,
-			}
+			if existingUser == nil {
+				hashedPassword, err := bcrypt.GenerateFromPassword([]byte(config.AppConfig.DEFAULT_PASSWORD), bcrypt.DefaultCost)
+				if err != nil {
+					return err
+				}
 
-			_, err = s.userRepostitory.Create(tx, payloadUser)
-			if err != nil {
-				return err
+				// ada data email pada resident request, buatkan user
+				payloadUser := models.User{
+					Email:    *data.Email,
+					Password: string(hashedPassword),
+					// Role:       models.Role(data.Role),
+					ResidentID: &existingNik.ID,
+				}
+
+				newUser, err := s.userRepostitory.Create(tx, payloadUser)
+				if err != nil {
+					return err
+				}
+				// buat user rt
+				userRT := models.UserRT{
+					UserID: newUser.ID,
+					Role:   models.Role(data.Role),
+					RtID:   data.RtID,
+				}
+				_, err = s.userRt.Create(tx, userRT)
+				if err != nil {
+					return err
+				}
+			} else {
+				return errors.New("email sudah terdaftar")
 			}
 		}
 
-		result = created
+		result = existingNik
 		return nil
 	})
 	// handling err

@@ -14,6 +14,7 @@ type ResidentCreateRequest struct {
 	PhoneNumber    *string   `json:"phone_number"`
 	BirthDate      time.Time `json:"birth_date"`
 	Gender         string    `json:"gender"`
+	RtID           string    `json:"rt_id"`
 	Job            string    `json:"job"`
 	IsHeadOfFamily bool      `json:"is_head_of_family"`
 }
