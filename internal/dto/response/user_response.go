@@ -11,12 +11,18 @@ type UserResponse struct {
 
 type UserDetailResponse struct {
 	UserResponse
+	UserRts  []UserRtResponse        `json:"user_rt"`
 	Resident *ResidentDetailResponse `json:"resident"`
 }
 
 func UserToResponse(user *models.User) *UserDetailResponse {
 	if user == nil {
 		return nil
+	}
+	userRts := make([]UserRtResponse, len(user.UserRts))
+
+	for i, userRt := range user.UserRts {
+		userRts[i] = *UserRtToResponse(&userRt)
 	}
 	return &UserDetailResponse{
 		UserResponse: UserResponse{
@@ -25,6 +31,7 @@ func UserToResponse(user *models.User) *UserDetailResponse {
 			Role:       string(user.Role),
 			ResidentID: user.ResidentID,
 		},
+		UserRts:  userRts,
 		Resident: MapResidentDetailResponse(user.Resident),
 	}
 }

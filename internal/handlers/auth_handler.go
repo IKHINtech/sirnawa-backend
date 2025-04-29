@@ -29,6 +29,8 @@ func CheckPasswordHash(password, hash string) bool {
 func getUserByUserID(e string) (*models.User, error) {
 	db := database.DB.
 		Preload("Resident").
+		Preload("UserRTs").
+		Preload("UserRTs.Rt").
 		Preload("Resident.ResidentHouses").
 		Preload("Resident.ResidentHouses.House").
 		Preload("Resident.ResidentHouses.House.Rw").

@@ -7,6 +7,7 @@ type User struct {
 	Role       Role      `gorm:"type:role;not null" json:"role"` // TODO: nanti di buat null
 	ResidentID *string   `gorm:"null" json:"resident_id"`        // nullable
 	Resident   *Resident `gorm:"foreignKey:ResidentID" json:"resident,omitempty"`
+	UserRts    UserRTs
 }
 
 type Users []User
