@@ -19,9 +19,9 @@ func UserToResponse(user *models.User) *UserDetailResponse {
 	if user == nil {
 		return nil
 	}
-	userRts := make([]UserRtResponse, len(user.UserRts))
+	userRts := make([]UserRtResponse, len(user.UserRTs))
 
-	for i, userRt := range user.UserRts {
+	for i, userRt := range user.UserRTs {
 		userRts[i] = *UserRtToResponse(&userRt)
 	}
 	return &UserDetailResponse{

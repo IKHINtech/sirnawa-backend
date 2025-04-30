@@ -48,5 +48,6 @@ func Migrate() error {
 		&models.Ipl{},
 		&models.IplDetail{},
 		&models.ResidentHouse{},
+		&models.UserRT{},
 	)
 }
