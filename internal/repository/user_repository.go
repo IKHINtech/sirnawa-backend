@@ -9,10 +9,12 @@ import (
 type UserRepository interface {
 	Create(tx *gorm.DB, data models.User) (*models.User, error)
 	Update(tx *gorm.DB, id string, data models.User) (*models.User, error)
+	UpdateEmail(tx *gorm.DB, id string, email string) error
 	FindAll() (models.Users, error)
 	Paginated(pagination utils.Pagination) (*utils.Pagination, models.Users, error)
 	FindByID(id string) (*models.User, error)
 	FindByEmail(email string) (*models.User, error)
+	FindByResidentID(residentID string) (*models.User, error)
 	Delete(id string) error
 }
 
@@ -42,11 +44,33 @@ func (r *userRepositoryImpl) Create(tx *gorm.DB, data models.User) (*models.User
 	return &data, err
 }
 
+func (r *userRepositoryImpl) UpdateEmail(tx *gorm.DB, id string, email string) error {
+	if tx == nil {
+		tx = r.db
+	}
+	err := tx.Model(&models.User{}).Where("id = ?", id).Update("email", email).Error
+	return err
+}
+
 func (r *userRepositoryImpl) Update(tx *gorm.DB, id string, data models.User) (*models.User, error) {
 	if tx == nil {
 		tx = r.db
 	}
 	err := tx.Model(&models.User{}).Where("id = ?", id).Updates(data).Error
+	return &data, err
+}
+
+func (r *userRepositoryImpl) FindByResidentID(residentID string) (*models.User, error) {
+	var data models.User
+
+	err := r.db.First(&data, "resident_id = ?", residentID).Error
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return nil, nil
+		} else {
+			return nil, err
+		}
+	}
 	return &data, err
 }
 

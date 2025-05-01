@@ -18,6 +18,11 @@ type Config struct {
 	PORT             string `mapstructure:"PORT"`
 	JWT_SECRET       string `mapstructure:"JWT_SECRET"`
 	DEFAULT_PASSWORD string `mapstructure:"DEFAULT_PASSWORD"`
+	EMAIL_HOST       string `mapstructure:"EMAIL_HOST"`
+	EMAIL_PORT       string `mapstructure:"EMAIL_PORT"`
+	EMAIL_USERNAME   string `mapstructure:"EMAIL_USERNAME"`
+	EMAIL_PASSWORD   string `mapstructure:"EMAIL_PASSWORD"`
+	EMAIL_FROM_NAME  string `mapstructure:"EMAIL_FROM_NAME"`
 }
 
 var AppConfig Config

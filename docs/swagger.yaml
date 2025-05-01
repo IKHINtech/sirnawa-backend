@@ -64,13 +64,9 @@ definitions:
     properties:
       block_id:
         type: string
-      housing_area_id:
-        type: string
       number:
         type: string
       rt_id:
-        type: string
-      rw_id:
         type: string
       status:
         description: aktif / tidak aktif
@@ -80,15 +76,11 @@ definitions:
     properties:
       block_id:
         type: string
-      housing_area_id:
-        type: string
       id:
         type: string
       number:
         type: string
       rt_id:
-        type: string
-      rw_id:
         type: string
       status:
         description: aktif / tidak aktif
@@ -251,6 +243,8 @@ definitions:
       role:
         example: warga;admin_rt;sekretaris;bendahara;wakil_rt
         type: string
+      rt_id:
+        type: string
     type: object
   request.ResidentHouseCreateRequest:
     properties:
@@ -284,6 +278,8 @@ definitions:
         type: string
       role:
         example: warga;admin_rt;sekretaris;bendahara;wakil_rt
+        type: string
+      rt_id:
         type: string
     type: object
   request.RondaActivityCreateRequest:
@@ -509,6 +505,23 @@ definitions:
         type: string
       user_id:
         type: integer
+    type: object
+  request.VerifyCodeRequest:
+    properties:
+      email:
+        type: string
+    required:
+    - email
+    type: object
+  request.VerifyEmailCodeRequest:
+    properties:
+      code:
+        type: string
+      email:
+        type: string
+    required:
+    - code
+    - email
     type: object
   utils.ErrorDetails:
     properties:
@@ -741,6 +754,8 @@ paths:
       - Auth
   /auth/logout:
     delete:
+      consumes:
+      - application/json
       description: Logout
       produces:
       - application/json
@@ -820,6 +835,58 @@ paths:
           schema:
             $ref: '#/definitions/utils.ErrorResponse'
       summary: Register
+      tags:
+      - Auth
+  /auth/send-email-verification:
+    post:
+      consumes:
+      - application/json
+      description: Send Email Verification
+      parameters:
+      - description: Verification Code Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.VerifyCodeRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Send Email Verification
+      tags:
+      - Auth
+  /auth/verify-email-code:
+    post:
+      consumes:
+      - application/json
+      description: Verifies the email code and activates the user
+      parameters:
+      - description: Verification Code
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.VerifyEmailCodeRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Verify Email Code
       tags:
       - Auth
   /block:

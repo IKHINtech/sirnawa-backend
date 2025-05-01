@@ -12,4 +12,6 @@ func AuthRoutes(route fiber.Router) {
 	route.Get("/me", middleware.Protected(), handlers.Me)
 	route.Post("/register", handlers.Register)
 	route.Get("/refresh-token", handlers.RefreshToken)
+	route.Post("/verify-email-code", handlers.VerifyEmailCode)
+	route.Post("/send-email-verification", handlers.SendEmailVerification)
 }

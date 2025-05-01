@@ -10,6 +10,7 @@ import (
 	"github.com/IKHINtech/sirnawa-backend/internal/dto"
 	"github.com/IKHINtech/sirnawa-backend/internal/dto/request"
 	"github.com/IKHINtech/sirnawa-backend/internal/dto/response"
+	"github.com/IKHINtech/sirnawa-backend/internal/middleware"
 	"github.com/IKHINtech/sirnawa-backend/internal/models"
 	"github.com/IKHINtech/sirnawa-backend/pkg/helpers"
 	"github.com/IKHINtech/sirnawa-backend/pkg/utils"
@@ -24,6 +25,60 @@ import (
 func CheckPasswordHash(password, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
 	return err == nil
+}
+
+func getValidVerificationCode(userID, code string) (*models.UserVerification, error) {
+	var verification models.UserVerification
+	err := database.DB.Where("user_id = ? AND code = ? AND is_used = false AND expires_at > ?", userID, code, time.Now()).
+		First(&verification).Error
+	if err != nil {
+		return nil, err
+	}
+	return &verification, nil
+}
+
+func markVerificationCodeUsed(id string) error {
+	return database.DB.Model(&models.UserVerification{}).Where("id = ?", id).
+		Update("is_used", true).Error
+}
+
+func getOnlyUserByUserID(e string) (*models.User, error) {
+	db := database.DB
+
+	var user models.User
+	if err := db.Where("id = ?", e).First(&user).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, nil
+		}
+		return nil, err
+	}
+	return &user, nil
+}
+
+func createUserVerification(userID, code string, expiredAt time.Time) error {
+	db := database.DB
+	return db.Create(&models.UserVerification{
+		UserID:    userID,
+		Code:      code,
+		ExpiresAt: expiredAt,
+	}).Error
+}
+
+func getActiveVerificationCode(userID string) (*models.UserVerification, error) {
+	db := database.DB
+	var userVerification models.UserVerification
+	if err := db.Where("user_id = ? AND is_used = false", userID).First(&userVerification).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, nil
+		}
+		return nil, err
+	}
+	return &userVerification, nil
+}
+
+func activateUser(userID string) error {
+	return database.DB.Model(&models.User{}).Where("id = ?", userID).
+		Update("is_active", true).Error
 }
 
 func getUserByUserID(e string) (*models.User, error) {
@@ -88,10 +143,8 @@ func Login(c *fiber.Ctx) error {
 		return h.InternalServerError(c, []string{err.Error(), "Internal server error"})
 	}
 
-	userData = response.UserResponse{
-		ID:    usermodels.ID,
-		Email: usermodels.Email,
-		Role:  usermodels.Role.ToString(),
+	if !usermodels.IsActive {
+		return h.Forbidden(c, []string{"User is not verified"})
 	}
 
 	if !CheckPasswordHash(pass, usermodels.Password) {
@@ -113,6 +166,12 @@ func Login(c *fiber.Ctx) error {
 	refreshString, err := utils.GenerateRefreshToken(userData.ID)
 	if err != nil {
 		return h.InternalServerError(c, []string{"Failed to create refresh token", err.Error()})
+	}
+
+	userData = response.UserResponse{
+		ID:    usermodels.ID,
+		Email: usermodels.Email,
+		Role:  usermodels.Role.ToString(),
 	}
 
 	utils.SetRefreshTokenCookie(c, refreshString)
@@ -248,7 +307,7 @@ func RefreshToken(c *fiber.Ctx) error {
 	claims := token.Claims.(jwt.MapClaims)
 	userID := claims["user_id"].(string)
 
-	usermodels, err := getUserByUserID(userID)
+	usermodels, err := getOnlyUserByUserID(userID)
 	if err != nil {
 		return h.InternalServerError(c, []string{"Error on get user data", err.Error()})
 	}
@@ -283,7 +342,7 @@ func RefreshToken(c *fiber.Ctx) error {
 // @Summary Logout
 // @Description Logout
 // @Tags Auth
-// @AAccept json
+// @Accept json
 // @Produce json
 // @Success 200 {object} utils.ResponseData
 // @Failure 400 {object} utils.ErrorResponse
@@ -303,4 +362,122 @@ func Logout(c *fiber.Ctx) error {
 	return c.JSON(fiber.Map{
 		"message": "Successfully logged out",
 	})
+}
+
+// Logout handles SendEmailVerification godoc
+// @Summary Send Email Verification
+// @Description Send Email Verification
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param request body request.VerifyCodeRequest true "Verification Code Request"
+// @Success 200 {object} utils.ResponseData
+// @Failure 400 {object} utils.ErrorResponse
+// @Router /auth/send-email-verification [post]
+func SendEmailVerification(c *fiber.Ctx) error {
+	h := utils.ResponseHandler{}
+
+	var req request.VerifyCodeRequest
+	if err := c.BodyParser(&req); err != nil {
+		return h.BadRequest(c, []string{"Invalid request body", err.Error()})
+	}
+
+	middleware.ValidateRequest(req)
+
+	user, err := helpers.GetUserByEmail(req.Email)
+	if err != nil {
+		return h.InternalServerError(c, []string{"Failed to get User", err.Error()})
+	}
+
+	if user == nil {
+		return h.NotFound(c, []string{"User not found"})
+	}
+	if user.IsActive {
+		return h.BadRequest(c, []string{"User already activated"})
+	}
+	if user.Email == nil || *user.Email == "" {
+		return h.BadRequest(c, []string{"User does not have a valid email address"})
+	}
+	code := utils.GenerateVerificationCode(6) // e.g., "348112"
+	expiresAt := time.Now().Add(10 * time.Minute)
+
+	existingCode, err := getActiveVerificationCode(user.ID)
+	if err != nil {
+		return h.InternalServerError(c, []string{"Error checking existing verification", err.Error()})
+	}
+	if existingCode != nil {
+		return h.BadRequest(c, []string{"A verification code was already sent. Please wait until it expires."})
+	}
+
+	// Kirim email
+	body := utils.GenerateVerificationEmailBody(code)
+	err = utils.SendEmail(utils.MailRequest{
+		To:      *user.Email,
+		Subject: "Kode Aktivasi Akun Anda",
+		Body:    body,
+	})
+	if err != nil {
+		return h.BadRequest(c, []string{err.Error(), "Error on send verification email"})
+	}
+
+	err = createUserVerification(user.ID, code, expiresAt)
+	if err != nil {
+		return h.InternalServerError(c, []string{"Error on create verification code", err.Error()})
+	}
+	return h.Ok(c, nil, "Verification email sent", nil)
+}
+
+// VerifyEmailCode handles verification of the email code
+// @Summary Verify Email Code
+// @Description Verifies the email code and activates the user
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param request body request.VerifyEmailCodeRequest true "Verification Code"
+// @Success 200 {object} utils.ResponseData
+// @Failure 400 {object} utils.ErrorResponse
+// @Router /auth/verify-email-code [post]
+func VerifyEmailCode(c *fiber.Ctx) error {
+	h := utils.ResponseHandler{}
+
+	var req request.VerifyEmailCodeRequest
+	if err := c.BodyParser(&req); err != nil {
+		return h.BadRequest(c, []string{"Invalid request body", err.Error()})
+	}
+
+	middleware.ValidateRequest(req)
+
+	user, err := helpers.GetUserByEmail(req.Email)
+	if err != nil {
+		if err != nil {
+			return h.InternalServerError(c, []string{"Failed to get User", err.Error()})
+		}
+	}
+
+	if user != nil && user.IsActive {
+		return h.BadRequest(c, []string{"User is already active"})
+	}
+
+	verification, err := getValidVerificationCode(user.ID, req.Code)
+	if err != nil {
+		return h.InternalServerError(c, []string{"Failed to query verification code", err.Error()})
+	}
+
+	if verification == nil {
+		return h.BadRequest(c, []string{"Invalid or expired verification code"})
+	}
+
+	// Tandai kode sebagai digunakan
+	err = markVerificationCodeUsed(verification.ID)
+	if err != nil {
+		return h.InternalServerError(c, []string{"Failed to mark verification code as used", err.Error()})
+	}
+
+	// Update user: set is_active = true
+	err = activateUser(user.ID)
+	if err != nil {
+		return h.InternalServerError(c, []string{"Failed to activate user", err.Error()})
+	}
+
+	return h.Ok(c, nil, "Email verification successful", nil)
 }

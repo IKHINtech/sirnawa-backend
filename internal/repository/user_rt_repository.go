@@ -10,6 +10,7 @@ type UserRTRepository interface {
 	Create(tx *gorm.DB, data models.UserRT) (*models.UserRT, error)
 	Update(tx *gorm.DB, id string, data models.UserRT) (*models.UserRT, error)
 	FindAll(rtID string) (models.UserRTs, error)
+	FindByUserID(userID string) (models.UserRTs, error)
 	Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, models.UserRTs, error)
 	FindByID(id string) (*models.UserRT, error)
 	Delete(id string) error
@@ -61,6 +62,13 @@ func (r *userRTRepositoryImpl) FindByID(id string) (*models.UserRT, error) {
 		return nil, err
 	}
 	return &data, err
+}
+
+func (r *userRTRepositoryImpl) FindByUserID(userID string) (models.UserRTs, error) {
+	query := r.db.Where("user_id = ?", userID)
+	var data models.UserRTs
+	err := query.Find(&data).Error
+	return data, err
 }
 
 func (r *userRTRepositoryImpl) FindAll(rtID string) (models.UserRTs, error) {

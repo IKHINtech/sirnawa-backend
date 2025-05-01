@@ -3,6 +3,7 @@ package models
 type User struct {
 	BaseModel
 	Email      *string   `gorm:"uniqueIndex" json:"email"`
+	IsActive   bool      `gorm:"default:false"`
 	Password   string    `gorm:"not null" json:"-"`
 	Role       Role      `gorm:"type:role;not null;default:warga" json:"role"`
 	ResidentID *string   `gorm:"null" json:"resident_id"` // nullable

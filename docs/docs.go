@@ -304,6 +304,9 @@ const docTemplate = `{
         "/auth/logout": {
             "delete": {
                 "description": "Logout",
+                "consumes": [
+                    "application/json"
+                ],
                 "produces": [
                     "application/json"
                 ],
@@ -411,6 +414,86 @@ const docTemplate = `{
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/dto.RegisterInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/send-email-verification": {
+            "post": {
+                "description": "Send Email Verification",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Send Email Verification",
+                "parameters": [
+                    {
+                        "description": "Verification Code Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.VerifyCodeRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/verify-email-code": {
+            "post": {
+                "description": "Verifies the email code and activates the user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Verify Email Code",
+                "parameters": [
+                    {
+                        "description": "Verification Code",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.VerifyEmailCodeRequest"
                         }
                     }
                 ],
@@ -5009,16 +5092,10 @@ const docTemplate = `{
                 "block_id": {
                     "type": "string"
                 },
-                "housing_area_id": {
-                    "type": "string"
-                },
                 "number": {
                     "type": "string"
                 },
                 "rt_id": {
-                    "type": "string"
-                },
-                "rw_id": {
                     "type": "string"
                 },
                 "status": {
@@ -5033,9 +5110,6 @@ const docTemplate = `{
                 "block_id": {
                     "type": "string"
                 },
-                "housing_area_id": {
-                    "type": "string"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -5043,9 +5117,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "rt_id": {
-                    "type": "string"
-                },
-                "rw_id": {
                     "type": "string"
                 },
                 "status": {
@@ -5294,6 +5365,9 @@ const docTemplate = `{
                 "role": {
                     "type": "string",
                     "example": "warga;admin_rt;sekretaris;bendahara;wakil_rt"
+                },
+                "rt_id": {
+                    "type": "string"
                 }
             }
         },
@@ -5345,6 +5419,9 @@ const docTemplate = `{
                 "role": {
                     "type": "string",
                     "example": "warga;admin_rt;sekretaris;bendahara;wakil_rt"
+                },
+                "rt_id": {
+                    "type": "string"
                 }
             }
         },
@@ -5689,6 +5766,32 @@ const docTemplate = `{
                 },
                 "user_id": {
                     "type": "integer"
+                }
+            }
+        },
+        "request.VerifyCodeRequest": {
+            "type": "object",
+            "required": [
+                "email"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.VerifyEmailCodeRequest": {
+            "type": "object",
+            "required": [
+                "code",
+                "email"
+            ],
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
                 }
             }
         },
