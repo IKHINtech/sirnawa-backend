@@ -11,7 +11,7 @@ import (
 func GetUserByEmail(e string) (*models.User, error) {
 	db := database.DB
 	var user models.User
-	if err := db.Where(&models.User{Email: e}).First(&user).Error; err != nil {
+	if err := db.Where(&models.User{Email: &e}).First(&user).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, nil
 		}

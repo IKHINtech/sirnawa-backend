@@ -102,7 +102,7 @@ func (s *residentServiceImpl) Create(data request.ResidentCreateRequest) (*respo
 
 				// ada data email pada resident request, buatkan user
 				payloadUser := models.User{
-					Email:    *data.Email,
+					Email:    data.Email,
 					Password: string(hashedPassword),
 					// Role:       models.Role(data.Role),
 					ResidentID: &existingNik.ID,

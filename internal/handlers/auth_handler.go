@@ -194,7 +194,7 @@ func Register(c *fiber.Ctx) error {
 
 	// Create new user
 	user := models.User{
-		Email:    input.Email,
+		Email:    &input.Email,
 		Password: string(hashedPassword),
 		Role:     models.RoleWarga,
 	}
