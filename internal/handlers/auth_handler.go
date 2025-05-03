@@ -151,6 +151,12 @@ func Login(c *fiber.Ctx) error {
 		return h.Forbidden(c, []string{"Invalid identity or password"})
 	}
 
+	userData = response.UserResponse{
+		ID:    usermodels.ID,
+		Email: usermodels.Email,
+		Role:  usermodels.Role.ToString(),
+	}
+
 	// Create Access Token
 	accessString, activeUntil, err := utils.GenerateAccessToken(*usermodels)
 	if err != nil {
@@ -161,12 +167,6 @@ func Login(c *fiber.Ctx) error {
 	refreshString, err := utils.GenerateRefreshToken(userData.ID)
 	if err != nil {
 		return h.InternalServerError(c, []string{"Failed to create refresh token", err.Error()})
-	}
-
-	userData = response.UserResponse{
-		ID:    usermodels.ID,
-		Email: usermodels.Email,
-		Role:  usermodels.Role.ToString(),
 	}
 
 	utils.SetRefreshTokenCookie(c, refreshString)
