@@ -346,8 +346,9 @@ func RefreshToken(c *fiber.Ctx) error {
 	responseL := dto.ResponseLogin{
 		User: userData,
 		AccessToken: dto.Token{
-			Token:     accessString,
-			ExpiresIn: accessTime,
+			Token:        accessString,
+			ExpiresIn:    accessTime,
+			RefreshToken: refreshToken,
 		},
 	}
 
