@@ -157,11 +157,6 @@ func Login(c *fiber.Ctx) error {
 		return h.InternalServerError(c, []string{"Failed to create access token", err.Error()})
 	}
 
-	accessToken := dto.Token{
-		Token:     accessString,
-		ExpiresIn: activeUntil,
-	}
-
 	// Create Refresh Token
 	refreshString, err := utils.GenerateRefreshToken(userData.ID)
 	if err != nil {
@@ -175,6 +170,12 @@ func Login(c *fiber.Ctx) error {
 	}
 
 	utils.SetRefreshTokenCookie(c, refreshString)
+
+	accessToken := dto.Token{
+		Token:        accessString,
+		RefreshToken: refreshString,
+		ExpiresIn:    activeUntil,
+	}
 
 	response := dto.ResponseLogin{
 		User:        userData,
@@ -278,18 +279,33 @@ func Register(c *fiber.Ctx) error {
 // @Tags Auth
 // @Accept json
 // @Produce json
+// @Param data body request.RefreshTokenRequest true "Refresh Token"
 // @Success 200 {object} utils.ResponseData
 // @Failure 400 {object} utils.ErrorResponse
-// @Router /auth/refresh-token [get]
+// @Router /auth/refresh-token [post]
 func RefreshToken(c *fiber.Ctx) error {
 	h := &utils.ResponseHandler{}
+	var refreshToken string
 
 	// Ambil refresh token dari cookie
-	refreshToken := c.Cookies("refresh_token") // Ganti "refresh_token" dengan nama cookie yang sesuai
+	refreshTokenCookies := c.Cookies("refresh_token") // Ganti "refresh_token" dengan nama cookie yang sesuai
 
 	// Pastikan token ada
-	if refreshToken == "" {
-		return h.Unauthorized(c, []string{"Refresh token is missing"})
+	if refreshTokenCookies == "" {
+
+		var req request.RefreshTokenRequest
+		if err := c.BodyParser(&req); err != nil {
+			return h.BadRequest(c, []string{"Invalid request body", err.Error()})
+		}
+
+		middleware.ValidateRequest(req)
+		if req.RefreshToken == "" {
+			return h.Unauthorized(c, []string{"Refresh token is missing"})
+		}
+
+		refreshToken = req.RefreshToken
+	} else {
+		refreshToken = refreshTokenCookies
 	}
 	// Parse and validate the refresh token
 	token, err := jwt.Parse(refreshToken, func(token *jwt.Token) (any, error) {

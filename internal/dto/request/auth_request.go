@@ -13,3 +13,7 @@ type VerifyEmailCodeRequest struct {
 type VerifyCodeRequest struct {
 	Email string `json:"email" validate:"required,email"`
 }
+
+type RefreshTokenRequest struct {
+	RefreshToken string `json:"refresh_token" validate:"required"`
+}

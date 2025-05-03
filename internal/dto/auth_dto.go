@@ -6,8 +6,9 @@ type ResponseLogin struct {
 }
 
 type Token struct {
-	Token     string `json:"token"`
-	ExpiresIn int64  `json:"expires_in"`
+	Token        string `json:"token"`
+	RefreshToken string `json:"refresh_token"`
+	ExpiresIn    int64  `json:"expires_in"`
 }
 
 type RegisterInput struct {
