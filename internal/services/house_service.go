@@ -23,17 +23,20 @@ type HouseService interface {
 type houseServiceImpl struct {
 	repository repository.HouseRepository
 	rwRepo     repository.RwRepository
+	rtRepo     repository.RtRepository
 	db         *gorm.DB
 }
 
 func NewHouseServices(
 	repo repository.HouseRepository,
 	rwRepo repository.RwRepository,
+	rtRepo repository.RtRepository,
 	db *gorm.DB,
 ) HouseService {
 	return &houseServiceImpl{
 		repository: repo,
 		rwRepo:     rwRepo,
+		rtRepo:     rtRepo,
 		db:         db,
 	}
 }
@@ -67,7 +70,11 @@ func (s *houseServiceImpl) Create(data request.HouseCreateRequest) (*response.Ho
 	var result *models.House
 
 	err := s.withTransaction(func(tx *gorm.DB) error {
-		rw, err := s.rwRepo.FindByRtID(data.RtID)
+		rtData, err := s.rtRepo.FindByID(data.RtID)
+		if err != nil {
+			return err
+		}
+		rw, err := s.rwRepo.FindByID(rtData.RwID)
 		if err != nil {
 			return err
 		}

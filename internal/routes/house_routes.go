@@ -11,7 +11,8 @@ import (
 func HouseRoutes(route fiber.Router) {
 	repo := repository.NewHouseRepository(database.DB)
 	rwRepository := repository.NewRwRepository(database.DB)
-	services := services.NewHouseServices(repo, rwRepository, database.DB)
+	rtRepository := repository.NewRtRepository(database.DB)
+	services := services.NewHouseServices(repo, rwRepository, rtRepository, database.DB)
 	handlers := handlers.NewHouseHandler(services)
 
 	route.Get("/", handlers.Paginated)
