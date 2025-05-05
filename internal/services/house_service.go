@@ -16,8 +16,8 @@ type HouseService interface {
 	Update(id string, data request.HouseUpdateRequset) (*response.HouseResponse, error)
 	FindByID(id string) (*response.HouseResponseDetail, error)
 	Delete(id string) error
-	FindAll(rtID string) (response.HouseResponses, error)
-	Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, *response.HouseResponses, error)
+	FindAll(rtID, blockID string) (response.HouseResponses, error)
+	Paginated(pagination utils.Pagination, rtID, blockID string) (*utils.Pagination, *response.HouseResponses, error)
 }
 
 type houseServiceImpl struct {
@@ -131,8 +131,8 @@ func (s *houseServiceImpl) Update(id string, data request.HouseUpdateRequset) (*
 	return res, nil
 }
 
-func (s *houseServiceImpl) FindAll(rtID string) (response.HouseResponses, error) {
-	result, err := s.repository.FindAll(rtID)
+func (s *houseServiceImpl) FindAll(rtID, blockID string) (response.HouseResponses, error) {
+	result, err := s.repository.FindAll(rtID, blockID)
 	if err != nil {
 		return nil, err
 	}
@@ -151,8 +151,8 @@ func (s *houseServiceImpl) FindByID(id string) (*response.HouseResponseDetail, e
 	return resp, err
 }
 
-func (s *houseServiceImpl) Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, *response.HouseResponses, error) {
-	paginated, data, err := s.repository.Paginated(pagination, rtID)
+func (s *houseServiceImpl) Paginated(pagination utils.Pagination, rtID, blockID string) (*utils.Pagination, *response.HouseResponses, error) {
+	paginated, data, err := s.repository.Paginated(pagination, rtID, blockID)
 	if err != nil {
 		return nil, nil, err
 	}

@@ -97,6 +97,7 @@ func (h *houseHandlerImpl) Update(ctx *fiber.Ctx) error {
 // @Security Bearer
 // @Param paginated query boolean false "Paginated"
 // @Param rt_id query string false "RT ID"
+// @Param block_id query string false "Block ID"
 // @Param page query int false "Page number"
 // @Param page_size query int false "Page size"
 // @Param order_by query string false "Order by"
@@ -107,6 +108,7 @@ func (h *houseHandlerImpl) Update(ctx *fiber.Ctx) error {
 func (h *houseHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 	r := &utils.ResponseHandler{}
 	rt_id := ctx.Query("rt_id", "")
+	block_id := ctx.Query("block_id", "")
 	isPaginated := ctx.QueryBool("paginated", true)
 	var meta *utils.Pagination
 	var data *response.HouseResponses
@@ -115,12 +117,12 @@ func (h *houseHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 
 		paginate := utils.GetPaginationParams(ctx)
 
-		meta, data, err = h.services.Paginated(paginate, rt_id)
+		meta, data, err = h.services.Paginated(paginate, rt_id, block_id)
 		if err != nil {
 			return r.BadRequest(ctx, []string{"error:" + err.Error()})
 		}
 	} else {
-		res, err := h.services.FindAll(rt_id)
+		res, err := h.services.FindAll(rt_id, block_id)
 		if err != nil {
 			return r.BadRequest(ctx, []string{"error:" + err.Error()})
 		}
