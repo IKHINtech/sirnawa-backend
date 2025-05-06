@@ -98,6 +98,7 @@ func (h *houseHandlerImpl) Update(ctx *fiber.Ctx) error {
 // @Param paginated query boolean false "Paginated"
 // @Param rt_id query string false "RT ID"
 // @Param block_id query string false "Block ID"
+// @Param status query string false "Status Rumah" Enums(aktif, tidak_akfit, kontrakan)
 // @Param page query int false "Page number"
 // @Param page_size query int false "Page size"
 // @Param order_by query string false "Order by"
@@ -109,20 +110,21 @@ func (h *houseHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 	r := &utils.ResponseHandler{}
 	rt_id := ctx.Query("rt_id", "")
 	block_id := ctx.Query("block_id", "")
+	status := ctx.Query("status", "")
 	isPaginated := ctx.QueryBool("paginated", true)
 	var meta *utils.Pagination
-	var data *response.HouseResponses
+	var data *[]response.HouseResponseDetail
 	var err error
 	if isPaginated {
 
 		paginate := utils.GetPaginationParams(ctx)
 
-		meta, data, err = h.services.Paginated(paginate, rt_id, block_id)
+		meta, data, err = h.services.Paginated(paginate, rt_id, block_id, status)
 		if err != nil {
 			return r.BadRequest(ctx, []string{"error:" + err.Error()})
 		}
 	} else {
-		res, err := h.services.FindAll(rt_id, block_id)
+		res, err := h.services.FindAll(rt_id, block_id, status)
 		if err != nil {
 			return r.BadRequest(ctx, []string{"error:" + err.Error()})
 		}

@@ -14,10 +14,10 @@ type HouseResponse struct {
 
 type HouseResponseDetail struct {
 	HouseResponse
-	Rt                    RtResponse              `json:"rt"`
-	Rw                    RwResponse              `json:"rw"`
-	Block                 BlockResponse           `json:"block"`
-	HousingArea           HousingAreaResponse     `json:"housing_area"`
+	Rt                    *RtResponse             `json:"rt"`
+	Rw                    *RwResponse             `json:"rw"`
+	Block                 *BlockResponse          `json:"block"`
+	HousingArea           *HousingAreaResponse    `json:"housing_area"`
 	ResidentHouseResponse []ResidentHouseResponse `json:"resident_houses"`
 }
 
@@ -57,12 +57,37 @@ func MapHouseDetailResponse(data *models.House) *HouseResponseDetail {
 	for i, r := range data.ResidentHouses {
 		residentHouse[i] = *ResidentHouseModelToResidentHouseResponse(&r)
 	}
+
+	var rtResponse *RtResponse
+	var rwResponse *RwResponse
+	var housingAreaResponse *HousingAreaResponse
+
+	if data.Rt.ID != "" {
+		rtResponse = RtModelToRtResponse(&data.Rt)
+	}
+
+	if data.Rw.ID != "" {
+		rwResponse = RwModelToRwResponse(&data.Rw)
+	}
+
+	if data.HousingArea.ID != "" {
+		housingAreaResponse = HousingAreaModelToHousingAreaResponse(&data.HousingArea)
+	}
+
 	return &HouseResponseDetail{
 		HouseResponse:         *HouseModelToHouseResponse(data),
-		Rt:                    *RtModelToRtResponse(&data.Rt),
-		Rw:                    *RwModelToRwResponse(&data.Rw),
-		Block:                 *BlockModelToBlockResponse(&data.Block),
-		HousingArea:           *HousingAreaModelToHousingAreaResponse(&data.HousingArea),
+		Rt:                    rtResponse,
+		Rw:                    rwResponse,
+		Block:                 BlockModelToBlockResponse(&data.Block),
+		HousingArea:           housingAreaResponse,
 		ResidentHouseResponse: residentHouse,
 	}
+}
+
+func HouseDetailListResponse(data models.Houses) []HouseResponseDetail {
+	res := make([]HouseResponseDetail, len(data))
+	for i, v := range data {
+		res[i] = *MapHouseDetailResponse(&v)
+	}
+	return res
 }
