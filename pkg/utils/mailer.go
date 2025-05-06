@@ -68,6 +68,31 @@ func GenerateVerificationEmailBody(code string) string {
 	`, code)
 }
 
+func GenerateForgotPasswordOTPEmailBody(otp string) string {
+	return fmt.Sprintf(`
+		<!DOCTYPE html>
+		<html>
+		<head>
+			<meta charset="UTF-8">
+			<title>Reset Password - OTP</title>
+		</head>
+		<body style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px;">
+			<div style="max-width: 600px; margin: auto; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);">
+				<h2 style="color: #333333;">Kode OTP Reset Password</h2>
+				<p>Halo,</p>
+				<p>Gunakan kode OTP berikut untuk mengatur ulang password akun Anda:</p>
+				<h1 style="color: #DC3545; letter-spacing: 4px;">%s</h1>
+				<p>Kode ini hanya berlaku selama 10 menit.</p>
+				<p>Jika Anda tidak merasa melakukan permintaan ini, abaikan email ini.</p>
+				<br>
+				<p>Salam,</p>
+				<p><strong>RT App</strong></p>
+			</div>
+		</body>
+		</html>
+	`, otp)
+}
+
 // code := "123456" // misalnya generate pakai random string/OTP generator
 // body := GenerateVerificationEmailBody(code)
 //

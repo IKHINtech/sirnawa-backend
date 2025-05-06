@@ -381,6 +381,63 @@ func Logout(c *fiber.Ctx) error {
 	})
 }
 
+// Forgor Password handles godoc
+// @Summary Send Forgot Password Verification
+// @Description Send Forgot Password Verification
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param request body request.VerifyCodeRequest true "Forgot Password Request"
+// @Success 200 {object} utils.ResponseData
+// @Failure 400 {object} utils.ErrorResponse
+// @Router /auth/send-forgot-password-verification [post]
+func ForgotPassword(c *fiber.Ctx) error {
+	h := utils.ResponseHandler{}
+
+	var req request.VerifyCodeRequest
+	if err := c.BodyParser(&req); err != nil {
+		return h.BadRequest(c, []string{"Invalid request body", err.Error()})
+	}
+
+	middleware.ValidateRequest(req)
+
+	user, err := helpers.GetUserByEmail(req.Email)
+	if err != nil {
+		return h.InternalServerError(c, []string{"Failed to get User", err.Error()})
+	}
+
+	if user == nil {
+		return h.NotFound(c, []string{"User not found"})
+	}
+
+	code := utils.GenerateVerificationCode(6) // e.g., "348112"
+	expiresAt := time.Now().Add(10 * time.Minute)
+
+	existingCode, err := getActiveVerificationCode(user.ID)
+	if err != nil {
+		return h.InternalServerError(c, []string{"Error checking existing verification", err.Error()})
+	}
+	if existingCode != nil {
+		return h.BadRequest(c, []string{"A verification code was already sent. Please wait until it expires."})
+	}
+
+	body := utils.GenerateForgotPasswordOTPEmailBody(code)
+	err = utils.SendEmail(utils.MailRequest{
+		To:      *user.Email,
+		Subject: "Forgot Password OTP",
+		Body:    body,
+	})
+	if err != nil {
+		return h.BadRequest(c, []string{err.Error(), "Error on send verification email"})
+	}
+
+	err = createUserVerification(user.ID, code, expiresAt)
+	if err != nil {
+		return h.InternalServerError(c, []string{"Error on create verification code", err.Error()})
+	}
+	return h.Ok(c, nil, "Verification email sent", nil)
+}
+
 // Logout handles SendEmailVerification godoc
 // @Summary Send Email Verification
 // @Description Send Email Verification
@@ -444,6 +501,60 @@ func SendEmailVerification(c *fiber.Ctx) error {
 	return h.Ok(c, nil, "Verification email sent", nil)
 }
 
+// Forgor Password Verify Code handles godoc
+// @Summary Verify Forgot Password Verification
+// @Description Verify Forgot Password Verification
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param request body request.VerifyEmailCodeRequest true "Forgot Password Code Vefification"
+// @Success 200 {object} utils.ResponseData
+// @Failure 400 {object} utils.ErrorResponse
+// @Router /auth/send-forgot-password-verification [post]
+func VerifyForgotPasswordCode(c *fiber.Ctx) error {
+	h := utils.ResponseHandler{}
+
+	var req request.VerifyEmailCodeRequest
+	if err := c.BodyParser(&req); err != nil {
+		return h.BadRequest(c, []string{"Invalid request body", err.Error()})
+	}
+
+	middleware.ValidateRequest(req)
+
+	user, err := helpers.GetUserByEmail(req.Email)
+	if err != nil {
+		return h.InternalServerError(c, []string{"Failed to get User", err.Error()})
+	}
+
+	verification, err := getValidVerificationCode(user.ID, req.Code)
+	if err != nil {
+		return h.InternalServerError(c, []string{"Failed to query verification code", err.Error()})
+	}
+
+	if verification == nil {
+		return h.BadRequest(c, []string{"Invalid or expired verification code"})
+	}
+
+	// Tandai kode sebagai digunakan
+	err = markVerificationCodeUsed(verification.ID)
+	if err != nil {
+		return h.InternalServerError(c, []string{"Failed to mark verification code as used", err.Error()})
+	}
+
+	// Create Access Token
+	accessString, activeUntil, err := utils.GenerateAccessToken(*user)
+	if err != nil {
+		return h.InternalServerError(c, []string{"Failed to create access token", err.Error()})
+	}
+
+	accessToken := dto.Token{
+		Token:     accessString,
+		ExpiresIn: activeUntil,
+	}
+
+	return h.Ok(c, accessToken, "Verification code used", nil)
+}
+
 // VerifyEmailCode handles verification of the email code
 // @Summary Verify Email Code
 // @Description Verifies the email code and activates the user
@@ -466,9 +577,7 @@ func VerifyEmailCode(c *fiber.Ctx) error {
 
 	user, err := helpers.GetUserByEmail(req.Email)
 	if err != nil {
-		if err != nil {
-			return h.InternalServerError(c, []string{"Failed to get User", err.Error()})
-		}
+		return h.InternalServerError(c, []string{"Failed to get User", err.Error()})
 	}
 
 	if user != nil && user.IsActive {
