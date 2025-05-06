@@ -15,5 +15,6 @@ func ResidentHouseRoutes(route fiber.Router) {
 
 	route.Post("/", handlers.AssignResidentToHouse)
 	route.Get("/:id", handlers.ChangeToPrimary)
+	route.Get("/house/:id", handlers.FindByHouseID)
 	route.Delete("/:id", handlers.Delete)
 }

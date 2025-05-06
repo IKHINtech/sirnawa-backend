@@ -11,7 +11,7 @@ type ResidentHouseRepository interface {
 	Update(tx *gorm.DB, id string, data models.ResidentHouse) (*models.ResidentHouse, error)
 	ChangeToPrimary(tx *gorm.DB, id string) error
 	ChangeNotPrimaryByResidentID(tx *gorm.DB, residentID string) error
-	FindAll() (models.ResidentHouses, error)
+	FindAll(houseID string) (models.ResidentHouses, error)
 	Paginated(pagination utils.Pagination) (*utils.Pagination, models.ResidentHouses, error)
 	FindByID(id string) (*models.ResidentHouse, error)
 	FindByResidentID(residentID string) (models.ResidentHouses, error)
@@ -88,9 +88,13 @@ func (r *residentHouseRepositoryImpl) FindByID(id string) (*models.ResidentHouse
 	return &data, err
 }
 
-func (r *residentHouseRepositoryImpl) FindAll() (models.ResidentHouses, error) {
+func (r *residentHouseRepositoryImpl) FindAll(houseID string) (models.ResidentHouses, error) {
 	var data models.ResidentHouses
-	err := r.db.Find(&data).Error
+	query := r.db.Preload("Resident")
+	if houseID != "" {
+		query = query.Where("house_id = ?", houseID)
+	}
+	err := query.Find(&data).Error
 	return data, err
 }
 

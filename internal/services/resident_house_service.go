@@ -13,6 +13,7 @@ import (
 
 type ResidentHouseService interface {
 	AssignResidentToHouse(data request.ResidentHouseCreateRequest) (*response.ResidentHouseResponse, error)
+	FindByHouseID(houseId string) ([]response.ResidentHouseDetailResponse, error)
 	ChangeToPrimary(id string) error
 	Delete(id string) error
 }
@@ -120,8 +121,25 @@ func (s *residentHouseServiceImpl) Update(id string, data request.ResidentHouseU
 	return res, nil
 }
 
-func (s *residentHouseServiceImpl) FindAll() (response.ResidentHouseResponses, error) {
-	result, err := s.repository.FindAll()
+func (s *residentHouseServiceImpl) FindByHouseID(houseID string) ([]response.ResidentHouseDetailResponse, error) {
+	result, err := s.repository.FindAll(houseID)
+	if err != nil {
+		return nil, err
+	}
+	if result == nil {
+		return []response.ResidentHouseDetailResponse{}, nil
+	}
+
+	res := make([]response.ResidentHouseDetailResponse, len(result))
+	for i, v := range result {
+		res[i] = *response.MapResidentHouseDetailResponse(&v)
+	}
+
+	return res, nil
+}
+
+func (s *residentHouseServiceImpl) FindAll(houseID string) (response.ResidentHouseResponses, error) {
+	result, err := s.repository.FindAll(houseID)
 	if err != nil {
 		return nil, err
 	}

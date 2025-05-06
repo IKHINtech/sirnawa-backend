@@ -1,12 +1,19 @@
 package response
 
-import "github.com/IKHINtech/sirnawa-backend/internal/models"
+import (
+	"github.com/IKHINtech/sirnawa-backend/internal/models"
+)
 
 type ResidentHouseResponse struct {
 	BaseResponse
 	ResidentID string `json:"resident_id"`
 	HouseID    string `json:"house_id"`
 	IsPrimary  bool   `json:"is_primary"` // Apakah ini rumah utama
+}
+
+type ResidentHouseDetailResponse struct {
+	ResidentHouseResponse
+	Resident ResidentResponse `json:"resident"`
 }
 
 type ResidentHouseFullResponse struct {
@@ -43,4 +50,17 @@ func MapResidentHouseFullResponse(data models.ResidentHouse) ResidentHouseFullRe
 		ResidentHouseResponse: *ResidentHouseModelToResidentHouseResponse(&data),
 		House:                 *MapHouseDetailResponse(&data.House),
 	}
+}
+
+func MapResidentHouseDetailResponse(data *models.ResidentHouse) *ResidentHouseDetailResponse {
+	if data == nil {
+		return nil
+	}
+	res := ResidentHouseModelToResidentHouseResponse(data)
+	resident := ResidentModelToResidentResponse(&data.Resident)
+	result := ResidentHouseDetailResponse{
+		ResidentHouseResponse: *res,
+		Resident:              *resident,
+	}
+	return &result
 }

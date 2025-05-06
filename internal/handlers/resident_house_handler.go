@@ -12,6 +12,7 @@ type ResidentHouseHandler interface {
 	AssignResidentToHouse(ctx *fiber.Ctx) error
 	ChangeToPrimary(ctx *fiber.Ctx) error
 	Delete(ctx *fiber.Ctx) error
+	FindByHouseID(ctx *fiber.Ctx) error
 }
 
 type residentHouseHandlerImpl struct {
@@ -98,4 +99,30 @@ func (h *residentHouseHandlerImpl) ChangeToPrimary(ctx *fiber.Ctx) error {
 		return r.BadRequest(ctx, []string{"error:" + err.Error()})
 	}
 	return r.Ok(ctx, nil, "Successfully deleted", nil)
+}
+
+// Find Resident House by House ID
+// @Summary Find Resident House by House ID
+// @Descrpiton Find Resident House by House ID
+// @Tags Resident House
+// @Accept json
+// @Produce json
+// @Security Bearer
+// @Param id path string true "House id"
+// @Success 200 {object} utils.ResponseData
+// @Failure 400 {object} utils.ResponseData
+// @Router /resident-house/house/{id} [get]
+func (h *residentHouseHandlerImpl) FindByHouseID(ctx *fiber.Ctx) error {
+	r := &utils.ResponseHandler{}
+	houseID := ctx.Params("id")
+
+	if houseID == "" {
+		return r.BadRequest(ctx, []string{"house id is required"})
+	}
+	res, err := h.services.FindByHouseID(houseID)
+	if err != nil {
+		return r.BadRequest(ctx, []string{"error:" + err.Error()})
+	}
+
+	return r.Ok(ctx, res, "Successfully get data", nil)
 }
