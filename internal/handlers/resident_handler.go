@@ -100,11 +100,15 @@ func (h *residentHandlerImpl) Update(ctx *fiber.Ctx) error {
 // @Param page_size query int false "Page size"
 // @Param order_by query string false "Order by"
 // @Param order query string false "Order"
+// @Param rt_id query string false "RT ID"
+// @Param search query string false "Search Resident By Name"
 // @Success 200 {object} utils.ResponseData
 // @Failure 400 {object} utils.ResponseData
 // @Router /resident [get]
 func (h *residentHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 	r := &utils.ResponseHandler{}
+	search := ctx.Query("search", "")
+	rt_id := ctx.Query("rt_id", "")
 	isPaginated := ctx.QueryBool("paginated", true)
 
 	var meta *utils.Pagination
@@ -113,12 +117,12 @@ func (h *residentHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 	if isPaginated {
 		paginate := utils.GetPaginationParams(ctx)
 
-		meta, data, err = h.services.Paginated(paginate)
+		meta, data, err = h.services.Paginated(paginate, rt_id, search)
 		if err != nil {
 			return r.BadRequest(ctx, []string{"error:" + err.Error()})
 		}
 	} else {
-		res, err := h.services.FindAll()
+		res, err := h.services.FindAll(rt_id, search)
 		if err != nil {
 			return r.BadRequest(ctx, []string{"error:" + err.Error()})
 		}

@@ -18,8 +18,8 @@ type ResidentService interface {
 	Update(id string, data request.ResidentUpdateRequset) (*response.ResidentResponse, error)
 	FindByID(id string) (*response.ResidentResponse, error)
 	Delete(id string) error
-	FindAll() (response.ResidentResponses, error)
-	Paginated(pagination utils.Pagination) (*utils.Pagination, *response.ResidentResponses, error)
+	FindAll(rt_id, search string) (response.ResidentResponses, error)
+	Paginated(pagination utils.Pagination, rt_id, search string) (*utils.Pagination, *response.ResidentResponses, error)
 }
 
 type residentServiceImpl struct {
@@ -162,6 +162,7 @@ func (s *residentServiceImpl) Create(data request.ResidentCreateRequest) (*respo
 				}
 			}
 		}
+
 		// jika nik ditemukan dan email tidak
 		if existingUser == nil && existingNik != nil {
 			// cari user dengan nik yang dikirim
@@ -248,6 +249,15 @@ func (s *residentServiceImpl) Update(id string, data request.ResidentUpdateRequs
 			return err
 		}
 
+		existingNik, err := s.repository.FindByNIK(data.NIK)
+		if err != nil {
+			return err
+		}
+
+		if existingNik != nil && existingNik.ID != existing.ID {
+			return errors.New("NIK tersebut sudah terdaftar")
+		}
+
 		payload := request.ResidentUpdateRequsetToResidentModel(data)
 		payload.ID = existing.ID
 
@@ -268,8 +278,8 @@ func (s *residentServiceImpl) Update(id string, data request.ResidentUpdateRequs
 	return res, nil
 }
 
-func (s *residentServiceImpl) FindAll() (response.ResidentResponses, error) {
-	result, err := s.repository.FindAll()
+func (s *residentServiceImpl) FindAll(rt_id, search string) (response.ResidentResponses, error) {
+	result, err := s.repository.FindAll(rt_id, search)
 	if err != nil {
 		return nil, err
 	}
@@ -288,8 +298,8 @@ func (s *residentServiceImpl) FindByID(id string) (*response.ResidentResponse, e
 	return resp, err
 }
 
-func (s *residentServiceImpl) Paginated(pagination utils.Pagination) (*utils.Pagination, *response.ResidentResponses, error) {
-	paginated, data, err := s.repository.Paginated(pagination)
+func (s *residentServiceImpl) Paginated(pagination utils.Pagination, rt_id, search string) (*utils.Pagination, *response.ResidentResponses, error) {
+	paginated, data, err := s.repository.Paginated(pagination, rt_id, search)
 	if err != nil {
 		return nil, nil, err
 	}
