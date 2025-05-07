@@ -27,11 +27,13 @@ func NewResidentRepository(db *gorm.DB) ResidentRepository {
 func (r *residentRepositoryImpl) Paginated(pagination utils.Pagination, rt_id, search string) (*utils.Pagination, models.Residents, error) {
 	var datas models.Residents
 
-	query := r.db.Model(&models.Resident{}).Select("residents.*").Joins("User").
-		Joins("User.UserRTs")
+	query := r.db.Model(&models.Resident{}).Select("residents.*")
 
 	if rt_id != "" {
-		query.Where("user_rts.rt_id = ?", rt_id)
+		query = query.
+			Joins("JOIN users ON users.resident_id = residents.id").
+			Joins("JOIN user_rts ON user_rts.user_id = users.id").
+			Where("user_rts.rt_id = ?", rt_id)
 	}
 
 	if search != "" {
@@ -88,14 +90,17 @@ func (r *residentRepositoryImpl) FindByNIK(nik string) (*models.Resident, error)
 func (r *residentRepositoryImpl) FindAll(rt_id, search string) (models.Residents, error) {
 	var data models.Residents
 
-	query := r.db.Table("residents")
+	query := r.db.Model(&models.Resident{}).Select("residents.*")
+
 	if rt_id != "" {
-		query = query.Joins("users on users.resident_id = residents.id ")
-		query = query.Joins("user_rts on user_rts.user_id = users.id").Where("user_rts.rt_id = ?", rt_id)
+		query = query.
+			Joins("JOIN users ON users.resident_id = residents.id").
+			Joins("JOIN user_rts ON user_rts.user_id = users.id").
+			Where("user_rts.rt_id = ?", rt_id)
 	}
 
 	if search != "" {
-		query = query.Where("LOWER(name) like  LOWER(?)  ", "%"+search+"%")
+		query = query.Where("LOWER(name) LIKE LOWER(?) OR nik LIKE ?", "%"+search+"%", "%"+search+"%")
 	}
 
 	err := query.Find(&data).Error
