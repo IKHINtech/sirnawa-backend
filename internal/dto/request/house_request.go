@@ -5,10 +5,12 @@ import (
 )
 
 type HouseCreateRequest struct {
-	BlockID string `json:"block_id"`
-	Number  string `json:"number"`
-	RtID    string `json:"rt_id"`
-	Status  string `json:"status"` // aktif / tidak aktif
+	BlockID   string  `json:"block_id"`
+	Number    string  `json:"number"`
+	RtID      string  `json:"rt_id"`
+	Status    string  `json:"status"` // aktif / tidak aktif
+	Longitude float64 `json:"longitude"`
+	Latitude  float64 `json:"latitude"`
 }
 
 type HouseUpdateRequset struct {
@@ -28,6 +30,8 @@ func HouseUpdateRequsetToHouseModel(data HouseUpdateRequset, rwID, housingAreaID
 		BlockID:       data.BlockID,
 		Status:        models.HouseStatus(data.Status),
 		HousingAreaID: housingAreaID,
+		Longitude:     data.Longitude,
+		Latitude:      data.Latitude,
 	}
 }
 
@@ -39,5 +43,7 @@ func HouseCreateRequestToHouseModel(data HouseCreateRequest, rwID, housingAreaID
 		RtID:          data.RtID,
 		RwID:          rwID,
 		HousingAreaID: housingAreaID,
+		Longitude:     data.Longitude,
+		Latitude:      data.Latitude,
 	}
 }

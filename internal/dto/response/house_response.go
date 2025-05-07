@@ -4,12 +4,14 @@ import "github.com/IKHINtech/sirnawa-backend/internal/models"
 
 type HouseResponse struct {
 	BaseResponse
-	RtID          string `json:"rt_id"`
-	RwID          string `json:"rw_id"`
-	HousingAreaID string `json:"housing_area_id"`
-	BlockID       string `json:"block_id"`
-	Number        string `json:"number"`
-	Status        string `json:"status"`
+	RtID          string  `json:"rt_id"`
+	RwID          string  `json:"rw_id"`
+	HousingAreaID string  `json:"housing_area_id"`
+	BlockID       string  `json:"block_id"`
+	Number        string  `json:"number"`
+	Status        string  `json:"status"`
+	Longitude     float64 `json:"longitude"`
+	Latitude      float64 `json:"latitude"`
 }
 
 type HouseResponseDetail struct {
@@ -37,6 +39,8 @@ func HouseModelToHouseResponse(data *models.House) *HouseResponse {
 		RtID:          data.RtID,
 		Status:        string(data.Status),
 		BaseResponse:  base,
+		Longitude:     data.Longitude,
+		Latitude:      data.Latitude,
 	}
 }
 
