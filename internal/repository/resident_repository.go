@@ -90,7 +90,7 @@ func (r *residentRepositoryImpl) FindByNIK(nik string) (*models.Resident, error)
 func (r *residentRepositoryImpl) FindAll(rt_id, search string) (models.Residents, error) {
 	var data models.Residents
 
-	query := r.db.Model(&models.Resident{}).Select("residents.*")
+	query := r.db.Model(&models.Resident{}).Distinct("residents.*")
 
 	if rt_id != "" {
 		query = query.
