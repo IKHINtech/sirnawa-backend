@@ -29,12 +29,12 @@ func (r *residentRepositoryImpl) Paginated(pagination utils.Pagination, rt_id, s
 
 	query := r.db.Table("residents")
 	if rt_id != "" {
-		query = query.Joins("users on users.resident_id = residents.id ")
-		query = query.Joins("user_rts on user_rts.user_id = users.id").Where("user_rts.rt_id = ?", rt_id)
+		query = query.Joins("JOIN users on users.resident_id = residents.id ")
+		query = query.Joins("JOIN user_rts on user_rts.user_id = users.id").Where("user_rts.rt_id = ?", rt_id)
 	}
 
 	if search != "" {
-		query = query.Where("LOWER(name) like  LOWER(?)  ", "%"+search+"%")
+		query = query.Where("LOWER(name) like  LOWER(?)  or nik like(?)", "%"+search+"%", "%"+search+"%")
 	}
 	err := query.Scopes(utils.Paginate(datas, &pagination, query)).Find(&datas).Error
 	return &pagination, datas, err

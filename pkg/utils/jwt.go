@@ -13,7 +13,7 @@ import (
 func GenerateAccessToken(data models.User) (string, int64, error) {
 	claims := jwt.MapClaims{
 		"user_id": data.ID,
-		"exp":     time.Now().Add(time.Hour * 24).Unix(), // Berlaku 1 hari
+		"exp":     time.Now().Add(time.Minute * 5).Unix(), // Berlaku 1 hari
 		"iat":     time.Now().Unix(),
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
