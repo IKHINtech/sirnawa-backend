@@ -27,15 +27,19 @@ func NewResidentRepository(db *gorm.DB) ResidentRepository {
 func (r *residentRepositoryImpl) Paginated(pagination utils.Pagination, rt_id, search string) (*utils.Pagination, models.Residents, error) {
 	var datas models.Residents
 
-	query := r.db.Table("residents")
+	query := r.db.Table("residents").Select("residents.*")
+
 	if rt_id != "" {
-		query = query.Joins("JOIN users on users.resident_id = residents.id ")
-		query = query.Joins("JOIN user_rts on user_rts.user_id = users.id").Where("user_rts.rt_id = ?", rt_id)
+		query = query.
+			Joins("JOIN users ON users.resident_id = residents.id").
+			Joins("JOIN user_rts ON user_rts.user_id = users.id").
+			Where("user_rts.rt_id = ?", rt_id)
 	}
 
 	if search != "" {
-		query = query.Where("LOWER(name) like  LOWER(?)  or nik like(?)", "%"+search+"%", "%"+search+"%")
+		query = query.Where("LOWER(name) LIKE LOWER(?) OR nik LIKE ?", "%"+search+"%", "%"+search+"%")
 	}
+
 	err := query.Scopes(utils.Paginate(datas, &pagination, query)).Find(&datas).Error
 	return &pagination, datas, err
 }
