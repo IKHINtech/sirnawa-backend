@@ -7,6 +7,7 @@ import (
 	"github.com/IKHINtech/sirnawa-backend/internal/database"
 	"github.com/IKHINtech/sirnawa-backend/internal/middleware"
 	"github.com/IKHINtech/sirnawa-backend/internal/routes"
+	"github.com/IKHINtech/sirnawa-backend/pkg/utils"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -37,11 +38,17 @@ func main() {
 	// migrasi database
 	// database.Migrate()
 
+	// Inisialisasi Google Drive Service
+	driveService, err := utils.NewDriveService("service-account-my-rt.json")
+	if err != nil {
+		log.Fatalf("Gagal inisialisasi Drive Service: %v", err)
+	}
+
 	app := fiber.New()
 
 	middleware.SetupCORS(app)
 	middleware.SetupRecovery(app)
-	routes.SetupRoutesApp(app)
+	routes.SetupRoutesApp(app, driveService)
 
 	if err := app.Listen(":" + config.AppConfig.PORT); err != nil {
 		log.Fatalf("Failed to start server: %v", err)

@@ -5,13 +5,14 @@ import (
 	"github.com/IKHINtech/sirnawa-backend/internal/handlers"
 	"github.com/IKHINtech/sirnawa-backend/internal/repository"
 	"github.com/IKHINtech/sirnawa-backend/internal/services"
+	"github.com/IKHINtech/sirnawa-backend/pkg/utils"
 	"github.com/gofiber/fiber/v2"
 )
 
-func AnnouncementRoutes(route fiber.Router) {
+func AnnouncementRoutes(route fiber.Router, driveService utils.DriveService) {
 	repository := repository.NewAnnouncementRepository(database.DB)
 	services := services.NewAnnouncementServices(repository, database.DB)
-	handlers := handlers.NewAnnouncementHandler(services)
+	handlers := handlers.NewAnnouncementHandler(services, driveService)
 
 	route.Get("/", handlers.Paginated)
 	route.Get("/:id", handlers.FindByID)

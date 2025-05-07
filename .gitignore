@@ -31,3 +31,4 @@ go.sum
 # Logs
 *.log
 logs/
+service-account-my-rt.json

@@ -23,6 +23,7 @@ type Config struct {
 	EMAIL_USERNAME   string `mapstructure:"EMAIL_USERNAME"`
 	EMAIL_PASSWORD   string `mapstructure:"EMAIL_PASSWORD"`
 	EMAIL_FROM_NAME  string `mapstructure:"EMAIL_FROM_NAME"`
+	DRIVE_FOLDER     string `mapstructure:"DRIVE_FOLDER"`
 }
 
 var AppConfig Config

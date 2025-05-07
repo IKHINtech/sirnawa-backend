@@ -1,9 +1,9 @@
 package handlers
 
 import (
+	"github.com/IKHINtech/sirnawa-backend/internal/config"
 	"github.com/IKHINtech/sirnawa-backend/internal/dto/request"
 	"github.com/IKHINtech/sirnawa-backend/internal/dto/response"
-	"github.com/IKHINtech/sirnawa-backend/internal/middleware"
 	"github.com/IKHINtech/sirnawa-backend/internal/services"
 	"github.com/IKHINtech/sirnawa-backend/pkg/utils"
 	"github.com/gofiber/fiber/v2"
@@ -18,75 +18,200 @@ type AnnouncementHandler interface {
 }
 
 type announcementHandlerImpl struct {
-	services services.AnnouncementService
+	services     services.AnnouncementService
+	driveService utils.DriveService
 }
 
-func NewAnnouncementHandler(services services.AnnouncementService) AnnouncementHandler {
-	return &announcementHandlerImpl{services: services}
+func NewAnnouncementHandler(services services.AnnouncementService, driveService utils.DriveService) AnnouncementHandler {
+	return &announcementHandlerImpl{services: services, driveService: driveService}
 }
 
 // Create Announcement
-// @Summary Create Announcement
-// @Descrpiton Create Announcement
+// @Summary Create Announcement with attachments
+// @Description Create Announcement with file attachments
 // @Tags Announcement
-// @Accept json
+// @Accept multipart/form-data
 // @Produce json
 // @Security Bearer
-// @Param data body request.AnnouncementCreateRequest true "Create Announcement"
-// @Success 200 {object} utils.ResponseData
+// @Param title formData string true "Announcement title"
+// @Param content formData string true "Announcement content"
+// @Param created_by formData string true "Creator user ID"
+// @Param rt_id formData string true "RT ID"
+// @Param attachments formData []file false "Attachment files"
+// @Success 201 {object} utils.ResponseData
 // @Failure 400 {object} utils.ResponseData
 // @Router /announcement [post]
 func (h *announcementHandlerImpl) Create(ctx *fiber.Ctx) error {
 	r := &utils.ResponseHandler{}
-	var req request.AnnouncementCreateRequest
-	if err := ctx.BodyParser(&req); err != nil {
-		return r.BadRequest(ctx, []string{"Body is not valid"})
+
+	// Parse form data
+	form, err := ctx.MultipartForm()
+	if err != nil {
+		return r.BadRequest(ctx, []string{"Failed to parse form data"})
 	}
 
-	middleware.ValidateRequest(req)
+	// Bind form data to request struct
+	req := request.AnnouncementCreateRequest{
+		Title:     form.Value["title"][0],
+		Content:   form.Value["content"][0],
+		CreatedBy: form.Value["created_by"][0],
+		RtID:      form.Value["rt_id"][0],
+	}
 
+	// Upload attachments to Google Drive
+	var attachmentIDs []string
+	if files := form.File["attachments"]; len(files) > 0 {
+		for _, file := range files {
+			fileID, err := h.driveService.UploadToDrive(file, config.AppConfig.DRIVE_FOLDER)
+			if err != nil {
+				return r.BadRequest(ctx, []string{"Failed to upload attachment: " + err.Error()})
+			}
+			attachmentIDs = append(attachmentIDs, fileID)
+		}
+	}
+	req.Attachments = attachmentIDs
+
+	// Create announcement
 	res, err := h.services.Create(req)
 	if err != nil {
-		return r.BadRequest(ctx, []string{"error:" + err.Error()})
+		return r.BadRequest(ctx, []string{err.Error()})
 	}
 
-	return r.Created(ctx, res, "Successfully created")
+	return r.Created(ctx, res, "Announcement created successfully")
 }
 
 // Update Announcement
-// @Summary Update Announcement
-// @Descrpiton Update Announcement
+// @Summary Update Announcement with attachments
+// @Description Update Announcement with file attachments
 // @Tags Announcement
-// @Accept json
+// @Accept multipart/form-data
 // @Produce json
 // @Security Bearer
-// @Param data body request.AnnouncementUpdateRequset true "Update Announcement"
-// @Param id path string true "Announcement id"
+// @Param id path string true "Announcement ID"
+// @Param title formData string false "Announcement title"
+// @Param content formData string false "Announcement content"
+// @Param attachments formData []file false "Attachment files"
+// @Param delete_attachments formData []string false "Attachment IDs to delete"
 // @Success 200 {object} utils.ResponseData
 // @Failure 400 {object} utils.ResponseData
 // @Router /announcement/{id} [put]
 func (h *announcementHandlerImpl) Update(ctx *fiber.Ctx) error {
 	r := &utils.ResponseHandler{}
 	id := ctx.Params("id")
+
 	if id == "" {
-		return r.BadRequest(ctx, []string{"id is required"})
+		return r.BadRequest(ctx, []string{"ID is required"})
 	}
 
-	req := new(request.AnnouncementUpdateRequset)
-
-	if err := ctx.BodyParser(&req); err != nil {
-		return r.BadRequest(ctx, []string{"Body is not valid"})
-	}
-
-	middleware.ValidateRequest(req)
-
-	res, err := h.services.Update(id, *req)
+	// Parse form data
+	form, err := ctx.MultipartForm()
 	if err != nil {
-		return r.BadRequest(ctx, []string{"error:" + err.Error()})
+		return r.BadRequest(ctx, []string{"Failed to parse form data"})
 	}
 
-	return r.Created(ctx, res, "Successfully created")
+	// Bind form data to request struct
+	req := request.AnnouncementCreateRequest{
+		Title:   form.Value["title"][0],
+		Content: form.Value["content"][0],
+	}
+
+	// Handle attachments
+	var newAttachmentIDs []string
+	if files := form.File["attachments"]; len(files) > 0 {
+		for _, file := range files {
+			fileID, err := h.driveService.UploadToDrive(file, config.AppConfig.DRIVE_FOLDER)
+			if err != nil {
+				return r.BadRequest(ctx, []string{"Failed to upload attachment: " + err.Error()})
+			}
+			newAttachmentIDs = append(newAttachmentIDs, fileID)
+		}
+	}
+	req.Attachments = newAttachmentIDs
+
+	// // Handle attachment deletions
+	// if deletes := form.Value["delete_attachments"]; len(deletes) > 0 {
+	// 	req.DeleteAttachments = deletes
+	// }
+
+	// Validate request
+	payload := request.AnnouncementUpdateRequset{
+		ID:                        id,
+		AnnouncementCreateRequest: req,
+	}
+
+	// Update announcement
+	res, err := h.services.Update(id, payload)
+	if err != nil {
+		return r.BadRequest(ctx, []string{err.Error()})
+	}
+
+	return r.Ok(ctx, res, "Announcement updated successfully", nil)
 }
+
+//////////////////////////////////////////////////////////
+
+// // Create Announcement
+// // @Summary Create Announcement
+// // @Descrpiton Create Announcement
+// // @Tags Announcement
+// // @Accept json
+// // @Produce json
+// // @Security Bearer
+// // @Param data body request.AnnouncementCreateRequest true "Create Announcement"
+// // @Success 200 {object} utils.ResponseData
+// // @Failure 400 {object} utils.ResponseData
+// // @Router /announcement [post]
+// func (h *announcementHandlerImpl) Create(ctx *fiber.Ctx) error {
+// 	r := &utils.ResponseHandler{}
+// 	var req request.AnnouncementCreateRequest
+// 	if err := ctx.BodyParser(&req); err != nil {
+// 		return r.BadRequest(ctx, []string{"Body is not valid"})
+// 	}
+//
+// 	middleware.ValidateRequest(req)
+//
+// 	res, err := h.services.Create(req)
+// 	if err != nil {
+// 		return r.BadRequest(ctx, []string{"error:" + err.Error()})
+// 	}
+//
+// 	return r.Created(ctx, res, "Successfully created")
+// }
+//
+// // Update Announcement
+// // @Summary Update Announcement
+// // @Descrpiton Update Announcement
+// // @Tags Announcement
+// // @Accept json
+// // @Produce json
+// // @Security Bearer
+// // @Param data body request.AnnouncementUpdateRequset true "Update Announcement"
+// // @Param id path string true "Announcement id"
+// // @Success 200 {object} utils.ResponseData
+// // @Failure 400 {object} utils.ResponseData
+// // @Router /announcement/{id} [put]
+// func (h *announcementHandlerImpl) Update(ctx *fiber.Ctx) error {
+// 	r := &utils.ResponseHandler{}
+// 	id := ctx.Params("id")
+// 	if id == "" {
+// 		return r.BadRequest(ctx, []string{"id is required"})
+// 	}
+//
+// 	req := new(request.AnnouncementUpdateRequset)
+//
+// 	if err := ctx.BodyParser(&req); err != nil {
+// 		return r.BadRequest(ctx, []string{"Body is not valid"})
+// 	}
+//
+// 	middleware.ValidateRequest(req)
+//
+// 	res, err := h.services.Update(id, *req)
+// 	if err != nil {
+// 		return r.BadRequest(ctx, []string{"error:" + err.Error()})
+// 	}
+//
+// 	return r.Created(ctx, res, "Successfully created")
+// }
 
 // Get Announcement
 // @Summary Get Announcement
