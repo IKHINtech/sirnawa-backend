@@ -19,12 +19,20 @@ type AnnouncementService interface {
 }
 
 type announcementServiceImpl struct {
-	repository repository.AnnouncementRepository
-	db         *gorm.DB
+	repository   repository.AnnouncementRepository
+	driveService utils.DriveService
+	db           *gorm.DB
 }
 
-func NewAnnouncementServices(repo repository.AnnouncementRepository, db *gorm.DB) AnnouncementService {
-	return &announcementServiceImpl{repository: repo, db: db}
+func NewAnnouncementServices(repo repository.AnnouncementRepository,
+	driveService utils.DriveService,
+	db *gorm.DB,
+) AnnouncementService {
+	return &announcementServiceImpl{
+		repository:   repo,
+		driveService: driveService,
+		db:           db,
+	}
 }
 
 func (s *announcementServiceImpl) withTransaction(fn func(tx *gorm.DB) error) error {
@@ -71,7 +79,7 @@ func (s *announcementServiceImpl) Create(data request.AnnouncementCreateRequest)
 		return nil, err
 	}
 
-	res := response.AnnouncementModelToAnnouncementResponse(result)
+	res := response.AnnouncementModelToAnnouncementResponse(result, s.driveService)
 	return res, nil
 }
 
@@ -92,6 +100,15 @@ func (s *announcementServiceImpl) Update(id string, data request.AnnouncementUpd
 			return err
 		}
 
+		if len(data.DeleteAttachments) != 0 {
+			for _, attachmentID := range data.DeleteAttachments {
+				err := s.driveService.DeleteFile(attachmentID)
+				if err != nil {
+					return err
+				}
+			}
+		}
+
 		result = updated
 		return nil
 	})
@@ -100,7 +117,7 @@ func (s *announcementServiceImpl) Update(id string, data request.AnnouncementUpd
 		return nil, err
 	}
 
-	res := response.AnnouncementModelToAnnouncementResponse(result)
+	res := response.AnnouncementModelToAnnouncementResponse(result, s.driveService)
 	return res, nil
 }
 
@@ -110,7 +127,7 @@ func (s *announcementServiceImpl) FindAll(rtID string) (response.AnnouncementRes
 		return nil, err
 	}
 
-	resp := response.AnnouncementListToResponse(result)
+	resp := response.AnnouncementListToResponse(result, s.driveService)
 	return resp, nil
 }
 
@@ -120,7 +137,7 @@ func (s *announcementServiceImpl) FindByID(id string) (*response.AnnouncementRes
 		return nil, err
 	}
 
-	resp := response.AnnouncementModelToAnnouncementResponse(result)
+	resp := response.AnnouncementModelToAnnouncementResponse(result, s.driveService)
 	return resp, err
 }
 
@@ -130,7 +147,7 @@ func (s *announcementServiceImpl) Paginated(pagination utils.Pagination, rtID st
 		return nil, nil, err
 	}
 
-	resp := response.AnnouncementListToResponse(data)
+	resp := response.AnnouncementListToResponse(data, s.driveService)
 	return paginated, &resp, err
 }
 

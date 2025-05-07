@@ -15,6 +15,7 @@ type AnnouncementCreateRequest struct {
 type AnnouncementUpdateRequset struct {
 	ID string `json:"id"`
 	AnnouncementCreateRequest
+	DeleteAttachments []string `json:"delete_attachments"`
 }
 
 func AnnouncementUpdateRequsetToAnnouncementModel(data AnnouncementUpdateRequset) models.Announcement {

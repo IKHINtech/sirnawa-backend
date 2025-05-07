@@ -128,15 +128,15 @@ func (h *announcementHandlerImpl) Update(ctx *fiber.Ctx) error {
 	}
 	req.Attachments = newAttachmentIDs
 
-	// // Handle attachment deletions
-	// if deletes := form.Value["delete_attachments"]; len(deletes) > 0 {
-	// 	req.DeleteAttachments = deletes
-	// }
-
 	// Validate request
 	payload := request.AnnouncementUpdateRequset{
 		ID:                        id,
 		AnnouncementCreateRequest: req,
+	}
+
+	// Handle attachment deletions
+	if deletes := form.Value["delete_attachments"]; len(deletes) > 0 {
+		payload.DeleteAttachments = deletes
 	}
 
 	// Update announcement
@@ -147,71 +147,6 @@ func (h *announcementHandlerImpl) Update(ctx *fiber.Ctx) error {
 
 	return r.Ok(ctx, res, "Announcement updated successfully", nil)
 }
-
-//////////////////////////////////////////////////////////
-
-// // Create Announcement
-// // @Summary Create Announcement
-// // @Descrpiton Create Announcement
-// // @Tags Announcement
-// // @Accept json
-// // @Produce json
-// // @Security Bearer
-// // @Param data body request.AnnouncementCreateRequest true "Create Announcement"
-// // @Success 200 {object} utils.ResponseData
-// // @Failure 400 {object} utils.ResponseData
-// // @Router /announcement [post]
-// func (h *announcementHandlerImpl) Create(ctx *fiber.Ctx) error {
-// 	r := &utils.ResponseHandler{}
-// 	var req request.AnnouncementCreateRequest
-// 	if err := ctx.BodyParser(&req); err != nil {
-// 		return r.BadRequest(ctx, []string{"Body is not valid"})
-// 	}
-//
-// 	middleware.ValidateRequest(req)
-//
-// 	res, err := h.services.Create(req)
-// 	if err != nil {
-// 		return r.BadRequest(ctx, []string{"error:" + err.Error()})
-// 	}
-//
-// 	return r.Created(ctx, res, "Successfully created")
-// }
-//
-// // Update Announcement
-// // @Summary Update Announcement
-// // @Descrpiton Update Announcement
-// // @Tags Announcement
-// // @Accept json
-// // @Produce json
-// // @Security Bearer
-// // @Param data body request.AnnouncementUpdateRequset true "Update Announcement"
-// // @Param id path string true "Announcement id"
-// // @Success 200 {object} utils.ResponseData
-// // @Failure 400 {object} utils.ResponseData
-// // @Router /announcement/{id} [put]
-// func (h *announcementHandlerImpl) Update(ctx *fiber.Ctx) error {
-// 	r := &utils.ResponseHandler{}
-// 	id := ctx.Params("id")
-// 	if id == "" {
-// 		return r.BadRequest(ctx, []string{"id is required"})
-// 	}
-//
-// 	req := new(request.AnnouncementUpdateRequset)
-//
-// 	if err := ctx.BodyParser(&req); err != nil {
-// 		return r.BadRequest(ctx, []string{"Body is not valid"})
-// 	}
-//
-// 	middleware.ValidateRequest(req)
-//
-// 	res, err := h.services.Update(id, *req)
-// 	if err != nil {
-// 		return r.BadRequest(ctx, []string{"error:" + err.Error()})
-// 	}
-//
-// 	return r.Created(ctx, res, "Successfully created")
-// }
 
 // Get Announcement
 // @Summary Get Announcement

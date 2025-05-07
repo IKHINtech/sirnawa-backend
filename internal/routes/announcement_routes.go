@@ -11,7 +11,7 @@ import (
 
 func AnnouncementRoutes(route fiber.Router, driveService utils.DriveService) {
 	repository := repository.NewAnnouncementRepository(database.DB)
-	services := services.NewAnnouncementServices(repository, database.DB)
+	services := services.NewAnnouncementServices(repository, driveService, database.DB)
 	handlers := handlers.NewAnnouncementHandler(services, driveService)
 
 	route.Get("/", handlers.Paginated)
