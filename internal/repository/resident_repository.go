@@ -27,7 +27,7 @@ func NewResidentRepository(db *gorm.DB) ResidentRepository {
 func (r *residentRepositoryImpl) Paginated(pagination utils.Pagination, rt_id, search string) (*utils.Pagination, models.Residents, error) {
 	var datas models.Residents
 
-	query := r.db.Table("residents").Select("residents.*")
+	query := r.db.Model(&models.Resident{}).Select("residents.*")
 
 	if rt_id != "" {
 		query = query.
