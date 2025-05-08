@@ -30,6 +30,11 @@ func AnnouncementModelToAnnouncementResponse(data *models.Announcement,
 	for i, attachment := range data.Attachments {
 		attachmentUrls[i] = driveService.GetFileURL(attachment)
 	}
+
+	var creator string
+	if data.User.ID != "" {
+		creator = data.User.Resident.Name
+	}
 	return &AnnouncementResponse{
 		BaseResponse:   base,
 		RtID:           data.RtID,
@@ -37,7 +42,7 @@ func AnnouncementModelToAnnouncementResponse(data *models.Announcement,
 		Content:        data.Content,
 		CreatedBy:      data.CreatedBy,
 		Attachments:    data.Attachments,
-		Creator:        data.User.Resident.Name,
+		Creator:        creator,
 		AttachmentUrls: attachmentUrls,
 	}
 }
