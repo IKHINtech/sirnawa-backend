@@ -4,7 +4,9 @@ import "github.com/IKHINtech/sirnawa-backend/internal/models"
 
 type HousingAreaResponse struct {
 	BaseResponse
-	Name string `json:"name"`
+	Name      string  `json:"name"`
+	Latitude  float64 `json:"latitude,omitempty"`
+	Longitude float64 `json:"longitude,omitempty"`
 }
 
 type HousingAreaResponses []HousingAreaResponse
@@ -18,6 +20,8 @@ func HousingAreaModelToHousingAreaResponse(data *models.HousingArea) *HousingAre
 	return &HousingAreaResponse{
 		Name:         data.Name,
 		BaseResponse: base,
+		Latitude:     data.Latitude,
+		Longitude:    data.Longitude,
 	}
 }
 

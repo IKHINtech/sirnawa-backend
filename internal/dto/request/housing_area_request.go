@@ -3,7 +3,9 @@ package request
 import "github.com/IKHINtech/sirnawa-backend/internal/models"
 
 type HousingAreaCreateRequest struct {
-	Name string `json:"name"`
+	Name      string  `json:"name"`
+	Latitude  float64 `json:"latitude,omitempty"`
+	Longitude float64 `json:"longitude,omitempty"`
 }
 
 type HousingAreaUpdateRequset struct {
@@ -18,6 +20,8 @@ func HousingAreaUpdateRequsetToHousingAreaModel(data HousingAreaUpdateRequset) m
 	return models.HousingArea{
 		Name:      data.Name,
 		BaseModel: base,
+		Latitude:  data.Latitude,
+		Longitude: data.Longitude,
 	}
 }
 
