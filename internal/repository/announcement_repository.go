@@ -25,7 +25,7 @@ func NewAnnouncementRepository(db *gorm.DB) AnnouncementRepository {
 
 func (r *announcementRepositoryImpl) Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, models.Announcements, error) {
 	var datas models.Announcements
-	query := r.db
+	query := r.db.Preload("User").Preload("User.Resident")
 
 	if rtID != "" {
 		query = query.Where("rt_id = ?", rtID)
@@ -56,7 +56,7 @@ func (r *announcementRepositoryImpl) Update(tx *gorm.DB, id string, data models.
 func (r *announcementRepositoryImpl) FindByID(id string) (*models.Announcement, error) {
 	var data models.Announcement
 
-	err := r.db.First(&data, "id = ?", id).Error
+	err := r.db.Preload("User").Preload("User.Resident").First(&data, "id = ?", id).Error
 	if err != nil {
 		return nil, err
 	}
@@ -66,7 +66,7 @@ func (r *announcementRepositoryImpl) FindByID(id string) (*models.Announcement, 
 func (r *announcementRepositoryImpl) FindAll(rtID string) (models.Announcements, error) {
 	var data models.Announcements
 
-	query := r.db
+	query := r.db.Preload("User").Preload("User.Resident")
 	if rtID != "" {
 		query = query.Where("rt_id = ?", rtID)
 	}

@@ -11,6 +11,7 @@ type AnnouncementResponse struct {
 	Title          string   `json:"title"`
 	Content        string   `json:"content"`
 	CreatedBy      string   `json:"created_by"`
+	Creator        string   `json:"creator"`
 	Attachments    []string `json:"attachments"`
 	AttachmentUrls []string `json:"attachment_urls"`
 }
@@ -36,6 +37,7 @@ func AnnouncementModelToAnnouncementResponse(data *models.Announcement,
 		Content:        data.Content,
 		CreatedBy:      data.CreatedBy,
 		Attachments:    data.Attachments,
+		Creator:        data.User.Resident.Name,
 		AttachmentUrls: attachmentUrls,
 	}
 }
