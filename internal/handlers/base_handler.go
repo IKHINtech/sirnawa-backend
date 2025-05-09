@@ -37,7 +37,7 @@ func (h *baseHandlerImpl) Create(ctx *fiber.Ctx) {
 
 	res, err := h.services.Create(req)
 	if err != nil {
-		r.BadRequest(ctx, []string{"error:" + err.Error()})
+		r.BadRequest(ctx, []string{err.Error()})
 		return
 	}
 
@@ -63,7 +63,7 @@ func (h *baseHandlerImpl) Update(ctx *fiber.Ctx) {
 
 	res, err := h.services.Update(id, *req)
 	if err != nil {
-		r.BadRequest(ctx, []string{"error:" + err.Error()})
+		r.BadRequest(ctx, []string{err.Error()})
 		return
 	}
 
@@ -77,7 +77,7 @@ func (h *baseHandlerImpl) Paginated(ctx *fiber.Ctx) {
 
 	meta, data, err := h.services.Paginated(paginate)
 	if err != nil {
-		r.BadRequest(ctx, []string{"error:" + err.Error()})
+		r.BadRequest(ctx, []string{err.Error()})
 		return
 	}
 	r.Ok(ctx, data, "Successfully get data", meta)
@@ -87,7 +87,7 @@ func (h *baseHandlerImpl) FindAll(ctx *fiber.Ctx) {
 	r := &utils.ResponseHandler{}
 	res, err := h.services.FindAll()
 	if err != nil {
-		r.BadRequest(ctx, []string{"error:" + err.Error()})
+		r.BadRequest(ctx, []string{err.Error()})
 		return
 	}
 	r.Ok(ctx, res, "Successfully get data", nil)
@@ -103,7 +103,7 @@ func (h *baseHandlerImpl) FindByID(ctx *fiber.Ctx) {
 
 	res, err := h.services.FindByID(id)
 	if err != nil {
-		r.BadRequest(ctx, []string{"error:" + err.Error()})
+		r.BadRequest(ctx, []string{err.Error()})
 		return
 	}
 	r.Ok(ctx, res, "Successfully get data", nil)
@@ -119,7 +119,7 @@ func (h *baseHandlerImpl) Delete(ctx *fiber.Ctx) {
 
 	err := h.services.Delete(id)
 	if err != nil {
-		r.BadRequest(ctx, []string{"error:" + err.Error()})
+		r.BadRequest(ctx, []string{err.Error()})
 		return
 	}
 	r.Ok(ctx, nil, "Successfully deleted", nil)

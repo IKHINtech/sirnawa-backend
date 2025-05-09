@@ -47,7 +47,7 @@ func (h *residentHandlerImpl) Create(ctx *fiber.Ctx) error {
 
 	res, err := h.services.Create(req)
 	if err != nil {
-		return r.BadRequest(ctx, []string{"error:" + err.Error()})
+		return r.BadRequest(ctx, []string{err.Error()})
 	}
 
 	return r.Created(ctx, res, "Successfully created")
@@ -82,7 +82,7 @@ func (h *residentHandlerImpl) Update(ctx *fiber.Ctx) error {
 
 	res, err := h.services.Update(id, *req)
 	if err != nil {
-		return r.BadRequest(ctx, []string{"error:" + err.Error()})
+		return r.BadRequest(ctx, []string{err.Error()})
 	}
 
 	return r.Created(ctx, res, "Successfully created")
@@ -119,12 +119,12 @@ func (h *residentHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 
 		meta, data, err = h.services.Paginated(paginate, rt_id, search)
 		if err != nil {
-			return r.BadRequest(ctx, []string{"error:" + err.Error()})
+			return r.BadRequest(ctx, []string{err.Error()})
 		}
 	} else {
 		res, err := h.services.FindAll(rt_id, search)
 		if err != nil {
-			return r.BadRequest(ctx, []string{"error:" + err.Error()})
+			return r.BadRequest(ctx, []string{err.Error()})
 		}
 		data = &res
 	}
@@ -151,7 +151,7 @@ func (h *residentHandlerImpl) FindByID(ctx *fiber.Ctx) error {
 
 	res, err := h.services.FindByID(id)
 	if err != nil {
-		return r.BadRequest(ctx, []string{"error:" + err.Error()})
+		return r.BadRequest(ctx, []string{err.Error()})
 	}
 	return r.Ok(ctx, res, "Successfully get data", nil)
 }
@@ -176,7 +176,7 @@ func (h *residentHandlerImpl) Delete(ctx *fiber.Ctx) error {
 
 	err := h.services.Delete(id)
 	if err != nil {
-		return r.BadRequest(ctx, []string{"error:" + err.Error()})
+		return r.BadRequest(ctx, []string{err.Error()})
 	}
 	return r.Ok(ctx, nil, "Successfully deleted", nil)
 }

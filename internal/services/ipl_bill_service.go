@@ -14,8 +14,8 @@ type IplBillService interface {
 	Update(id string, data request.IplBillUpdateRequset) (*response.IplBillResponse, error)
 	FindByID(id string) (*response.IplBillResponse, error)
 	Delete(id string) error
-	FindAll(rtID string) (response.IplBillResponses, error)
-	Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, *response.IplBillResponses, error)
+	FindAll(rtID, houseID, status string, month, years int) (response.IplBillResponses, error)
+	Paginated(pagination utils.Pagination, rtID, houseID, status string, month, year int) (*utils.Pagination, *response.IplBillResponses, error)
 }
 
 type iplBillServiceImpl struct {
@@ -104,8 +104,8 @@ func (s *iplBillServiceImpl) Update(id string, data request.IplBillUpdateRequset
 	return res, nil
 }
 
-func (s *iplBillServiceImpl) FindAll(rtID string) (response.IplBillResponses, error) {
-	result, err := s.repository.FindAll(rtID)
+func (s *iplBillServiceImpl) FindAll(rtID, houseID, status string, month, year int) (response.IplBillResponses, error) {
+	result, err := s.repository.FindAll(rtID, houseID, status, month, year)
 	if err != nil {
 		return nil, err
 	}
@@ -124,8 +124,8 @@ func (s *iplBillServiceImpl) FindByID(id string) (*response.IplBillResponse, err
 	return resp, err
 }
 
-func (s *iplBillServiceImpl) Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, *response.IplBillResponses, error) {
-	paginated, data, err := s.repository.Paginated(pagination, rtID)
+func (s *iplBillServiceImpl) Paginated(pagination utils.Pagination, rtID, houseID, status string, month, year int) (*utils.Pagination, *response.IplBillResponses, error) {
+	paginated, data, err := s.repository.Paginated(pagination, rtID, houseID, status, month, year)
 	if err != nil {
 		return nil, nil, err
 	}

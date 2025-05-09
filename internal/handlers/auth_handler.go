@@ -390,7 +390,7 @@ func Logout(c *fiber.Ctx) error {
 // @Param request body request.VerifyCodeRequest true "Forgot Password Request"
 // @Success 200 {object} utils.ResponseData
 // @Failure 400 {object} utils.ErrorResponse
-// @Router /auth/send-forgot-password-verification [post]
+// @Router /auth/forgot-password-verification [post]
 func ForgotPassword(c *fiber.Ctx) error {
 	h := utils.ResponseHandler{}
 

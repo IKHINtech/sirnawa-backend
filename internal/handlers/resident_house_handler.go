@@ -45,7 +45,7 @@ func (h *residentHouseHandlerImpl) AssignResidentToHouse(ctx *fiber.Ctx) error {
 
 	res, err := h.services.AssignResidentToHouse(req)
 	if err != nil {
-		return r.BadRequest(ctx, []string{"error:" + err.Error()})
+		return r.BadRequest(ctx, []string{err.Error()})
 	}
 
 	return r.Created(ctx, res, "Successfully created")
@@ -71,7 +71,7 @@ func (h *residentHouseHandlerImpl) Delete(ctx *fiber.Ctx) error {
 
 	err := h.services.Delete(id)
 	if err != nil {
-		return r.BadRequest(ctx, []string{"error:" + err.Error()})
+		return r.BadRequest(ctx, []string{err.Error()})
 	}
 	return r.Ok(ctx, nil, "Successfully deleted", nil)
 }
@@ -96,7 +96,7 @@ func (h *residentHouseHandlerImpl) ChangeToPrimary(ctx *fiber.Ctx) error {
 
 	err := h.services.ChangeToPrimary(id)
 	if err != nil {
-		return r.BadRequest(ctx, []string{"error:" + err.Error()})
+		return r.BadRequest(ctx, []string{err.Error()})
 	}
 	return r.Ok(ctx, nil, "Successfully deleted", nil)
 }
@@ -121,7 +121,7 @@ func (h *residentHouseHandlerImpl) FindByHouseID(ctx *fiber.Ctx) error {
 	}
 	res, err := h.services.FindByHouseID(houseID)
 	if err != nil {
-		return r.BadRequest(ctx, []string{"error:" + err.Error()})
+		return r.BadRequest(ctx, []string{err.Error()})
 	}
 
 	return r.Ok(ctx, res, "Successfully get data", nil)

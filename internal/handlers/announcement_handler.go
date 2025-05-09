@@ -180,12 +180,12 @@ func (h *announcementHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 
 		meta, data, err = h.services.Paginated(paginate, rtID)
 		if err != nil {
-			return r.BadRequest(ctx, []string{"error:" + err.Error()})
+			return r.BadRequest(ctx, []string{err.Error()})
 		}
 	} else {
 		res, err := h.services.FindAll(rtID)
 		if err != nil {
-			return r.BadRequest(ctx, []string{"error:" + err.Error()})
+			return r.BadRequest(ctx, []string{err.Error()})
 		}
 		data = &res
 	}
@@ -213,7 +213,7 @@ func (h *announcementHandlerImpl) FindByID(ctx *fiber.Ctx) error {
 
 	res, err := h.services.FindByID(id)
 	if err != nil {
-		return r.BadRequest(ctx, []string{"error:" + err.Error()})
+		return r.BadRequest(ctx, []string{err.Error()})
 	}
 	return r.Ok(ctx, res, "Successfully get data", nil)
 }
@@ -238,7 +238,7 @@ func (h *announcementHandlerImpl) Delete(ctx *fiber.Ctx) error {
 
 	err := h.services.Delete(id)
 	if err != nil {
-		return r.BadRequest(ctx, []string{"error:" + err.Error()})
+		return r.BadRequest(ctx, []string{err.Error()})
 	}
 	return r.Ok(ctx, nil, "Successfully deleted", nil)
 }

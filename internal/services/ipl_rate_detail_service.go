@@ -14,8 +14,8 @@ type IplRateDetailService interface {
 	Update(id string, data request.IplRateDetailUpdateRequset) (*response.IplRateDetailResponse, error)
 	FindByID(id string) (*response.IplRateDetailResponse, error)
 	Delete(id string) error
-	FindAll(rtID string) (response.IplRateDetailResponses, error)
-	Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, *response.IplRateDetailResponses, error)
+	FindAll(iplRateID string) (response.IplRateDetailResponses, error)
+	Paginated(pagination utils.Pagination, iplRateID string) (*utils.Pagination, *response.IplRateDetailResponses, error)
 }
 
 type iplRateDetailServiceImpl struct {
@@ -104,8 +104,8 @@ func (s *iplRateDetailServiceImpl) Update(id string, data request.IplRateDetailU
 	return res, nil
 }
 
-func (s *iplRateDetailServiceImpl) FindAll(rtID string) (response.IplRateDetailResponses, error) {
-	result, err := s.repository.FindAll(rtID)
+func (s *iplRateDetailServiceImpl) FindAll(iplRateID string) (response.IplRateDetailResponses, error) {
+	result, err := s.repository.FindAll(iplRateID)
 	if err != nil {
 		return nil, err
 	}
@@ -124,8 +124,8 @@ func (s *iplRateDetailServiceImpl) FindByID(id string) (*response.IplRateDetailR
 	return resp, err
 }
 
-func (s *iplRateDetailServiceImpl) Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, *response.IplRateDetailResponses, error) {
-	paginated, data, err := s.repository.Paginated(pagination, rtID)
+func (s *iplRateDetailServiceImpl) Paginated(pagination utils.Pagination, iplRateID string) (*utils.Pagination, *response.IplRateDetailResponses, error) {
+	paginated, data, err := s.repository.Paginated(pagination, iplRateID)
 	if err != nil {
 		return nil, nil, err
 	}

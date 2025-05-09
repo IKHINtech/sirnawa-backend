@@ -9,12 +9,13 @@ import (
 type IplBillResponse struct {
 	BaseResponse
 	HouseID     string    `json:"house_id"`
+	RtID        string    `json:"rt_id"`
 	Month       int       `json:"month"`
 	Year        int       `json:"year"`
 	TotalAmount int64     `json:"total_amount"`
 	AmountPaid  *int64    `json:"amount_paid"`
 	BalanceDue  *int64    `json:"balance_due"`
-	IplRateID   string    `json:"ipl_rate_id"`
+	IplRateID   *string   `json:"ipl_rate_id"`
 	Status      string    `json:"status"`
 	DueDate     time.Time `json:"due_date"`
 	Penalty     *string   `json:"penalty"`
@@ -31,6 +32,7 @@ func IplBillModelToIplBillResponse(data *models.IplBill) *IplBillResponse {
 	return &IplBillResponse{
 		BaseResponse: base,
 		HouseID:      data.HouseID,
+		RtID:         data.RtID,
 		Month:        data.Month,
 		Year:         data.Year,
 		TotalAmount:  data.TotalAmount,
