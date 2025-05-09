@@ -8,10 +8,10 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func BlockRoutes(route fiber.Router) {
-	repository := repository.NewBlockRepository(database.DB)
-	services := services.NewBlockServices(repository, database.DB)
-	handlers := handlers.NewBlockHandler(services)
+func IplBillRoutes(route fiber.Router) {
+	repository := repository.NewIplBillRepository(database.DB)
+	services := services.NewIplBillServices(repository, database.DB)
+	handlers := handlers.NewIplBillHandler(services)
 
 	route.Get("/", handlers.Paginated)
 	route.Get("/:id", handlers.FindByID)
