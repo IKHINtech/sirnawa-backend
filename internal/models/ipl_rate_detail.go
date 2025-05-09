@@ -9,3 +9,5 @@ type IplRateDetail struct {
 	IplRate IplRate `gorm:"foreignKey:IplRateID" json:"ipl_rate"`
 	Item    Item    `gorm:"foreignKey:ItemID" json:"item"`
 }
+
+type IplRateDetails []IplRateDetail

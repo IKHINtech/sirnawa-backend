@@ -18,3 +18,5 @@ type IplBill struct {
 
 	House House `gorm:"foreignKey:HouseID" json:"house"`
 }
+
+type IplBills []IplBill

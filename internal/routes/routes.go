@@ -28,7 +28,6 @@ func SetupRoutesApp(app *fiber.App, driveService utils.DriveService) {
 	ShopRoutes(app.Group("/shop", middleware.Protected()))
 	ShopProductRoutes(app.Group("/shop-product", middleware.Protected()))
 	HousingAreaRoutes(app.Group("/housing-area", middleware.Protected()))
-	IplRoutes(app.Group("/ipl", middleware.Protected()))
 	AnnouncementRoutes(app.Group("/announcement", middleware.Protected()), driveService)
 	ResidentHouseRoutes(app.Group("/resident-house", middleware.Protected()))
 

@@ -9,3 +9,5 @@ type IplBillDetail struct {
 	Note      string  `json:"note" gorm:"type:text"`
 	SubAmount int64   `json:"sub_amount"`
 }
+
+type IplBillDetails []IplBillDetail
