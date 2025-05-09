@@ -6,6 +6,7 @@ type RondaGroupResponse struct {
 	BaseResponse
 	Name  string `json:"name"`
 	Order uint   `json:"order"`
+	RtID  string `json:"rt_id"`
 }
 
 type RondaGroupResponses []RondaGroupResponse
@@ -17,9 +18,10 @@ func RondaGroupModelToRondaGroupResponse(data *models.RondaGroup) *RondaGroupRes
 		UpdatedAt: data.UpdatedAt,
 	}
 	return &RondaGroupResponse{
-		Name:         data.Name,
 		BaseResponse: base,
 		Order:        data.Order,
+		Name:         data.Name,
+		RtID:         data.RtID,
 	}
 }
 
