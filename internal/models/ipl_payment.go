@@ -4,15 +4,16 @@ import "time"
 
 type IplPayment struct {
 	BaseModel
-	HouseID string           `gorm:"not null" json:"house_id"`
-	House   House            `gorm:"foreignKey:HouseID" json:"house"`
-	Month   int              `gorm:"not null" json:"month"`
-	Year    int              `gorm:"not null" json:"year"`
-	Amount  float64          `gorm:"not null" json:"amount"`
-	IplID   string           `gorm:"not null" json:"ipl_id"`
-	Ipl     Ipl              `gorm:"foreignKey:IplID" json:"ipl"`
-	Status  IplPaymentStatus `gorm:"default:unpaid;type:ipl_payment_status" json:"status"` // paid/unpaid
-	PaidAt  *time.Time       `gorm:"null" json:"paid_at,omitempty"`
+	IplBillID          string             `json:"ipl_bill_id" gorm:"not null"`
+	PaidAt             time.Time          `gorm:"not null" json:"paid_at,omitempty"`
+	AmountPaid         int64              `json:"amount_paid" gorm:"not null"`
+	IplPaymentMethod   PaymentMethod      `json:"payment_method" gorm:"not null"`
+	Evidence           string             `json:"evidence" gorm:"type:text"`
+	VerifiedBy         *string            `json:"verified_by" gorm:"null"`
+	VerificationStatus VerificationStatus `json:"verification_status" gorm:"not null;default:pending"`
+	Notes              string             `json:"notes" gorm:"type:text"`
+
+	IplBill IplBill `json:"ipl_bill" gorm:"foreignKey:IplBillID"`
 }
 
 type IplPayments []IplPayment

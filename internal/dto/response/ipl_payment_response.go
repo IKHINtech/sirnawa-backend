@@ -8,13 +8,14 @@ import (
 
 type IplPaymentResponse struct {
 	BaseResponse
-
-	HouseID string     `json:"house_id"`
-	Month   int        `json:"month"`
-	Year    int        `json:"year"`
-	Amount  float64    `json:"amount"`
-	Status  string     `json:"status"` // paid/unpaid
-	PaidAt  *time.Time `json:"paid_at,omitempty"`
+	IplBillID          string    `json:"ipl_bill_id"`
+	PaidAt             time.Time `json:"paid_at,omitempty"`
+	AmountPaid         int64     `json:"amount_paid"`
+	IplPaymentMethod   string    `json:"payment_method"`
+	Evidence           string    `json:"evidence"`
+	VerifiedBy         *string   `json:"verified"`
+	VerificationStatus string    `json:"verification_status"`
+	Notes              string    `json:"notes"`
 }
 
 type IplPaymentResponses []IplPaymentResponse
@@ -26,13 +27,15 @@ func IplPaymentModelToIplPaymentResponse(data *models.IplPayment) *IplPaymentRes
 		UpdatedAt: data.UpdatedAt,
 	}
 	return &IplPaymentResponse{
-		BaseResponse: base,
-		HouseID:      data.HouseID,
-		Month:        data.Month,
-		Year:         data.Year,
-		Amount:       data.Amount,
-		Status:       string(data.Status),
-		PaidAt:       data.PaidAt,
+		BaseResponse:       base,
+		IplBillID:          data.IplBillID,
+		PaidAt:             data.PaidAt,
+		AmountPaid:         data.AmountPaid,
+		IplPaymentMethod:   data.IplPaymentMethod.ToString(),
+		Evidence:           data.Evidence,
+		Notes:              data.Notes,
+		VerificationStatus: data.VerificationStatus.ToString(),
+		VerifiedBy:         data.VerifiedBy,
 	}
 }
 
