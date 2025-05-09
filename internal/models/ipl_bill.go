@@ -16,7 +16,8 @@ type IplBill struct {
 	DueDate     time.Time     `json:"due_date" gorm:"not null"`
 	Penalty     *string       `json:"penalty" gorm:"null"`
 
-	House House `gorm:"foreignKey:HouseID" json:"house"`
+	House          House          `gorm:"foreignKey:HouseID" json:"house"`
+	IplBillDetails IplBillDetails `json:"items"`
 }
 
 type IplBills []IplBill

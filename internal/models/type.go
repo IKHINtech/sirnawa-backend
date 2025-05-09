@@ -27,6 +27,14 @@ func (p PaymentMethod) ToString() string {
 	return string(p)
 }
 
+func (h HouseType) ToString() string {
+	return string(h)
+}
+
+func (i IplBillStatus) ToString() string {
+	return string(i)
+}
+
 const (
 	Tunai    PaymentMethod = "cash"
 	Transfer PaymentMethod = "transfer"
