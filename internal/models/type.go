@@ -3,7 +3,6 @@ package models
 type (
 	HouseStatus           string
 	RondaAttendanceStatus string
-	IplPaymentStatus      string
 	HouseType             string
 	ItemType              string
 	IplBillStatus         string
@@ -14,6 +13,10 @@ type (
 
 func (r Role) ToString() string {
 	return string(r)
+}
+
+func (i ItemType) ToString() string {
+	return string(i)
 }
 
 func (v VerificationStatus) ToString() string {
@@ -36,11 +39,11 @@ const (
 )
 
 const (
-	IplBillStatusPaid          IplBillStatus = "paid"
-	IplBillStatusUnpaid        IplBillStatus = "unpaid"
-	IplBillStatusOverdue       IplBillStatus = "overdue"
-	IplBillStatusPenalty       IplBillStatus = "penalty"
-	IplBillStatusPartiallyPaid IplBillStatus = "partially_paid"
+	IplBillStatusPaid          IplBillStatus = "paid"           // sudah dibayar
+	IplBillStatusUnpaid        IplBillStatus = "unpaid"         // belum dibayar
+	IplBillStatusOverdue       IplBillStatus = "overdue"        // telat bayar
+	IplBillStatusPenalty       IplBillStatus = "penalty"        // ada denda
+	IplBillStatusPartiallyPaid IplBillStatus = "partially_paid" // kurang bayar
 )
 
 const (
@@ -71,11 +74,6 @@ const (
 const (
 	RondaAttendanceStatusHadir      RondaAttendanceStatus = "hadir"
 	RondaAttendanceStatusTidakHadir RondaAttendanceStatus = "tidak hadir"
-)
-
-const (
-	IplPaymentStatusUnpaid IplPaymentStatus = "unpaid"
-	IplPaymentStatusPaid   IplPaymentStatus = "paid"
 )
 
 // CREATE TYPE house_status AS ENUM ('aktif', 'tidak aktif');
