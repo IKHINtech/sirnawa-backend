@@ -26,8 +26,8 @@ func Connect() {
 
 func Migrate() error {
 	return DB.AutoMigrate(
-		&models.User{},
-		&models.UserVerification{},
+		// &models.User{},
+		// &models.UserVerification{},
 		// &models.Block{},
 		// &models.Announcement{},
 		// &models.House{},
@@ -45,10 +45,14 @@ func Migrate() error {
 		// &models.Rt{},
 		// &models.Shop{},
 		// &models.ShopProduct{},
-		// &models.HousingArea{}, //TODO: migrasi housing area
-		// &models.Ipl{},
-		// &models.IplDetail{},
-		// &models.ResidentHouse{},
-		// &models.UserRT{},
+		&models.HousingArea{},
+		&models.IplBill{},
+		&models.IplBillDetail{},
+		&models.IplPayment{},
+		&models.IplRate{},
+		&models.IplRateDetail{},
+		&models.Item{},
+	// &models.ResidentHouse{},
+	// &models.UserRT{},
 	)
 }
