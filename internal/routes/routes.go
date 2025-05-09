@@ -26,6 +26,11 @@ func SetupRoutesApp(app *fiber.App, driveService utils.DriveService) {
 	RondaGroupMemberRoutes(app.Group("/ronda-group-member", middleware.Protected()))
 	RondaScheduleRoutes(app.Group("/ronda-schedule", middleware.Protected()))
 	ShopRoutes(app.Group("/shop", middleware.Protected()))
+	ItemRoutes(app.Group("/item", middleware.Protected()))
+	IplBillRoutes(app.Group("/ipl-bill", middleware.Protected()))
+	IplBillDetailRoutes(app.Group("/ipl-bill-detail", middleware.Protected()))
+	IplRateRoutes(app.Group("/ipl-rate", middleware.Protected()))
+	IplRateDetailRoutes(app.Group("/ipl-rate-detail", middleware.Protected()))
 	ShopProductRoutes(app.Group("/shop-product", middleware.Protected()))
 	HousingAreaRoutes(app.Group("/housing-area", middleware.Protected()))
 	AnnouncementRoutes(app.Group("/announcement", middleware.Protected()), driveService)
@@ -33,7 +38,7 @@ func SetupRoutesApp(app *fiber.App, driveService utils.DriveService) {
 
 	// Default route
 	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("SIRNAWA BACKEND 🚀")
+		return c.SendString(" My RT 🚀")
 	})
 
 	app.Get("/swagger/*", swagger.HandlerDefault) // default
