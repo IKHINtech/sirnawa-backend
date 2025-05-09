@@ -6,3 +6,6 @@ run:
 
 app-build:
 	docker-compose up --build
+
+build-image:
+	docker compose up --build -d
