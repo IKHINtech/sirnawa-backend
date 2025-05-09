@@ -12,7 +12,7 @@ import (
 type RondaGroupService interface {
 	Create(data request.RondaGroupCreateRequest) (*response.RondaGroupResponse, error)
 	Update(id string, data request.RondaGroupUpdateRequset) (*response.RondaGroupResponse, error)
-	FindByID(id string) (*response.RondaGroupResponse, error)
+	FindByID(id string) (*response.RondaGroupDetailResponse, error)
 	Delete(id string) error
 	FindAll(rtID string) (response.RondaGroupResponses, error)
 	Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, *response.RondaGroupResponses, error)
@@ -114,13 +114,13 @@ func (s *rondaGroupServiceImpl) FindAll(rtID string) (response.RondaGroupRespons
 	return resp, nil
 }
 
-func (s *rondaGroupServiceImpl) FindByID(id string) (*response.RondaGroupResponse, error) {
+func (s *rondaGroupServiceImpl) FindByID(id string) (*response.RondaGroupDetailResponse, error) {
 	result, err := s.repository.FindByID(id)
 	if err != nil {
 		return nil, err
 	}
 
-	resp := response.RondaGroupModelToRondaGroupResponse(result)
+	resp := response.MapRondaGroupDetailResponse(result)
 	return resp, err
 }
 
