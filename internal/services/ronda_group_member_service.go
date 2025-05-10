@@ -1,6 +1,8 @@
 package services
 
 import (
+	"errors"
+
 	"github.com/IKHINtech/sirnawa-backend/internal/dto/request"
 	"github.com/IKHINtech/sirnawa-backend/internal/dto/response"
 	"github.com/IKHINtech/sirnawa-backend/internal/models"
@@ -56,6 +58,16 @@ func (s *rondaGroupMemberServiceImpl) Create(data request.RondaGroupMemberCreate
 	var result *models.RondaGroupMember
 
 	err := s.withTransaction(func(tx *gorm.DB) error {
+		// cek apakah rumah pada payload sudah masuk dalam suatu group, ketika iya maka error, karena 1 rumah 1 group
+		existingAnggota, err := s.repository.FindByID(data.HouseID)
+		if err != nil {
+			return err
+		}
+
+		if existingAnggota != nil {
+			return errors.New("anggota sudah ada di group")
+		}
+
 		payload := request.RondaGroupMemberCreateRequestToRondaGroupMemberModel(data)
 
 		created, err := s.repository.Create(tx, payload)

@@ -1,6 +1,8 @@
 package repository
 
 import (
+	"errors"
+
 	"github.com/IKHINtech/sirnawa-backend/internal/models"
 	"github.com/IKHINtech/sirnawa-backend/pkg/utils"
 	"gorm.io/gorm"
@@ -12,6 +14,7 @@ type RondaGroupMemberRepository interface {
 	FindAll() (models.RondaGroupMembers, error)
 	Paginated(pagination utils.Pagination) (*utils.Pagination, models.RondaGroupMembers, error)
 	FindByID(id string) (*models.RondaGroupMember, error)
+	FindByHouseID(houseID string) (*models.RondaGroupMember, error)
 	GetTotalMember(groupID string) (*int64, error)
 	Delete(id string) error
 }
@@ -53,6 +56,20 @@ func (r *rondaGroupMemberRepositoryImpl) Update(tx *gorm.DB, id string, data mod
 		tx = r.db
 	}
 	err := tx.Model(&models.RondaGroupMember{}).Where("id = ?", id).Updates(data).Error
+	return &data, err
+}
+
+func (r *rondaGroupMemberRepositoryImpl) FindByHouseID(houseID string) (*models.RondaGroupMember, error) {
+	var data models.RondaGroupMember
+
+	err := r.db.First(&data, "house_id = ?", houseID).Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, nil
+		} else {
+			return nil, err
+		}
+	}
 	return &data, err
 }
 
