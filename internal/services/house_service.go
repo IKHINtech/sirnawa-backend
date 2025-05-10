@@ -16,7 +16,7 @@ type HouseService interface {
 	Update(id string, data request.HouseUpdateRequset) (*response.HouseResponse, error)
 	FindByID(id string) (*response.HouseResponseDetail, error)
 	Delete(id string) error
-	FindAll(rtID, blockID, status string) ([]response.HouseResponseDetail, error)
+	FindAll(rtID, blockID, status, isNotInGroupRonda string) ([]response.HouseResponseDetail, error)
 	Paginated(pagination utils.Pagination, rtID, blockID, status string) (*utils.Pagination, *[]response.HouseResponseDetail, error)
 }
 
@@ -131,8 +131,8 @@ func (s *houseServiceImpl) Update(id string, data request.HouseUpdateRequset) (*
 	return res, nil
 }
 
-func (s *houseServiceImpl) FindAll(rtID, blockID, status string) ([]response.HouseResponseDetail, error) {
-	result, err := s.repository.FindAll(rtID, blockID, status)
+func (s *houseServiceImpl) FindAll(rtID, blockID, status, isNotInGroupRonda string) ([]response.HouseResponseDetail, error) {
+	result, err := s.repository.FindAll(rtID, blockID, status, isNotInGroupRonda)
 	if err != nil {
 		return nil, err
 	}

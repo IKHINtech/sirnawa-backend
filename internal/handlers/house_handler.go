@@ -98,6 +98,7 @@ func (h *houseHandlerImpl) Update(ctx *fiber.Ctx) error {
 // @Param paginated query boolean false "Paginated"
 // @Param rt_id query string false "RT ID"
 // @Param block_id query string false "Block ID"
+// @Param not_in_group_ronda query string false "Filter Not In Group Ronda"
 // @Param status query string false "Status Rumah" Enums(aktif, tidak_akfit, kontrakan)
 // @Param page query int false "Page number"
 // @Param page_size query int false "Page size"
@@ -111,6 +112,7 @@ func (h *houseHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 	rt_id := ctx.Query("rt_id", "")
 	block_id := ctx.Query("block_id", "")
 	status := ctx.Query("status", "")
+	isNotInGroupRonda := ctx.Query("not_in_group_ronda", "")
 	isPaginated := ctx.QueryBool("paginated", true)
 	var meta *utils.Pagination
 	var data *[]response.HouseResponseDetail
@@ -124,7 +126,7 @@ func (h *houseHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 			return r.BadRequest(ctx, []string{err.Error()})
 		}
 	} else {
-		res, err := h.services.FindAll(rt_id, block_id, status)
+		res, err := h.services.FindAll(rt_id, block_id, status, isNotInGroupRonda)
 		if err != nil {
 			return r.BadRequest(ctx, []string{err.Error()})
 		}

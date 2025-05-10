@@ -9,7 +9,7 @@ import (
 type HouseRepository interface {
 	Create(tx *gorm.DB, data models.House) (*models.House, error)
 	Update(tx *gorm.DB, id string, data models.House) (*models.House, error)
-	FindAll(rtID, blockID, status string) (models.Houses, error)
+	FindAll(rtID, blockID, status, isNotInGroupRonda string) (models.Houses, error)
 	Paginated(pagination utils.Pagination, rtID, blockID, status string) (*utils.Pagination, models.Houses, error)
 	FindByID(id string) (*models.House, error)
 	Delete(id string) error
@@ -77,7 +77,7 @@ func (r *houseRepositoryImpl) FindByID(id string) (*models.House, error) {
 	return &data, err
 }
 
-func (r *houseRepositoryImpl) FindAll(rtID, blockID, status string) (models.Houses, error) {
+func (r *houseRepositoryImpl) FindAll(rtID, blockID, status string, isNotInGroupRonda string) (models.Houses, error) {
 	var data models.Houses
 
 	query := r.db.Preload("Block")
@@ -91,6 +91,12 @@ func (r *houseRepositoryImpl) FindAll(rtID, blockID, status string) (models.Hous
 
 	if status != "" {
 		query = query.Where("status = ?", status)
+	}
+
+	if isNotInGroupRonda != "" {
+		query = query.Joins("LEFT JOIN ronda_group_members on ronda_group_members.house_id = houses.id").
+			Where("ronda_group_members.house_id IS NULL").
+			Where("houses.status != ?", models.HouseStatusContract)
 	}
 
 	err := query.Find(&data).Error
