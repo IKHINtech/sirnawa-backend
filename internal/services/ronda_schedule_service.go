@@ -19,12 +19,16 @@ type RondaScheduleService interface {
 }
 
 type rondaGroupScheduleServiceImpl struct {
-	repository repository.RondaScheduleRepository
-	db         *gorm.DB
+	repository            repository.RondaScheduleRepository
+	groupMemberRepository repository.RondaGroupMemberRepository
+	db                    *gorm.DB
 }
 
-func NewRondaScheduleServices(repo repository.RondaScheduleRepository, db *gorm.DB) RondaScheduleService {
-	return &rondaGroupScheduleServiceImpl{repository: repo, db: db}
+func NewRondaScheduleServices(repo repository.RondaScheduleRepository,
+	groupMemberRepository repository.RondaGroupMemberRepository,
+	db *gorm.DB,
+) RondaScheduleService {
+	return &rondaGroupScheduleServiceImpl{repository: repo, groupMemberRepository: groupMemberRepository, db: db}
 }
 
 func (s *rondaGroupScheduleServiceImpl) withTransaction(fn func(tx *gorm.DB) error) error {
@@ -71,7 +75,7 @@ func (s *rondaGroupScheduleServiceImpl) Create(data request.RondaScheduleCreateR
 		return nil, err
 	}
 
-	res := response.RondaScheduleModelToRondaScheduleResponse(result)
+	res := response.RondaScheduleModelToRondaScheduleResponse(result, nil)
 	return res, nil
 }
 
@@ -100,17 +104,25 @@ func (s *rondaGroupScheduleServiceImpl) Update(id string, data request.RondaSche
 		return nil, err
 	}
 
-	res := response.RondaScheduleModelToRondaScheduleResponse(result)
+	res := response.RondaScheduleModelToRondaScheduleResponse(result, nil)
 	return res, nil
 }
 
 func (s *rondaGroupScheduleServiceImpl) FindAll() (response.RondaScheduleResponses, error) {
-	result, err := s.repository.FindAll()
+	data, err := s.repository.FindAll()
 	if err != nil {
 		return nil, err
 	}
 
-	resp := response.RondaScheduleListToResponse(result)
+	resp := make(response.RondaScheduleResponses, len(data))
+	for i, item := range data {
+		totalMember, err := s.groupMemberRepository.GetTotalMember(item.GroupID)
+		if err != nil {
+			return nil, err
+		}
+		resp[i] = *response.RondaScheduleModelToRondaScheduleResponse(&item, totalMember)
+	}
+
 	return resp, nil
 }
 
@@ -120,7 +132,7 @@ func (s *rondaGroupScheduleServiceImpl) FindByID(id string) (*response.RondaSche
 		return nil, err
 	}
 
-	resp := response.RondaScheduleModelToRondaScheduleResponse(result)
+	resp := response.RondaScheduleModelToRondaScheduleResponse(result, nil)
 	return resp, err
 }
 
@@ -130,7 +142,14 @@ func (s *rondaGroupScheduleServiceImpl) Paginated(pagination utils.Pagination) (
 		return nil, nil, err
 	}
 
-	resp := response.RondaScheduleListToResponse(data)
+	resp := make(response.RondaScheduleResponses, len(data))
+	for i, item := range data {
+		totalMember, err := s.groupMemberRepository.GetTotalMember(item.GroupID)
+		if err != nil {
+			return nil, nil, err
+		}
+		resp[i] = *response.RondaScheduleModelToRondaScheduleResponse(&item, totalMember)
+	}
 	return paginated, &resp, err
 }
 

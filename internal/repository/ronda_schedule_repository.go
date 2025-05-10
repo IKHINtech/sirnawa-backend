@@ -25,7 +25,7 @@ func NewRondaScheduleRepository(db *gorm.DB) RondaScheduleRepository {
 
 func (r *rondaScheduleRepositoryImpl) Paginated(pagination utils.Pagination) (*utils.Pagination, models.RondaSchedules, error) {
 	var datas models.RondaSchedules
-	query := r.db
+	query := r.db.Preload("Rt").Preload("Group")
 	err := query.Scopes(utils.Paginate(datas, &pagination, query)).Find(&datas).Error
 	return &pagination, datas, err
 }
@@ -52,7 +52,7 @@ func (r *rondaScheduleRepositoryImpl) Update(tx *gorm.DB, id string, data models
 func (r *rondaScheduleRepositoryImpl) FindByID(id string) (*models.RondaSchedule, error) {
 	var data models.RondaSchedule
 
-	err := r.db.First(&data, "id = ?", id).Error
+	err := r.db.Preload("Rt").Preload("Group").First(&data, "id = ?", id).Error
 	if err != nil {
 		return nil, err
 	}
@@ -61,7 +61,7 @@ func (r *rondaScheduleRepositoryImpl) FindByID(id string) (*models.RondaSchedule
 
 func (r *rondaScheduleRepositoryImpl) FindAll() (models.RondaSchedules, error) {
 	var data models.RondaSchedules
-	err := r.db.Find(&data).Error
+	err := r.db.Preload("Rt").Preload("Group").Find(&data).Error
 	return data, err
 }
 

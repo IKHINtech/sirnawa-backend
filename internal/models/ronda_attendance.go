@@ -8,6 +8,7 @@ type RondaAttendance struct {
 	Note            string                `json:"note"`
 	Resident        Resident              `gorm:"foreignKey:ResidentID"`
 	RondaActivity   RondaActivity         `gorm:"foreignKey:RondaActivityID"`
+	// TODO: handel kalo digantikan orang lain
 }
 
 type RondaAttendances []RondaAttendance
