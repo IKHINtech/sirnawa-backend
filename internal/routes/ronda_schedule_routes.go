@@ -9,8 +9,9 @@ import (
 )
 
 func RondaScheduleRoutes(route fiber.Router) {
-	repository := repository.NewRondaScheduleRepository(database.DB)
-	services := services.NewRondaScheduleServices(repository, database.DB)
+	repo := repository.NewRondaScheduleRepository(database.DB)
+	rondaGroupMemberRepo := repository.NewRondaGroupMemberRepository(database.DB)
+	services := services.NewRondaScheduleServices(repo, rondaGroupMemberRepo, database.DB)
 	handlers := handlers.NewRondaScheduleHandler(services)
 
 	route.Get("/", handlers.Paginated)
