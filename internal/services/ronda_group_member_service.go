@@ -59,7 +59,7 @@ func (s *rondaGroupMemberServiceImpl) Create(data request.RondaGroupMemberCreate
 
 	err := s.withTransaction(func(tx *gorm.DB) error {
 		// cek apakah rumah pada payload sudah masuk dalam suatu group, ketika iya maka error, karena 1 rumah 1 group
-		existingAnggota, err := s.repository.FindByID(data.HouseID)
+		existingAnggota, err := s.repository.FindByHouseID(data.HouseID)
 		if err != nil {
 			return err
 		}
