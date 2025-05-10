@@ -25,7 +25,7 @@ func NewRondaGroupRepository(db *gorm.DB) RondaGroupRepository {
 
 func (r *rondaGroupRepositoryImpl) Paginated(pagination utils.Pagination, rtID string) (*utils.Pagination, models.RondaGroups, error) {
 	var datas models.RondaGroups
-	query := r.db
+	query := r.db.Preload("Rt")
 
 	if rtID != "" {
 		query = query.Where("rt_id = ?", rtID)
@@ -56,7 +56,7 @@ func (r *rondaGroupRepositoryImpl) Update(tx *gorm.DB, id string, data models.Ro
 func (r *rondaGroupRepositoryImpl) FindByID(id string) (*models.RondaGroup, error) {
 	var data models.RondaGroup
 
-	err := r.db.Preload("Members").Preload("Members.Resident").Preload("Members.House").First(&data, "id = ?", id).Error
+	err := r.db.Preload("Rt").Preload("Members").Preload("Members.Resident").Preload("Members.House").First(&data, "id = ?", id).Error
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +65,7 @@ func (r *rondaGroupRepositoryImpl) FindByID(id string) (*models.RondaGroup, erro
 
 func (r *rondaGroupRepositoryImpl) FindAll(rtID string) (models.RondaGroups, error) {
 	var data models.RondaGroups
-	query := r.db
+	query := r.db.Preload("Rt")
 
 	if rtID != "" {
 		query = query.Where("rt_id = ?", rtID)

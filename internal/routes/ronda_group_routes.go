@@ -9,8 +9,9 @@ import (
 )
 
 func RondaGroupRoutes(route fiber.Router) {
-	repository := repository.NewRondaGroupRepository(database.DB)
-	services := services.NewRondaGroupServices(repository, database.DB)
+	repo := repository.NewRondaGroupRepository(database.DB)
+	memberRepo := repository.NewRondaGroupMemberRepository(database.DB)
+	services := services.NewRondaGroupServices(repo, memberRepo, database.DB)
 	handlers := handlers.NewRondaGroupHandler(services)
 
 	route.Get("/", handlers.Paginated)

@@ -20,11 +20,12 @@ type RondaGroupService interface {
 
 type rondaGroupServiceImpl struct {
 	repository repository.RondaGroupRepository
+	memberRepo repository.RondaGroupMemberRepository
 	db         *gorm.DB
 }
 
-func NewRondaGroupServices(repo repository.RondaGroupRepository, db *gorm.DB) RondaGroupService {
-	return &rondaGroupServiceImpl{repository: repo, db: db}
+func NewRondaGroupServices(repo repository.RondaGroupRepository, memberRepo repository.RondaGroupMemberRepository, db *gorm.DB) RondaGroupService {
+	return &rondaGroupServiceImpl{repository: repo, memberRepo: memberRepo, db: db}
 }
 
 func (s *rondaGroupServiceImpl) withTransaction(fn func(tx *gorm.DB) error) error {
@@ -71,7 +72,7 @@ func (s *rondaGroupServiceImpl) Create(data request.RondaGroupCreateRequest) (*r
 		return nil, err
 	}
 
-	res := response.RondaGroupModelToRondaGroupResponse(result)
+	res := response.RondaGroupModelToRondaGroupResponse(result, nil)
 	return res, nil
 }
 
@@ -100,7 +101,7 @@ func (s *rondaGroupServiceImpl) Update(id string, data request.RondaGroupUpdateR
 		return nil, err
 	}
 
-	res := response.RondaGroupModelToRondaGroupResponse(result)
+	res := response.RondaGroupModelToRondaGroupResponse(result, nil)
 	return res, nil
 }
 
@@ -110,7 +111,14 @@ func (s *rondaGroupServiceImpl) FindAll(rtID string) (response.RondaGroupRespons
 		return nil, err
 	}
 
-	resp := response.RondaGroupListToResponse(result)
+	resp := make(response.RondaGroupResponses, len(result))
+	for i, item := range result {
+		totalMember, err := s.memberRepo.GetTotalMember(item.ID)
+		if err != nil {
+			return nil, err
+		}
+		resp[i] = *response.RondaGroupModelToRondaGroupResponse(&item, totalMember)
+	}
 	return resp, nil
 }
 

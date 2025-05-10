@@ -12,6 +12,7 @@ type RondaGroupMemberRepository interface {
 	FindAll() (models.RondaGroupMembers, error)
 	Paginated(pagination utils.Pagination) (*utils.Pagination, models.RondaGroupMembers, error)
 	FindByID(id string) (*models.RondaGroupMember, error)
+	GetTotalMember(groupID string) (*int64, error)
 	Delete(id string) error
 }
 
@@ -21,6 +22,12 @@ type rondaGroupMemberRepositoryImpl struct {
 
 func NewRondaGroupMemberRepository(db *gorm.DB) RondaGroupMemberRepository {
 	return &rondaGroupMemberRepositoryImpl{db: db}
+}
+
+func (r *rondaGroupMemberRepositoryImpl) GetTotalMember(groupID string) (*int64, error) {
+	var data int64
+	err := r.db.Model(&models.RondaGroupMember{}).Where("group_id = ?", groupID).Count(&data).Error
+	return &data, err
 }
 
 func (r *rondaGroupMemberRepositoryImpl) Paginated(pagination utils.Pagination) (*utils.Pagination, models.RondaGroupMembers, error) {
