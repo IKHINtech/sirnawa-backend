@@ -40,7 +40,7 @@ func (h *rondaScheduleHandlerImpl) Create(ctx *fiber.Ctx) error {
 	r := &utils.ResponseHandler{}
 	var req request.RondaScheduleCreateRequest
 	if err := ctx.BodyParser(&req); err != nil {
-		return r.BadRequest(ctx, []string{"Body is not valid"})
+		return r.BadRequest(ctx, []string{"Body is not valid, error: " + err.Error()})
 	}
 
 	middleware.ValidateRequest(req)
