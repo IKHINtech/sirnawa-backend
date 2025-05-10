@@ -138,7 +138,14 @@ func (s *rondaGroupServiceImpl) Paginated(pagination utils.Pagination, rtID stri
 		return nil, nil, err
 	}
 
-	resp := response.RondaGroupListToResponse(data)
+	resp := make(response.RondaGroupResponses, len(data))
+	for i, item := range data {
+		totalMember, err := s.memberRepo.GetTotalMember(item.ID)
+		if err != nil {
+			return nil, nil, err
+		}
+		resp[i] = *response.RondaGroupModelToRondaGroupResponse(&item, totalMember)
+	}
 	return paginated, &resp, err
 }
 
