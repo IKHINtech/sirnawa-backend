@@ -27,7 +27,7 @@ func NewResidentRepository(db *gorm.DB) ResidentRepository {
 func (r *residentRepositoryImpl) Paginated(pagination utils.Pagination, rt_id, search string) (*utils.Pagination, models.Residents, error) {
 	var datas models.Residents
 
-	query := r.db.Model(&models.Resident{}).Distinct("residents.nik")
+	query := r.db.Model(&models.Resident{}).Distinct("residents.nik", "residents.created_at")
 
 	if rt_id != "" {
 		query = query.
@@ -90,7 +90,7 @@ func (r *residentRepositoryImpl) FindByNIK(nik string) (*models.Resident, error)
 func (r *residentRepositoryImpl) FindAll(rt_id, search string) (models.Residents, error) {
 	var data models.Residents
 
-	query := r.db.Model(&models.Resident{}).Distinct("residents.nik")
+	query := r.db.Model(&models.Resident{}).Distinct("residents.nik", "residents.created_at")
 
 	if rt_id != "" {
 		query = query.
