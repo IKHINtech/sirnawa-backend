@@ -116,6 +116,7 @@ func (h *residentHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 	var err error
 	if isPaginated {
 		paginate := utils.GetPaginationParams(ctx)
+		paginate.SortBy = "residents.created_at"
 
 		meta, data, err = h.services.Paginated(paginate, rt_id, search)
 		if err != nil {
