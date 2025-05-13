@@ -24,6 +24,9 @@ type IplBillResponse struct {
 type IplBillResponses []IplBillResponse
 
 func IplBillModelToIplBillResponse(data *models.IplBill) *IplBillResponse {
+	if data == nil {
+		return nil
+	}
 	base := BaseResponse{
 		ID:        data.ID,
 		CreatedAt: data.CreatedAt,
