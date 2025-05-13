@@ -2,5 +2,6 @@ package response
 
 type DashboardMobileResponse struct {
 	RondaSchedule *RondaScheduleResponse `json:"ronda_schedule"`
-	Announcecment *AnnouncementResponse  `json:"announcement"`
+	Announcement  *AnnouncementResponse  `json:"announcement"`
+	IplBill       *IplBillResponse       `json:"ipl_bill"`
 }

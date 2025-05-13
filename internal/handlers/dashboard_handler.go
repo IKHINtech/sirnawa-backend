@@ -18,19 +18,26 @@ import (
 // @Produce json
 // @Security Bearer
 // @Param rt_id query string true "RT ID"
+// @Param house_id query string true "House ID"
 // @Success 200 {object} utils.ResponseData
 // @Failure 400 {object} utils.ErrorResponse
 // @Router /dashboard/mobile [get]
 func DashboardMobile(c *fiber.Ctx, driveService utils.DriveService) error {
 	r := &utils.ResponseHandler{}
 	rtID := c.Query("rt_id")
+	houseID := c.Query("house_id")
 	if rtID == "" {
 		return r.BadRequest(c, []string{"id is required"})
 	}
 
+	if houseID == "" {
+		return r.Ok(c, nil, "house_id is required", nil)
+	}
+
+	db := database.DB
+
 	// get ronda jadwal ronda diminggu ini limit 1
 	var schedules *models.RondaSchedule
-	db := database.DB
 
 	now := time.Now()
 	start, end := utils.GetWeekRange(now)
@@ -41,6 +48,18 @@ func DashboardMobile(c *fiber.Ctx, driveService utils.DriveService) error {
 		return r.BadRequest(c, []string{"error", err.Error()})
 	}
 
+	var totalMember int64
+
+	if schedules != nil {
+		err = db.Model(&models.RondaGroupMember{}).Where("group_id = ?", schedules.GroupID).Count(&totalMember).Error
+	}
+	// get bill ipl pada bulan ini dan tahun ini
+	var billIpl *models.IplBill
+
+	err = db.Where("month = ? AND year = ? AND rt_id = ? AND house_id = ?", now.Month(), now.Year(), rtID, houseID).First(&billIpl).Error
+	if err != nil {
+		return r.BadRequest(c, []string{"error", err.Error()})
+	}
 	// get pengumuman limit 1
 	var announcement *models.Announcement
 
@@ -50,8 +69,9 @@ func DashboardMobile(c *fiber.Ctx, driveService utils.DriveService) error {
 	}
 
 	resp := response.DashboardMobileResponse{
-		RondaSchedule: response.RondaScheduleModelToRondaScheduleResponse(schedules, nil),
-		Announcecment: response.AnnouncementModelToAnnouncementResponse(announcement, driveService),
+		RondaSchedule: response.RondaScheduleModelToRondaScheduleResponse(schedules, &totalMember),
+		Announcement:  response.AnnouncementModelToAnnouncementResponse(announcement, driveService),
+		IplBill:       response.IplBillModelToIplBillResponse(billIpl),
 	}
 	// get event limit 1
 	return r.Ok(c, resp, "success", nil)
