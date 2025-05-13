@@ -10,7 +10,7 @@ import (
 
 func SetupRoutesApp(app *fiber.App, driveService utils.DriveService) {
 	AuthRoutes(app.Group("/auth"))
-	DashboardRoutes(app.Group("/dashboard"))
+	DashboardRoutes(app.Group("/dashboard"), driveService)
 	BlockRoutes(app.Group("/block", middleware.Protected()))
 	RtRoutes(app.Group("/rt", middleware.Protected()))
 	RwRoutes(app.Group("/rw", middleware.Protected()))
