@@ -54,10 +54,10 @@ func DashboardMobile(c *fiber.Ctx, driveService utils.DriveService) error {
 		}
 	}
 
-	var totalMember int64
+	var totalMember *int64
 
 	if schedules != nil {
-		err = db.Model(&models.RondaGroupMember{}).Where("group_id = ?", schedules.GroupID).Count(&totalMember).Error
+		err = db.Model(&models.RondaGroupMember{}).Where("group_id = ?", schedules.GroupID).Count(totalMember).Error
 	}
 
 	if err != nil {
@@ -87,7 +87,7 @@ func DashboardMobile(c *fiber.Ctx, driveService utils.DriveService) error {
 	}
 
 	resp := response.DashboardMobileResponse{
-		RondaSchedule: response.RondaScheduleModelToRondaScheduleResponse(schedules, &totalMember),
+		RondaSchedule: response.RondaScheduleModelToRondaScheduleResponse(schedules, totalMember),
 		Announcement:  response.AnnouncementModelToAnnouncementResponse(announcement, driveService),
 		IplBill:       response.IplBillModelToIplBillResponse(billIpl),
 	}
