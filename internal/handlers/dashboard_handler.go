@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"errors"
 	"time"
 
 	"github.com/IKHINtech/sirnawa-backend/internal/database"
@@ -8,6 +9,7 @@ import (
 	"github.com/IKHINtech/sirnawa-backend/internal/models"
 	"github.com/IKHINtech/sirnawa-backend/pkg/utils"
 	"github.com/gofiber/fiber/v2"
+	"gorm.io/gorm"
 )
 
 // Get Data DashboardMobile
@@ -45,7 +47,11 @@ func DashboardMobile(c *fiber.Ctx, driveService utils.DriveService) error {
 		Where("rt_id = ? AND (date BETWEEN ? AND ?)", rtID, start, end).
 		First(&schedules).Error
 	if err != nil {
-		return r.BadRequest(c, []string{"error", err.Error()})
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			schedules = nil
+		} else {
+			return r.BadRequest(c, []string{"error", err.Error()})
+		}
 	}
 
 	var totalMember int64
@@ -53,19 +59,31 @@ func DashboardMobile(c *fiber.Ctx, driveService utils.DriveService) error {
 	if schedules != nil {
 		err = db.Model(&models.RondaGroupMember{}).Where("group_id = ?", schedules.GroupID).Count(&totalMember).Error
 	}
+
+	if err != nil {
+		return r.BadRequest(c, []string{"error", err.Error()})
+	}
 	// get bill ipl pada bulan ini dan tahun ini
 	var billIpl *models.IplBill
 
 	err = db.Where("month = ? AND year = ? AND rt_id = ? AND house_id = ?", now.Month(), now.Year(), rtID, houseID).First(&billIpl).Error
 	if err != nil {
-		return r.BadRequest(c, []string{"error", err.Error()})
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			billIpl = nil
+		} else {
+			return r.BadRequest(c, []string{"error", err.Error()})
+		}
 	}
 	// get pengumuman limit 1
 	var announcement *models.Announcement
 
 	err = db.Preload("User").Preload("User.Resident").Preload("Rt").Where("rt_id = ?", rtID).Order("created_at DESC").First(&announcement).Error
 	if err != nil {
-		return r.BadRequest(c, []string{"error", err.Error()})
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			announcement = nil
+		} else {
+			return r.BadRequest(c, []string{"error", err.Error()})
+		}
 	}
 
 	resp := response.DashboardMobileResponse{
