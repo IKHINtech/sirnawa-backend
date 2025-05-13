@@ -111,6 +111,10 @@ func (h *residentHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 	rt_id := ctx.Query("rt_id", "")
 	isPaginated := ctx.QueryBool("paginated", true)
 
+	if rt_id == "" {
+		r.Ok(ctx, response.ResidentResponses{}, "RT ID harus di kirim", nil)
+	}
+
 	var meta *utils.Pagination
 	var data *response.ResidentResponses
 	var err error

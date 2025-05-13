@@ -1,6 +1,8 @@
 package services
 
 import (
+	"time"
+
 	"github.com/IKHINtech/sirnawa-backend/internal/dto/request"
 	"github.com/IKHINtech/sirnawa-backend/internal/dto/response"
 	"github.com/IKHINtech/sirnawa-backend/internal/models"
@@ -14,8 +16,8 @@ type RondaScheduleService interface {
 	Update(id string, data request.RondaScheduleUpdateRequset) (*response.RondaScheduleResponse, error)
 	FindByID(id string) (*response.RondaScheduleResponse, error)
 	Delete(id string) error
-	FindAll() (response.RondaScheduleResponses, error)
-	Paginated(pagination utils.Pagination) (*utils.Pagination, *response.RondaScheduleResponses, error)
+	FindAll(rtID, groupID string, date *time.Time) (response.RondaScheduleResponses, error)
+	Paginated(pagination utils.Pagination, rtID, groupID string, date *time.Time) (*utils.Pagination, *response.RondaScheduleResponses, error)
 }
 
 type rondaGroupScheduleServiceImpl struct {
@@ -108,8 +110,8 @@ func (s *rondaGroupScheduleServiceImpl) Update(id string, data request.RondaSche
 	return res, nil
 }
 
-func (s *rondaGroupScheduleServiceImpl) FindAll() (response.RondaScheduleResponses, error) {
-	data, err := s.repository.FindAll()
+func (s *rondaGroupScheduleServiceImpl) FindAll(rtID, groupID string, date *time.Time) (response.RondaScheduleResponses, error) {
+	data, err := s.repository.FindAll(rtID, groupID, date)
 	if err != nil {
 		return nil, err
 	}
@@ -136,8 +138,8 @@ func (s *rondaGroupScheduleServiceImpl) FindByID(id string) (*response.RondaSche
 	return resp, err
 }
 
-func (s *rondaGroupScheduleServiceImpl) Paginated(pagination utils.Pagination) (*utils.Pagination, *response.RondaScheduleResponses, error) {
-	paginated, data, err := s.repository.Paginated(pagination)
+func (s *rondaGroupScheduleServiceImpl) Paginated(pagination utils.Pagination, rtID, groupID string, date *time.Time) (*utils.Pagination, *response.RondaScheduleResponses, error) {
+	paginated, data, err := s.repository.Paginated(pagination, rtID, groupID, date)
 	if err != nil {
 		return nil, nil, err
 	}

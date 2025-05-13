@@ -170,6 +170,10 @@ func (h *announcementHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 	isPaginated := ctx.QueryBool("paginated", true)
 	rtID := ctx.Query("rt_id")
 
+	if rtID == "" {
+		r.Ok(ctx, response.AnnouncementResponses{}, "RT ID harus di kirim", nil)
+	}
+
 	var meta *utils.Pagination
 	var data *response.AnnouncementResponses
 	var err error

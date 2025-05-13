@@ -117,6 +117,9 @@ func (h *iplBillHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 	status := ctx.Query("status")
 	isPaginated := ctx.QueryBool("paginated", true)
 
+	if rtID == "" {
+		r.Ok(ctx, response.IplBillResponses{}, "RT ID harus di kirim", nil)
+	}
 	var meta *utils.Pagination
 	var data *response.IplBillResponses
 	var err error

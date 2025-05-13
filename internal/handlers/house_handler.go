@@ -114,6 +114,10 @@ func (h *houseHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 	status := ctx.Query("status", "")
 	isNotInGroupRonda := ctx.Query("not_in_group_ronda", "")
 	isPaginated := ctx.QueryBool("paginated", true)
+
+	if rt_id == "" {
+		r.Ok(ctx, response.HouseResponses{}, "RT ID harus di kirim", nil)
+	}
 	var meta *utils.Pagination
 	var data *[]response.HouseResponseDetail
 	var err error

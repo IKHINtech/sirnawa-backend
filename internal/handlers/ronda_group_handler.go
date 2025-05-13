@@ -109,6 +109,10 @@ func (h *rondaGroupHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 	rtID := ctx.Query("rt_id")
 	isPaginated := ctx.QueryBool("paginated", true)
 
+	if rtID == "" {
+		r.Ok(ctx, response.RondaGroupResponses{}, "RT ID harus di kirim", nil)
+	}
+
 	var meta *utils.Pagination
 	var data *response.RondaGroupResponses
 	var err error

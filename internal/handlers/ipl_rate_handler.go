@@ -110,6 +110,10 @@ func (h *iplRateHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 	rtID := ctx.Query("rt_id")
 	isPaginated := ctx.QueryBool("paginated", true)
 
+	if rtID == "" {
+		r.Ok(ctx, response.IplRateResponses{}, "RT ID harus di kirim", nil)
+	}
+
 	var meta *utils.Pagination
 	var data *response.IplRateResponses
 	var err error

@@ -1,6 +1,8 @@
 package repository
 
 import (
+	"time"
+
 	"github.com/IKHINtech/sirnawa-backend/internal/models"
 	"github.com/IKHINtech/sirnawa-backend/pkg/utils"
 	"gorm.io/gorm"
@@ -9,8 +11,8 @@ import (
 type RondaScheduleRepository interface {
 	Create(tx *gorm.DB, data models.RondaSchedule) (*models.RondaSchedule, error)
 	Update(tx *gorm.DB, id string, data models.RondaSchedule) (*models.RondaSchedule, error)
-	FindAll() (models.RondaSchedules, error)
-	Paginated(pagination utils.Pagination) (*utils.Pagination, models.RondaSchedules, error)
+	FindAll(rtID, groupID string, date *time.Time) (models.RondaSchedules, error)
+	Paginated(pagination utils.Pagination, rtID, groupID string, date *time.Time) (*utils.Pagination, models.RondaSchedules, error)
 	FindByID(id string) (*models.RondaSchedule, error)
 	Delete(id string) error
 }
@@ -23,9 +25,21 @@ func NewRondaScheduleRepository(db *gorm.DB) RondaScheduleRepository {
 	return &rondaScheduleRepositoryImpl{db: db}
 }
 
-func (r *rondaScheduleRepositoryImpl) Paginated(pagination utils.Pagination) (*utils.Pagination, models.RondaSchedules, error) {
+func (r *rondaScheduleRepositoryImpl) Paginated(pagination utils.Pagination, rtID, groupID string, date *time.Time) (*utils.Pagination, models.RondaSchedules, error) {
 	var datas models.RondaSchedules
 	query := r.db.Preload("Rt").Preload("Group")
+
+	if rtID != "" {
+		query = query.Where("rt_id = ?", rtID)
+	}
+
+	if groupID != "" {
+		query = query.Where("group_id = ?", groupID)
+	}
+
+	if date != nil {
+		query = query.Where("date = ?", date.Format("2006-01-02"))
+	}
 	err := query.Scopes(utils.Paginate(datas, &pagination, query)).Find(&datas).Error
 	return &pagination, datas, err
 }
@@ -59,9 +73,22 @@ func (r *rondaScheduleRepositoryImpl) FindByID(id string) (*models.RondaSchedule
 	return &data, err
 }
 
-func (r *rondaScheduleRepositoryImpl) FindAll() (models.RondaSchedules, error) {
+func (r *rondaScheduleRepositoryImpl) FindAll(rtID, groupID string, date *time.Time) (models.RondaSchedules, error) {
 	var data models.RondaSchedules
-	err := r.db.Preload("Rt").Preload("Group").Find(&data).Error
+	query := r.db.Preload("Rt").Preload("Group")
+
+	if rtID != "" {
+		query = query.Where("rt_id = ?", rtID)
+	}
+
+	if groupID != "" {
+		query = query.Where("group_id = ?", groupID)
+	}
+
+	if date != nil {
+		query = query.Where("date = ?", date.Format("2006-01-02"))
+	}
+	err := query.Find(&data).Error
 	return data, err
 }
 

@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"time"
+
 	"github.com/IKHINtech/sirnawa-backend/internal/dto/request"
 	"github.com/IKHINtech/sirnawa-backend/internal/dto/response"
 	"github.com/IKHINtech/sirnawa-backend/internal/middleware"
@@ -97,6 +99,9 @@ func (h *rondaScheduleHandlerImpl) Update(ctx *fiber.Ctx) error {
 // @Security Bearer
 // @Param paginated query boolean false "Paginated"
 // @Param page query int false "Page number"
+// @Param date query string false "Date (YYYY-MM-DD)"
+// @Param rt_id query string false "RT ID"
+// @Param group_id query string false "Group ID"
 // @Param page_size query int false "Page size"
 // @Param order_by query string false "Order by"
 // @Param order query string false "Order"
@@ -105,8 +110,24 @@ func (h *rondaScheduleHandlerImpl) Update(ctx *fiber.Ctx) error {
 // @Router /ronda-schedule [get]
 func (h *rondaScheduleHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 	r := &utils.ResponseHandler{}
-
+	rtID := ctx.Query("rt_id")
+	groupID := ctx.Query("group_id")
+	dateStr := ctx.Query("date")
 	isPaginated := ctx.QueryBool("paginated", true)
+	var date *time.Time
+
+	if rtID == "" {
+		r.Ok(ctx, response.RondaScheduleResponses{}, "RT ID harus di kirim", nil)
+	}
+
+	if dateStr != "" {
+		layout := "2006-01-02"
+		datecft, err := time.Parse(layout, dateStr)
+		if err != nil {
+			return r.BadRequest(ctx, []string{err.Error()})
+		}
+		date = &datecft
+	}
 
 	var meta *utils.Pagination
 	var data *response.RondaScheduleResponses
@@ -115,13 +136,13 @@ func (h *rondaScheduleHandlerImpl) Paginated(ctx *fiber.Ctx) error {
 	if isPaginated {
 		paginate := utils.GetPaginationParams(ctx)
 
-		meta, data, err = h.services.Paginated(paginate)
+		meta, data, err = h.services.Paginated(paginate, rtID, groupID, date)
 		if err != nil {
 			return r.BadRequest(ctx, []string{err.Error()})
 		}
 	} else {
 
-		res, err := h.services.FindAll()
+		res, err := h.services.FindAll(rtID, groupID, date)
 		if err != nil {
 			return r.BadRequest(ctx, []string{err.Error()})
 		}
