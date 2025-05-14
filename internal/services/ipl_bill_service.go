@@ -19,12 +19,13 @@ type IplBillService interface {
 }
 
 type iplBillServiceImpl struct {
-	repository repository.IplBillRepository
-	db         *gorm.DB
+	repository  repository.IplBillRepository
+	iplRateRepo repository.IplRateRepository
+	db          *gorm.DB
 }
 
-func NewIplBillServices(repo repository.IplBillRepository, db *gorm.DB) IplBillService {
-	return &iplBillServiceImpl{repository: repo, db: db}
+func NewIplBillServices(repo repository.IplBillRepository, iplRateRepo repository.IplRateRepository, db *gorm.DB) IplBillService {
+	return &iplBillServiceImpl{repository: repo, iplRateRepo: iplRateRepo, db: db}
 }
 
 func (s *iplBillServiceImpl) withTransaction(fn func(tx *gorm.DB) error) error {
@@ -73,6 +74,20 @@ func (s *iplBillServiceImpl) Create(data request.IplBillCreateRequest) (*respons
 
 	res := response.IplBillModelToIplBillResponse(result)
 	return res, nil
+}
+
+func (s *iplBillServiceImpl) GenerateIplBill(data request.IplBillGenerator) error {
+	err := s.withTransaction(func(tx *gorm.DB) error {
+		// cari ipl rate
+		// TODO: lanjut disini
+		iplRate, err := s.iplRateRepo.FindByID(data.IplRateID)
+		if err != nil {
+			return err
+		}
+
+		return err
+	})
+	return err
 }
 
 func (s *iplBillServiceImpl) Update(id string, data request.IplBillUpdateRequset) (*response.IplBillResponse, error) {

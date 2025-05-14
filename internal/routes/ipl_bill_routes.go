@@ -9,8 +9,9 @@ import (
 )
 
 func IplBillRoutes(route fiber.Router) {
-	repository := repository.NewIplBillRepository(database.DB)
-	services := services.NewIplBillServices(repository, database.DB)
+	repo := repository.NewIplBillRepository(database.DB)
+	iplRateRepo := repository.NewIplRateRepository(database.DB)
+	services := services.NewIplBillServices(repo, iplRateRepo, database.DB)
 	handlers := handlers.NewIplBillHandler(services)
 
 	route.Get("/", handlers.Paginated)

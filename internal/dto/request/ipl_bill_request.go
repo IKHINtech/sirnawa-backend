@@ -25,6 +25,13 @@ type IplBillUpdateRequset struct {
 	IplBillCreateRequest
 }
 
+type IplBillGenerator struct {
+	RtID      string `json:"rt_id"`
+	Month     int    `json:"month"`
+	Year      int    `json:"year"`
+	IplRateID string `json:"ipl_rate_id"`
+}
+
 func IplBillUpdateRequsetToIplBillModel(data IplBillUpdateRequset) models.IplBill {
 	base := models.BaseModel{
 		ID: data.ID,
