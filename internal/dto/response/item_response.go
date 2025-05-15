@@ -13,6 +13,9 @@ type ItemResponse struct {
 type ItemResponses []ItemResponse
 
 func ItemModelToItemResponse(data *models.Item) *ItemResponse {
+	if data == nil {
+		return nil
+	}
 	base := BaseResponse{
 		ID:        data.ID,
 		CreatedAt: data.CreatedAt,
