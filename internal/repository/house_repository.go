@@ -9,9 +9,10 @@ import (
 type HouseRepository interface {
 	Create(tx *gorm.DB, data models.House) (*models.House, error)
 	Update(tx *gorm.DB, id string, data models.House) (*models.House, error)
-	FindAll(rtID, blockID, status, isNotInGroupRonda string) (models.Houses, error)
+	FindAll(rtID, blockID, status, isNotInGroupRonda string, excludeStatus *string) (models.Houses, error)
 	Paginated(pagination utils.Pagination, rtID, blockID, status string) (*utils.Pagination, models.Houses, error)
 	FindByID(id string) (*models.House, error)
+	FindByIDs(ids []string) (models.Houses, error)
 	Delete(id string) error
 }
 
@@ -77,7 +78,16 @@ func (r *houseRepositoryImpl) FindByID(id string) (*models.House, error) {
 	return &data, err
 }
 
-func (r *houseRepositoryImpl) FindAll(rtID, blockID, status string, isNotInGroupRonda string) (models.Houses, error) {
+func (r *houseRepositoryImpl) FindByIDs(ids []string) (models.Houses, error) {
+	var data models.Houses
+
+	query := r.db.Where("id in ?", ids)
+
+	err := query.Find(&data).Error
+	return data, err
+}
+
+func (r *houseRepositoryImpl) FindAll(rtID, blockID, status string, isNotInGroupRonda string, excludeStatus *string) (models.Houses, error) {
 	var data models.Houses
 
 	query := r.db.Preload("Block")
@@ -91,6 +101,10 @@ func (r *houseRepositoryImpl) FindAll(rtID, blockID, status string, isNotInGroup
 
 	if status != "" {
 		query = query.Where("status = ?", status)
+	}
+
+	if excludeStatus != nil {
+		query = query.Where("status != ?", *excludeStatus)
 	}
 
 	if isNotInGroupRonda != "" {

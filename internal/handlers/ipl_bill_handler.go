@@ -15,6 +15,7 @@ type IplBillHandler interface {
 	Paginated(ctx *fiber.Ctx) error
 	FindByID(ctx *fiber.Ctx) error
 	Delete(ctx *fiber.Ctx) error
+	Generate(ctx *fiber.Ctx) error
 }
 
 type iplBillHandlerImpl struct {
@@ -23,6 +24,34 @@ type iplBillHandlerImpl struct {
 
 func NewIplBillHandler(services services.IplBillService) IplBillHandler {
 	return &iplBillHandlerImpl{services: services}
+}
+
+// Generate IplBill
+// @Summary Generate IplBill
+// @Descrpiton Generate IplBill
+// @Tags Ipl Bill
+// @Accept json
+// @Produce json
+// @Security Bearer
+// @Param data body request.IplBillGenerator true "Create IplBill"
+// @Success 200 {object} utils.ResponseData
+// @Failure 400 {object} utils.ResponseData
+// @Router /ipl-bill/generate [post]
+func (h *iplBillHandlerImpl) Generate(ctx *fiber.Ctx) error {
+	r := &utils.ResponseHandler{}
+	var req request.IplBillGenerator
+	if err := ctx.BodyParser(&req); err != nil {
+		return r.BadRequest(ctx, []string{"Body is not valid"})
+	}
+
+	middleware.ValidateRequest(req)
+
+	err := h.services.GenerateIplBill(req)
+	if err != nil {
+		return r.BadRequest(ctx, []string{err.Error()})
+	}
+
+	return r.Created(ctx, nil, "Successfully created")
 }
 
 // Create IplBill

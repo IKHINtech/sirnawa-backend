@@ -25,7 +25,7 @@ func NewIplRateDetailRepository(db *gorm.DB) IplRateDetailRepository {
 
 func (r *iplRateDetailRepositoryImpl) Paginated(pagination utils.Pagination, iplRateID string) (*utils.Pagination, models.IplRateDetails, error) {
 	var datas models.IplRateDetails
-	query := r.db
+	query := r.db.Preload("Item")
 
 	if iplRateID != "" {
 		query = query.Where("ipl_rate_id = ?", iplRateID)
@@ -64,7 +64,7 @@ func (r *iplRateDetailRepositoryImpl) FindByID(id string) (*models.IplRateDetail
 }
 
 func (r *iplRateDetailRepositoryImpl) FindAll(iplRateID string) (models.IplRateDetails, error) {
-	query := r.db
+	query := r.db.Preload("Item")
 
 	if iplRateID != "" {
 		query = query.Where("ipl_rate_id = ?", iplRateID)

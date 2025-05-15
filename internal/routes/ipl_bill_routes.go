@@ -10,8 +10,11 @@ import (
 
 func IplBillRoutes(route fiber.Router) {
 	repo := repository.NewIplBillRepository(database.DB)
+	iplBillDetailRepo := repository.NewIplBillDetailRepository(database.DB)
+	iplRateDetailRepo := repository.NewIplRateDetailRepository(database.DB)
+	houseRepo := repository.NewHouseRepository(database.DB)
 	iplRateRepo := repository.NewIplRateRepository(database.DB)
-	services := services.NewIplBillServices(repo, iplRateRepo, database.DB)
+	services := services.NewIplBillServices(repo, iplRateRepo, iplRateDetailRepo, iplBillDetailRepo, houseRepo, database.DB)
 	handlers := handlers.NewIplBillHandler(services)
 
 	route.Get("/", handlers.Paginated)

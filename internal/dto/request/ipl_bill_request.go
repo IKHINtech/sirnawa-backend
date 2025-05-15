@@ -26,10 +26,13 @@ type IplBillUpdateRequset struct {
 }
 
 type IplBillGenerator struct {
-	RtID      string `json:"rt_id"`
-	Month     int    `json:"month"`
-	Year      int    `json:"year"`
-	IplRateID string `json:"ipl_rate_id"`
+	RtID       string   `json:"rt_id"`
+	Month      int      `json:"month"`
+	Year       int      `json:"year"`
+	IplRateID  string   `json:"ipl_rate_id"`
+	HouseIDs   []string `json:"house_ids"`
+	IsAllHouse bool     `json:"is_all_house"`
+	DueDate    int      `json:"due_date"`
 }
 
 func IplBillUpdateRequsetToIplBillModel(data IplBillUpdateRequset) models.IplBill {
