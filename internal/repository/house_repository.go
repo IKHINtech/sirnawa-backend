@@ -10,7 +10,7 @@ type HouseRepository interface {
 	Create(tx *gorm.DB, data models.House) (*models.House, error)
 	Update(tx *gorm.DB, id string, data models.House) (*models.House, error)
 	FindAll(rtID, blockID, status, isNotInGroupRonda string, excludeStatus string) (models.Houses, error)
-	Paginated(pagination utils.Pagination, rtID, blockID, status string) (*utils.Pagination, models.Houses, error)
+	Paginated(pagination utils.Pagination, rtID, blockID, status, excludeStatus string) (*utils.Pagination, models.Houses, error)
 	FindByID(id string) (*models.House, error)
 	FindByIDs(ids []string) (models.Houses, error)
 	Delete(id string) error
@@ -24,7 +24,7 @@ func NewHouseRepository(db *gorm.DB) HouseRepository {
 	return &houseRepositoryImpl{db: db}
 }
 
-func (r *houseRepositoryImpl) Paginated(pagination utils.Pagination, rtID, blockID, status string) (*utils.Pagination, models.Houses, error) {
+func (r *houseRepositoryImpl) Paginated(pagination utils.Pagination, rtID, blockID, status, excludeStatus string) (*utils.Pagination, models.Houses, error) {
 	var datas models.Houses
 	query := r.db.Preload("Block")
 
@@ -38,6 +38,10 @@ func (r *houseRepositoryImpl) Paginated(pagination utils.Pagination, rtID, block
 
 	if status != "" {
 		query = query.Where("status = ?", status)
+	}
+
+	if excludeStatus != "" {
+		query = query.Where("status != ?", excludeStatus)
 	}
 	err := query.Scopes(utils.Paginate(datas, &pagination, query)).Find(&datas).Error
 	return &pagination, datas, err

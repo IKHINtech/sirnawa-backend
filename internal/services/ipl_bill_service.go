@@ -43,6 +43,7 @@ func NewIplBillServices(
 		iplRateRepo:       iplRateRepo,
 		iplRateDetailRepo: iplRateDetailRepo,
 		iplBillDetailRepo: iplBillDetailRepo,
+		houseRepo:         houseRepo,
 		db:                db,
 	}
 }
