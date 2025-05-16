@@ -1,8 +1,12 @@
 {
+    "schemes": [
+        "http",
+        "https"
+    ],
     "swagger": "2.0",
     "info": {
-        "description": "This is a API Server for SIRNAWA",
-        "title": "SIRNAWA API",
+        "description": "This is a API Server for App My RT",
+        "title": "My RT",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
             "name": "API Support",
@@ -14,7 +18,6 @@
         },
         "version": "1.0"
     },
-    "host": "localhost:5001",
     "basePath": "/",
     "paths": {
         "/announcement": {
@@ -93,8 +96,9 @@
                         "Bearer": []
                     }
                 ],
+                "description": "Create Announcement with file attachments",
                 "consumes": [
-                    "application/json"
+                    "multipart/form-data"
                 ],
                 "produces": [
                     "application/json"
@@ -102,21 +106,50 @@
                 "tags": [
                     "Announcement"
                 ],
-                "summary": "Create Announcement",
+                "summary": "Create Announcement with attachments",
                 "parameters": [
                     {
-                        "description": "Create Announcement",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.AnnouncementCreateRequest"
-                        }
+                        "type": "string",
+                        "description": "Announcement title",
+                        "name": "title",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Announcement content",
+                        "name": "content",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Creator user ID",
+                        "name": "created_by",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "RT ID",
+                        "name": "rt_id",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "file"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "Attachment files",
+                        "name": "attachments",
+                        "in": "formData"
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK",
+                    "201": {
+                        "description": "Created",
                         "schema": {
                             "$ref": "#/definitions/utils.ResponseData"
                         }
@@ -177,8 +210,9 @@
                         "Bearer": []
                     }
                 ],
+                "description": "Update Announcement with file attachments",
                 "consumes": [
-                    "application/json"
+                    "multipart/form-data"
                 ],
                 "produces": [
                     "application/json"
@@ -186,23 +220,46 @@
                 "tags": [
                     "Announcement"
                 ],
-                "summary": "Update Announcement",
+                "summary": "Update Announcement with attachments",
                 "parameters": [
                     {
-                        "description": "Update Announcement",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.AnnouncementUpdateRequset"
-                        }
-                    },
-                    {
                         "type": "string",
-                        "description": "Announcement id",
+                        "description": "Announcement ID",
                         "name": "id",
                         "in": "path",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Announcement title",
+                        "name": "title",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Announcement content",
+                        "name": "content",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "file"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "Attachment files",
+                        "name": "attachments",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "Attachment IDs to delete",
+                        "name": "delete_attachments",
+                        "in": "formData"
                     }
                 ],
                 "responses": {
@@ -256,6 +313,46 @@
                         "description": "Bad Request",
                         "schema": {
                             "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/forgot-password-verification": {
+            "post": {
+                "description": "Send Forgot Password Verification",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Send Forgot Password Verification",
+                "parameters": [
+                    {
+                        "description": "Forgot Password Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.VerifyCodeRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
                         }
                     }
                 }
@@ -359,7 +456,7 @@
             }
         },
         "/auth/refresh-token": {
-            "get": {
+            "post": {
                 "description": "Refresh Token",
                 "consumes": [
                     "application/json"
@@ -371,6 +468,17 @@
                     "Auth"
                 ],
                 "summary": "Refresh Token",
+                "parameters": [
+                    {
+                        "description": "Refresh Token",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.RefreshTokenRequest"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -448,6 +556,46 @@
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/request.VerifyCodeRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/send-forgot-password-verification": {
+            "post": {
+                "description": "Verify Forgot Password Verification",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Verify Forgot Password Verification",
+                "parameters": [
+                    {
+                        "description": "Forgot Password Code Vefification",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.VerifyEmailCodeRequest"
                         }
                     }
                 ],
@@ -769,6 +917,22 @@
                     "Dashboard"
                 ],
                 "summary": "Get Data DashboardMobile",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "RT ID",
+                        "name": "rt_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "House ID",
+                        "name": "house_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -813,6 +977,29 @@
                         "type": "string",
                         "description": "RT ID",
                         "name": "rt_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Block ID",
+                        "name": "block_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filter Not In Group Ronda",
+                        "name": "not_in_group_ronda",
+                        "in": "query"
+                    },
+                    {
+                        "enum": [
+                            "aktif",
+                            "tidak_akfit",
+                            "kontrakan"
+                        ],
+                        "type": "string",
+                        "description": "Status Rumah",
+                        "name": "status",
                         "in": "query"
                     },
                     {
@@ -1267,7 +1454,7 @@
                 }
             }
         },
-        "/ipl": {
+        "/ipl-bill": {
             "get": {
                 "security": [
                     {
@@ -1281,9 +1468,9 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Ipl"
+                    "Ipl Bill"
                 ],
-                "summary": "Get Ipl",
+                "summary": "Get IplBill",
                 "parameters": [
                     {
                         "type": "boolean",
@@ -1295,6 +1482,30 @@
                         "type": "string",
                         "description": "RT ID",
                         "name": "rt_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "House ID",
+                        "name": "house_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Status",
+                        "name": "status",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Bulan",
+                        "name": "month",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Tahun",
+                        "name": "year",
                         "in": "query"
                     },
                     {
@@ -1350,18 +1561,437 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Ipl"
+                    "Ipl Bill"
                 ],
-                "summary": "Create Ipl",
+                "summary": "Create IplBill",
                 "parameters": [
                     {
-                        "description": "Create Ipl",
+                        "description": "Create IplBill",
                         "name": "data",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.IplCreateRequest"
+                            "$ref": "#/definitions/request.IplBillCreateRequest"
                         }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            }
+        },
+        "/ipl-bill-detail": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Ipl Bill Detail"
+                ],
+                "summary": "Get Ipl Bill Detail",
+                "parameters": [
+                    {
+                        "type": "boolean",
+                        "description": "Paginated",
+                        "name": "paginated",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "RT ID",
+                        "name": "ipl_bill_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page size",
+                        "name": "page_size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Order by",
+                        "name": "order_by",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Order",
+                        "name": "order",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Ipl Bill Detail"
+                ],
+                "summary": "Create Ipl Bill Detail",
+                "parameters": [
+                    {
+                        "description": "Create IplBillDetail",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.IplBillDetailCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            }
+        },
+        "/ipl-bill-detail/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Ipl Bill Detail"
+                ],
+                "summary": "Find Ipl Bill Detail By ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Ipl Bill Detail id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Ipl Bill Detail"
+                ],
+                "summary": "Update Ipl Bill Detail",
+                "parameters": [
+                    {
+                        "description": "Update IplBillDetail",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.IplBillDetailUpdateRequset"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "IplBillDetail id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Ipl Bill Detail"
+                ],
+                "summary": "Delete Ipl Bill Detail By ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Ipl Bill Detail id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            }
+        },
+        "/ipl-bill/generate": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Ipl Bill"
+                ],
+                "summary": "Generate IplBill",
+                "parameters": [
+                    {
+                        "description": "Create IplBill",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.IplBillGenerator"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            }
+        },
+        "/ipl-bill/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Ipl Bill"
+                ],
+                "summary": "Find IplBill By ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "IplBill id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Ipl Bill"
+                ],
+                "summary": "Update IplBill",
+                "parameters": [
+                    {
+                        "description": "Update IplBill",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.IplBillUpdateRequset"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "IplBill id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Ipl Bill"
+                ],
+                "summary": "Delete IplBill By ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "IplBill id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -1618,7 +2248,7 @@
                 }
             }
         },
-        "/ipl/{id}": {
+        "/ipl-rate": {
             "get": {
                 "security": [
                     {
@@ -1632,13 +2262,239 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Ipl"
+                    "Ipl Rate"
                 ],
-                "summary": "Find Ipl By ID",
+                "summary": "Get Paginated IplRate",
+                "parameters": [
+                    {
+                        "type": "boolean",
+                        "description": "Paginated",
+                        "name": "paginated",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page size",
+                        "name": "page_size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "RT ID",
+                        "name": "rt_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Order by",
+                        "name": "order_by",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Order",
+                        "name": "order",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Ipl Rate"
+                ],
+                "summary": "Create IplRate",
+                "parameters": [
+                    {
+                        "description": "Create IplRate",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.IplRateCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            }
+        },
+        "/ipl-rate-detail": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Ipl Rate Detail"
+                ],
+                "summary": "Get Paginated IplRateDetail",
+                "parameters": [
+                    {
+                        "type": "boolean",
+                        "description": "Paginated",
+                        "name": "paginated",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page size",
+                        "name": "page_size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Order by",
+                        "name": "order_by",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Order",
+                        "name": "order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "IPL Rate ID",
+                        "name": "ipl_rate_id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Ipl Rate Detail"
+                ],
+                "summary": "Create IplRateDetail",
+                "parameters": [
+                    {
+                        "description": "Create IplRateDetail",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.IplRateDetailCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            }
+        },
+        "/ipl-rate-detail/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Ipl Rate Detail"
+                ],
+                "summary": "Find IplRateDetail By ID",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Ipl id",
+                        "description": "IplRateDetail id",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -1672,22 +2528,22 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Ipl"
+                    "Ipl Rate Detail"
                 ],
-                "summary": "Update Ipl",
+                "summary": "Update IplRateDetail",
                 "parameters": [
                     {
-                        "description": "Update Ipl",
+                        "description": "Update IplRateDetail",
                         "name": "data",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.IplUpdateRequset"
+                            "$ref": "#/definitions/request.IplRateDetailUpdateRequset"
                         }
                     },
                     {
                         "type": "string",
-                        "description": "Ipl id",
+                        "description": "IplRateDetail id",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -1721,13 +2577,388 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Ipl"
+                    "Ipl Rate Detail"
                 ],
-                "summary": "Delete Ipl By ID",
+                "summary": "Delete IplRateDetail By ID",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Ipl id",
+                        "description": "IplRateDetail id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            }
+        },
+        "/ipl-rate/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Ipl Rate"
+                ],
+                "summary": "Find IplRate By ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "IplRate id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Ipl Rate"
+                ],
+                "summary": "Update IplRate",
+                "parameters": [
+                    {
+                        "description": "Update IplRate",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.IplRateUpdateRequset"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "IplRate id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Ipl Rate"
+                ],
+                "summary": "Delete IplRate By ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "IplRate id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            }
+        },
+        "/item": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Item"
+                ],
+                "summary": "Get Item",
+                "parameters": [
+                    {
+                        "type": "boolean",
+                        "description": "Paginated",
+                        "name": "paginated",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "RT ID",
+                        "name": "rt_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page size",
+                        "name": "page_size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Order by",
+                        "name": "order_by",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Order",
+                        "name": "order",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Item"
+                ],
+                "summary": "Create Item",
+                "parameters": [
+                    {
+                        "description": "Create Item",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.ItemCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            }
+        },
+        "/item/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Item"
+                ],
+                "summary": "Find Item By ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Item id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Item"
+                ],
+                "summary": "Update Item",
+                "parameters": [
+                    {
+                        "description": "Update Item",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.ItemUpdateRequset"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Item id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Item"
+                ],
+                "summary": "Delete Item By ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Item id",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -2278,6 +3509,18 @@
                         "description": "Order",
                         "name": "order",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "RT ID",
+                        "name": "rt_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Search Resident By Name",
+                        "name": "search",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -2364,6 +3607,48 @@
                         "schema": {
                             "$ref": "#/definitions/request.ResidentHouseCreateRequest"
                         }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseData"
+                        }
+                    }
+                }
+            }
+        },
+        "/resident-house/house/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Resident House"
+                ],
+                "summary": "Find Resident House by House ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "House id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -3822,6 +5107,24 @@
                         "in": "query"
                     },
                     {
+                        "type": "string",
+                        "description": "Date (YYYY-MM-DD)",
+                        "name": "date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "RT ID",
+                        "name": "rt_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Group ID",
+                        "name": "group_id",
+                        "in": "query"
+                    },
+                    {
                         "type": "integer",
                         "description": "Page size",
                         "name": "page_size",
@@ -5006,55 +6309,6 @@
                 }
             }
         },
-        "request.AnnouncementCreateRequest": {
-            "type": "object",
-            "properties": {
-                "attachments": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "content": {
-                    "type": "string"
-                },
-                "created_by": {
-                    "type": "string"
-                },
-                "rt_id": {
-                    "type": "string"
-                },
-                "title": {
-                    "type": "string"
-                }
-            }
-        },
-        "request.AnnouncementUpdateRequset": {
-            "type": "object",
-            "properties": {
-                "attachments": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "content": {
-                    "type": "string"
-                },
-                "created_by": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "rt_id": {
-                    "type": "string"
-                },
-                "title": {
-                    "type": "string"
-                }
-            }
-        },
         "request.BlockCreateRequest": {
             "type": "object",
             "properties": {
@@ -5086,6 +6340,12 @@
                 "block_id": {
                     "type": "string"
                 },
+                "latitude": {
+                    "type": "number"
+                },
+                "longitude": {
+                    "type": "number"
+                },
                 "number": {
                     "type": "string"
                 },
@@ -5107,6 +6367,12 @@
                 "id": {
                     "type": "string"
                 },
+                "latitude": {
+                    "type": "number"
+                },
+                "longitude": {
+                    "type": "number"
+                },
                 "number": {
                     "type": "string"
                 },
@@ -5122,6 +6388,12 @@
         "request.HousingAreaCreateRequest": {
             "type": "object",
             "properties": {
+                "latitude": {
+                    "type": "number"
+                },
+                "longitude": {
+                    "type": "number"
+                },
                 "name": {
                     "type": "string"
                 }
@@ -5133,27 +6405,295 @@
                 "id": {
                     "type": "string"
                 },
+                "latitude": {
+                    "type": "number"
+                },
+                "longitude": {
+                    "type": "number"
+                },
                 "name": {
                     "type": "string"
                 }
             }
         },
-        "request.IplCreateRequest": {
+        "request.IplBillCreateRequest": {
+            "type": "object",
+            "properties": {
+                "amount_paid": {
+                    "type": "integer"
+                },
+                "balance_due": {
+                    "type": "integer"
+                },
+                "due_date": {
+                    "type": "string"
+                },
+                "house_id": {
+                    "type": "string"
+                },
+                "ipl_rate_id": {
+                    "type": "string"
+                },
+                "month": {
+                    "type": "integer"
+                },
+                "penalty": {
+                    "type": "string"
+                },
+                "rt_id": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "total_amount": {
+                    "type": "integer"
+                },
+                "year": {
+                    "type": "integer"
+                }
+            }
+        },
+        "request.IplBillDetailCreateRequest": {
+            "type": "object",
+            "properties": {
+                "ipl_bill_id": {
+                    "type": "string"
+                },
+                "item_id": {
+                    "type": "string"
+                },
+                "note": {
+                    "type": "string"
+                },
+                "sub_amount": {
+                    "type": "integer"
+                }
+            }
+        },
+        "request.IplBillDetailUpdateRequset": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "ipl_bill_id": {
+                    "type": "string"
+                },
+                "item_id": {
+                    "type": "string"
+                },
+                "note": {
+                    "type": "string"
+                },
+                "sub_amount": {
+                    "type": "integer"
+                }
+            }
+        },
+        "request.IplBillGenerator": {
+            "type": "object",
+            "properties": {
+                "due_date": {
+                    "type": "integer"
+                },
+                "house_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "ipl_rate_id": {
+                    "type": "string"
+                },
+                "is_all_house": {
+                    "type": "boolean"
+                },
+                "month": {
+                    "type": "integer"
+                },
+                "rt_id": {
+                    "type": "string"
+                },
+                "year": {
+                    "type": "integer"
+                }
+            }
+        },
+        "request.IplBillUpdateRequset": {
+            "type": "object",
+            "properties": {
+                "amount_paid": {
+                    "type": "integer"
+                },
+                "balance_due": {
+                    "type": "integer"
+                },
+                "due_date": {
+                    "type": "string"
+                },
+                "house_id": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "ipl_rate_id": {
+                    "type": "string"
+                },
+                "month": {
+                    "type": "integer"
+                },
+                "penalty": {
+                    "type": "string"
+                },
+                "rt_id": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "total_amount": {
+                    "type": "integer"
+                },
+                "year": {
+                    "type": "integer"
+                }
+            }
+        },
+        "request.IplPaymentCreateRequest": {
+            "type": "object",
+            "properties": {
+                "amount_paid": {
+                    "type": "integer"
+                },
+                "evidence": {
+                    "type": "string"
+                },
+                "ipl_bill_id": {
+                    "type": "string"
+                },
+                "notes": {
+                    "type": "string"
+                },
+                "paid_at": {
+                    "type": "string"
+                },
+                "payment_method": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.IplPaymentUpdateRequset": {
+            "type": "object",
+            "properties": {
+                "amount_paid": {
+                    "type": "integer"
+                },
+                "evidence": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "ipl_bill_id": {
+                    "type": "string"
+                },
+                "notes": {
+                    "type": "string"
+                },
+                "paid_at": {
+                    "type": "string"
+                },
+                "payment_method": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.IplRateCreateRequest": {
             "type": "object",
             "properties": {
                 "amount": {
-                    "type": "number"
+                    "type": "integer"
                 },
-                "is_active": {
-                    "type": "boolean"
+                "block_id": {
+                    "type": "string"
                 },
-                "items": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/request.IplDetailCreateRequest"
-                    }
+                "house_type": {
+                    "type": "string"
                 },
-                "note": {
+                "rt_id": {
+                    "type": "string"
+                },
+                "start_date": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.IplRateDetailCreateRequest": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "integer"
+                },
+                "ipl_rate_id": {
+                    "type": "string"
+                },
+                "item_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.IplRateDetailUpdateRequset": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "ipl_rate_id": {
+                    "type": "string"
+                },
+                "item_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.IplRateUpdateRequset": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "integer"
+                },
+                "block_id": {
+                    "type": "string"
+                },
+                "house_type": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "rt_id": {
+                    "type": "string"
+                },
+                "start_date": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.ItemCreateRequest": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "item_type": {
+                    "type": "string"
+                },
+                "name": {
                     "type": "string"
                 },
                 "rt_id": {
@@ -5161,82 +6701,19 @@
                 }
             }
         },
-        "request.IplDetailCreateRequest": {
+        "request.ItemUpdateRequset": {
             "type": "object",
             "properties": {
-                "ipl_id": {
-                    "type": "string"
-                },
-                "note": {
-                    "type": "string"
-                },
-                "sub_amount": {
-                    "type": "number"
-                }
-            }
-        },
-        "request.IplPaymentCreateRequest": {
-            "type": "object",
-            "properties": {
-                "amount": {
-                    "type": "number"
-                },
-                "house_id": {
-                    "type": "string"
-                },
-                "month": {
-                    "type": "integer"
-                },
-                "paid_at": {
-                    "type": "string"
-                },
-                "year": {
-                    "type": "integer"
-                }
-            }
-        },
-        "request.IplPaymentUpdateRequset": {
-            "type": "object",
-            "properties": {
-                "amount": {
-                    "type": "number"
-                },
-                "house_id": {
+                "description": {
                     "type": "string"
                 },
                 "id": {
                     "type": "string"
                 },
-                "month": {
-                    "type": "integer"
-                },
-                "paid_at": {
+                "item_type": {
                     "type": "string"
                 },
-                "year": {
-                    "type": "integer"
-                }
-            }
-        },
-        "request.IplUpdateRequset": {
-            "type": "object",
-            "properties": {
-                "amount": {
-                    "type": "number"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "is_active": {
-                    "type": "boolean"
-                },
-                "items": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/request.IplDetailCreateRequest"
-                    }
-                },
-                "note": {
+                "name": {
                     "type": "string"
                 },
                 "rt_id": {
@@ -5325,6 +6802,17 @@
                     "type": "string"
                 },
                 "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.RefreshTokenRequest": {
+            "type": "object",
+            "required": [
+                "refresh_token"
+            ],
+            "properties": {
+                "refresh_token": {
                     "type": "string"
                 }
             }
@@ -5555,6 +7043,9 @@
                 "group_id": {
                     "type": "string"
                 },
+                "house_id": {
+                    "type": "string"
+                },
                 "resident_id": {
                     "type": "string"
                 }
@@ -5564,6 +7055,9 @@
             "type": "object",
             "properties": {
                 "group_id": {
+                    "type": "string"
+                },
+                "house_id": {
                     "type": "string"
                 },
                 "id": {
@@ -5596,6 +7090,9 @@
                 },
                 "group_id": {
                     "type": "string"
+                },
+                "rt_id": {
+                    "type": "string"
                 }
             }
         },
@@ -5609,6 +7106,9 @@
                     "type": "string"
                 },
                 "id": {
+                    "type": "string"
+                },
+                "rt_id": {
                     "type": "string"
                 }
             }

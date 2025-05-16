@@ -12,38 +12,6 @@ definitions:
     - email
     - password
     type: object
-  request.AnnouncementCreateRequest:
-    properties:
-      attachments:
-        items:
-          type: string
-        type: array
-      content:
-        type: string
-      created_by:
-        type: string
-      rt_id:
-        type: string
-      title:
-        type: string
-    type: object
-  request.AnnouncementUpdateRequset:
-    properties:
-      attachments:
-        items:
-          type: string
-        type: array
-      content:
-        type: string
-      created_by:
-        type: string
-      id:
-        type: string
-      rt_id:
-        type: string
-      title:
-        type: string
-    type: object
   request.BlockCreateRequest:
     properties:
       name:
@@ -64,6 +32,10 @@ definitions:
     properties:
       block_id:
         type: string
+      latitude:
+        type: number
+      longitude:
+        type: number
       number:
         type: string
       rt_id:
@@ -78,6 +50,10 @@ definitions:
         type: string
       id:
         type: string
+      latitude:
+        type: number
+      longitude:
+        type: number
       number:
         type: string
       rt_id:
@@ -88,6 +64,10 @@ definitions:
     type: object
   request.HousingAreaCreateRequest:
     properties:
+      latitude:
+        type: number
+      longitude:
+        type: number
       name:
         type: string
     type: object
@@ -95,74 +75,208 @@ definitions:
     properties:
       id:
         type: string
+      latitude:
+        type: number
+      longitude:
+        type: number
       name:
         type: string
     type: object
-  request.IplCreateRequest:
+  request.IplBillCreateRequest:
     properties:
-      amount:
-        type: number
-      is_active:
-        type: boolean
-      items:
-        items:
-          $ref: '#/definitions/request.IplDetailCreateRequest'
-        type: array
-      note:
+      amount_paid:
+        type: integer
+      balance_due:
+        type: integer
+      due_date:
+        type: string
+      house_id:
+        type: string
+      ipl_rate_id:
+        type: string
+      month:
+        type: integer
+      penalty:
         type: string
       rt_id:
         type: string
+      status:
+        type: string
+      total_amount:
+        type: integer
+      year:
+        type: integer
     type: object
-  request.IplDetailCreateRequest:
+  request.IplBillDetailCreateRequest:
     properties:
-      ipl_id:
+      ipl_bill_id:
+        type: string
+      item_id:
         type: string
       note:
         type: string
       sub_amount:
-        type: number
+        type: integer
+    type: object
+  request.IplBillDetailUpdateRequset:
+    properties:
+      id:
+        type: string
+      ipl_bill_id:
+        type: string
+      item_id:
+        type: string
+      note:
+        type: string
+      sub_amount:
+        type: integer
+    type: object
+  request.IplBillGenerator:
+    properties:
+      due_date:
+        type: integer
+      house_ids:
+        items:
+          type: string
+        type: array
+      ipl_rate_id:
+        type: string
+      is_all_house:
+        type: boolean
+      month:
+        type: integer
+      rt_id:
+        type: string
+      year:
+        type: integer
+    type: object
+  request.IplBillUpdateRequset:
+    properties:
+      amount_paid:
+        type: integer
+      balance_due:
+        type: integer
+      due_date:
+        type: string
+      house_id:
+        type: string
+      id:
+        type: string
+      ipl_rate_id:
+        type: string
+      month:
+        type: integer
+      penalty:
+        type: string
+      rt_id:
+        type: string
+      status:
+        type: string
+      total_amount:
+        type: integer
+      year:
+        type: integer
     type: object
   request.IplPaymentCreateRequest:
     properties:
-      amount:
-        type: number
-      house_id:
-        type: string
-      month:
+      amount_paid:
         type: integer
+      evidence:
+        type: string
+      ipl_bill_id:
+        type: string
+      notes:
+        type: string
       paid_at:
         type: string
-      year:
-        type: integer
+      payment_method:
+        type: string
     type: object
   request.IplPaymentUpdateRequset:
     properties:
-      amount:
-        type: number
-      house_id:
+      amount_paid:
+        type: integer
+      evidence:
         type: string
       id:
         type: string
-      month:
-        type: integer
+      ipl_bill_id:
+        type: string
+      notes:
+        type: string
       paid_at:
         type: string
-      year:
-        type: integer
+      payment_method:
+        type: string
     type: object
-  request.IplUpdateRequset:
+  request.IplRateCreateRequest:
     properties:
       amount:
-        type: number
+        type: integer
+      block_id:
+        type: string
+      house_type:
+        type: string
+      rt_id:
+        type: string
+      start_date:
+        type: string
+    type: object
+  request.IplRateDetailCreateRequest:
+    properties:
+      amount:
+        type: integer
+      ipl_rate_id:
+        type: string
+      item_id:
+        type: string
+    type: object
+  request.IplRateDetailUpdateRequset:
+    properties:
+      amount:
+        type: integer
       id:
         type: string
-      is_active:
-        type: boolean
-      items:
-        items:
-          $ref: '#/definitions/request.IplDetailCreateRequest'
-        type: array
-      note:
+      ipl_rate_id:
+        type: string
+      item_id:
+        type: string
+    type: object
+  request.IplRateUpdateRequset:
+    properties:
+      amount:
+        type: integer
+      block_id:
+        type: string
+      house_type:
+        type: string
+      id:
+        type: string
+      rt_id:
+        type: string
+      start_date:
+        type: string
+    type: object
+  request.ItemCreateRequest:
+    properties:
+      description:
+        type: string
+      item_type:
+        type: string
+      name:
+        type: string
+      rt_id:
+        type: string
+    type: object
+  request.ItemUpdateRequset:
+    properties:
+      description:
+        type: string
+      id:
+        type: string
+      item_type:
+        type: string
+      name:
         type: string
       rt_id:
         type: string
@@ -221,6 +335,13 @@ definitions:
         type: string
       user_id:
         type: string
+    type: object
+  request.RefreshTokenRequest:
+    properties:
+      refresh_token:
+        type: string
+    required:
+    - refresh_token
     type: object
   request.ResidentCreateRequest:
     properties:
@@ -371,12 +492,16 @@ definitions:
     properties:
       group_id:
         type: string
+      house_id:
+        type: string
       resident_id:
         type: string
     type: object
   request.RondaGroupMemberUpdateRequset:
     properties:
       group_id:
+        type: string
+      house_id:
         type: string
       id:
         type: string
@@ -398,6 +523,8 @@ definitions:
         type: string
       group_id:
         type: string
+      rt_id:
+        type: string
     type: object
   request.RondaScheduleUpdateRequset:
     properties:
@@ -406,6 +533,8 @@ definitions:
       group_id:
         type: string
       id:
+        type: string
+      rt_id:
         type: string
     type: object
   request.RtCreateRequest:
@@ -564,17 +693,16 @@ definitions:
       status:
         type: string
     type: object
-host: localhost:5001
 info:
   contact:
     email: sarikhin@yahoo.co.id
     name: API Support
-  description: This is a API Server for SIRNAWA
+  description: This is a API Server for App My RT
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   termsOfService: http://swagger.io/terms/
-  title: SIRNAWA API
+  title: My RT
   version: "1.0"
 paths:
   /announcement:
@@ -624,19 +752,41 @@ paths:
       - Announcement
     post:
       consumes:
-      - application/json
+      - multipart/form-data
+      description: Create Announcement with file attachments
       parameters:
-      - description: Create Announcement
-        in: body
-        name: data
+      - description: Announcement title
+        in: formData
+        name: title
         required: true
-        schema:
-          $ref: '#/definitions/request.AnnouncementCreateRequest'
+        type: string
+      - description: Announcement content
+        in: formData
+        name: content
+        required: true
+        type: string
+      - description: Creator user ID
+        in: formData
+        name: created_by
+        required: true
+        type: string
+      - description: RT ID
+        in: formData
+        name: rt_id
+        required: true
+        type: string
+      - collectionFormat: csv
+        description: Attachment files
+        in: formData
+        items:
+          type: file
+        name: attachments
+        type: array
       produces:
       - application/json
       responses:
-        "200":
-          description: OK
+        "201":
+          description: Created
           schema:
             $ref: '#/definitions/utils.ResponseData'
         "400":
@@ -645,7 +795,7 @@ paths:
             $ref: '#/definitions/utils.ResponseData'
       security:
       - Bearer: []
-      summary: Create Announcement
+      summary: Create Announcement with attachments
       tags:
       - Announcement
   /announcement/{id}:
@@ -701,19 +851,36 @@ paths:
       - Announcement
     put:
       consumes:
-      - application/json
+      - multipart/form-data
+      description: Update Announcement with file attachments
       parameters:
-      - description: Update Announcement
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/request.AnnouncementUpdateRequset'
-      - description: Announcement id
+      - description: Announcement ID
         in: path
         name: id
         required: true
         type: string
+      - description: Announcement title
+        in: formData
+        name: title
+        type: string
+      - description: Announcement content
+        in: formData
+        name: content
+        type: string
+      - collectionFormat: csv
+        description: Attachment files
+        in: formData
+        items:
+          type: file
+        name: attachments
+        type: array
+      - collectionFormat: csv
+        description: Attachment IDs to delete
+        in: formData
+        items:
+          type: string
+        name: delete_attachments
+        type: array
       produces:
       - application/json
       responses:
@@ -727,9 +894,35 @@ paths:
             $ref: '#/definitions/utils.ResponseData'
       security:
       - Bearer: []
-      summary: Update Announcement
+      summary: Update Announcement with attachments
       tags:
       - Announcement
+  /auth/forgot-password-verification:
+    post:
+      consumes:
+      - application/json
+      description: Send Forgot Password Verification
+      parameters:
+      - description: Forgot Password Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.VerifyCodeRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Send Forgot Password Verification
+      tags:
+      - Auth
   /auth/login:
     post:
       consumes:
@@ -793,10 +986,17 @@ paths:
       tags:
       - Auth
   /auth/refresh-token:
-    get:
+    post:
       consumes:
       - application/json
       description: Refresh Token
+      parameters:
+      - description: Refresh Token
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.RefreshTokenRequest'
       produces:
       - application/json
       responses:
@@ -861,6 +1061,32 @@ paths:
           schema:
             $ref: '#/definitions/utils.ErrorResponse'
       summary: Send Email Verification
+      tags:
+      - Auth
+  /auth/send-forgot-password-verification:
+    post:
+      consumes:
+      - application/json
+      description: Verify Forgot Password Verification
+      parameters:
+      - description: Forgot Password Code Vefification
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.VerifyEmailCodeRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Verify Forgot Password Verification
       tags:
       - Auth
   /auth/verify-email-code:
@@ -1047,6 +1273,17 @@ paths:
       consumes:
       - application/json
       description: Get Data DashboardMobile
+      parameters:
+      - description: RT ID
+        in: query
+        name: rt_id
+        required: true
+        type: string
+      - description: House ID
+        in: query
+        name: house_id
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -1075,6 +1312,22 @@ paths:
       - description: RT ID
         in: query
         name: rt_id
+        type: string
+      - description: Block ID
+        in: query
+        name: block_id
+        type: string
+      - description: Filter Not In Group Ronda
+        in: query
+        name: not_in_group_ronda
+        type: string
+      - description: Status Rumah
+        enum:
+        - aktif
+        - tidak_akfit
+        - kontrakan
+        in: query
+        name: status
         type: string
       - description: Page number
         in: query
@@ -1365,7 +1618,7 @@ paths:
       summary: Update HousingArea
       tags:
       - Housing Area
-  /ipl:
+  /ipl-bill:
     get:
       consumes:
       - application/json
@@ -1377,6 +1630,93 @@ paths:
       - description: RT ID
         in: query
         name: rt_id
+        type: string
+      - description: House ID
+        in: query
+        name: house_id
+        type: string
+      - description: Status
+        in: query
+        name: status
+        type: string
+      - description: Bulan
+        in: query
+        name: month
+        type: integer
+      - description: Tahun
+        in: query
+        name: year
+        type: integer
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: page_size
+        type: integer
+      - description: Order by
+        in: query
+        name: order_by
+        type: string
+      - description: Order
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get IplBill
+      tags:
+      - Ipl Bill
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create IplBill
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.IplBillCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Create IplBill
+      tags:
+      - Ipl Bill
+  /ipl-bill-detail:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Paginated
+        in: query
+        name: paginated
+        type: boolean
+      - description: RT ID
+        in: query
+        name: ipl_bill_id
         type: string
       - description: Page number
         in: query
@@ -1407,19 +1747,19 @@ paths:
             $ref: '#/definitions/utils.ResponseData'
       security:
       - Bearer: []
-      summary: Get Ipl
+      summary: Get Ipl Bill Detail
       tags:
-      - Ipl
+      - Ipl Bill Detail
     post:
       consumes:
       - application/json
       parameters:
-      - description: Create Ipl
+      - description: Create IplBillDetail
         in: body
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.IplCreateRequest'
+          $ref: '#/definitions/request.IplBillDetailCreateRequest'
       produces:
       - application/json
       responses:
@@ -1433,9 +1773,200 @@ paths:
             $ref: '#/definitions/utils.ResponseData'
       security:
       - Bearer: []
-      summary: Create Ipl
+      summary: Create Ipl Bill Detail
       tags:
-      - Ipl
+      - Ipl Bill Detail
+  /ipl-bill-detail/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Ipl Bill Detail id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Delete Ipl Bill Detail By ID
+      tags:
+      - Ipl Bill Detail
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Ipl Bill Detail id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Find Ipl Bill Detail By ID
+      tags:
+      - Ipl Bill Detail
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update IplBillDetail
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.IplBillDetailUpdateRequset'
+      - description: IplBillDetail id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Update Ipl Bill Detail
+      tags:
+      - Ipl Bill Detail
+  /ipl-bill/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: IplBill id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Delete IplBill By ID
+      tags:
+      - Ipl Bill
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: IplBill id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Find IplBill By ID
+      tags:
+      - Ipl Bill
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update IplBill
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.IplBillUpdateRequset'
+      - description: IplBill id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Update IplBill
+      tags:
+      - Ipl Bill
+  /ipl-bill/generate:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create IplBill
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.IplBillGenerator'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Generate IplBill
+      tags:
+      - Ipl Bill
   /ipl-payment:
     get:
       consumes:
@@ -1585,40 +2116,34 @@ paths:
       summary: Update IplPayment
       tags:
       - IPL Payment
-  /ipl/{id}:
-    delete:
-      consumes:
-      - application/json
-      parameters:
-      - description: Ipl id
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseData'
-      security:
-      - Bearer: []
-      summary: Delete Ipl By ID
-      tags:
-      - Ipl
+  /ipl-rate:
     get:
       consumes:
       - application/json
       parameters:
-      - description: Ipl id
-        in: path
-        name: id
-        required: true
+      - description: Paginated
+        in: query
+        name: paginated
+        type: boolean
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: page_size
+        type: integer
+      - description: RT ID
+        in: query
+        name: rt_id
+        type: string
+      - description: Order by
+        in: query
+        name: order_by
+        type: string
+      - description: Order
+        in: query
+        name: order
         type: string
       produces:
       - application/json
@@ -1633,20 +2158,112 @@ paths:
             $ref: '#/definitions/utils.ResponseData'
       security:
       - Bearer: []
-      summary: Find Ipl By ID
+      summary: Get Paginated IplRate
       tags:
-      - Ipl
-    put:
+      - Ipl Rate
+    post:
       consumes:
       - application/json
       parameters:
-      - description: Update Ipl
+      - description: Create IplRate
         in: body
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.IplUpdateRequset'
-      - description: Ipl id
+          $ref: '#/definitions/request.IplRateCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Create IplRate
+      tags:
+      - Ipl Rate
+  /ipl-rate-detail:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Paginated
+        in: query
+        name: paginated
+        type: boolean
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: page_size
+        type: integer
+      - description: Order by
+        in: query
+        name: order_by
+        type: string
+      - description: Order
+        in: query
+        name: order
+        type: string
+      - description: IPL Rate ID
+        in: query
+        name: ipl_rate_id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get Paginated IplRateDetail
+      tags:
+      - Ipl Rate Detail
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create IplRateDetail
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.IplRateDetailCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Create IplRateDetail
+      tags:
+      - Ipl Rate Detail
+  /ipl-rate-detail/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: IplRateDetail id
         in: path
         name: id
         required: true
@@ -1664,9 +2281,300 @@ paths:
             $ref: '#/definitions/utils.ResponseData'
       security:
       - Bearer: []
-      summary: Update Ipl
+      summary: Delete IplRateDetail By ID
       tags:
-      - Ipl
+      - Ipl Rate Detail
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: IplRateDetail id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Find IplRateDetail By ID
+      tags:
+      - Ipl Rate Detail
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update IplRateDetail
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.IplRateDetailUpdateRequset'
+      - description: IplRateDetail id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Update IplRateDetail
+      tags:
+      - Ipl Rate Detail
+  /ipl-rate/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: IplRate id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Delete IplRate By ID
+      tags:
+      - Ipl Rate
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: IplRate id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Find IplRate By ID
+      tags:
+      - Ipl Rate
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update IplRate
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.IplRateUpdateRequset'
+      - description: IplRate id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Update IplRate
+      tags:
+      - Ipl Rate
+  /item:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Paginated
+        in: query
+        name: paginated
+        type: boolean
+      - description: RT ID
+        in: query
+        name: rt_id
+        type: string
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: page_size
+        type: integer
+      - description: Order by
+        in: query
+        name: order_by
+        type: string
+      - description: Order
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get Item
+      tags:
+      - Item
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create Item
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.ItemCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Create Item
+      tags:
+      - Item
+  /item/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Item id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Delete Item By ID
+      tags:
+      - Item
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Item id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Find Item By ID
+      tags:
+      - Item
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update Item
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.ItemUpdateRequset'
+      - description: Item id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Update Item
+      tags:
+      - Item
   /post:
     get:
       consumes:
@@ -1994,6 +2902,14 @@ paths:
         in: query
         name: order
         type: string
+      - description: RT ID
+        in: query
+        name: rt_id
+        type: string
+      - description: Search Resident By Name
+        in: query
+        name: search
+        type: string
       produces:
       - application/json
       responses:
@@ -2112,6 +3028,32 @@ paths:
       security:
       - Bearer: []
       summary: Change To Primary By ID
+      tags:
+      - Resident House
+  /resident-house/house/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: House id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Find Resident House by House ID
       tags:
       - Resident House
   /resident/{id}:
@@ -2958,6 +3900,18 @@ paths:
         in: query
         name: page
         type: integer
+      - description: Date (YYYY-MM-DD)
+        in: query
+        name: date
+        type: string
+      - description: RT ID
+        in: query
+        name: rt_id
+        type: string
+      - description: Group ID
+        in: query
+        name: group_id
+        type: string
       - description: Page size
         in: query
         name: page_size
@@ -3694,6 +4648,9 @@ paths:
       summary: Update Shop
       tags:
       - Shop
+schemes:
+- http
+- https
 securityDefinitions:
   Bearer:
     description: Type "Bearer" followed by a space and JWT token.
