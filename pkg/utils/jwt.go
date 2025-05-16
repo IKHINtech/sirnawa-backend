@@ -13,7 +13,7 @@ import (
 func GenerateAccessToken(data models.User) (string, int64, error) {
 	claims := jwt.MapClaims{
 		"user_id": data.ID,
-		"exp":     time.Now().Add(time.Minute * 5).Unix(), // Berlaku 1 hari
+		"exp":     time.Now().Add(time.Hour * 24).Unix(), // Berlaku 1 hari
 		"iat":     time.Now().Unix(),
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
@@ -22,7 +22,7 @@ func GenerateAccessToken(data models.User) (string, int64, error) {
 		return "", 0, err
 	}
 	// Menambahkan waktu expired dalam format epoch (jumlah detik sejak 1970-01-01)
-	expiredTime := time.Now().Add(time.Minute * 15).Unix()
+	expiredTime := time.Now().Add(time.Hour * 24).Unix()
 
 	// Kembalikan token dan waktu expired dalam format epoch
 	return signedToken, expiredTime, nil
@@ -32,7 +32,7 @@ func GenerateAccessToken(data models.User) (string, int64, error) {
 func GenerateRefreshToken(userID string) (string, error) {
 	claims := jwt.MapClaims{
 		"user_id": userID,
-		"exp":     time.Now().Add(time.Hour * 24 * 7).Unix(), // Berlaku 7 hari
+		"exp":     time.Now().Add(time.Hour * 24 * 30).Unix(), // Berlaku 7 hari
 		"iat":     time.Now().Unix(),
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
