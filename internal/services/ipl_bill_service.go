@@ -104,7 +104,7 @@ func (s *iplBillServiceImpl) Generate(tx *gorm.DB, data request.IplBillGenerator
 		TotalAmount: iplRate.Amount,
 		BalanceDue:  nil,
 		AmountPaid:  nil,
-		IplRateID:   &data.IplRateID,
+		IplRateID:   &iplRate.ID,
 		Status:      models.IplBillStatusUnpaid,
 		DueDate:     time.Date(data.Year, time.Month(data.Month), data.DueDate, 0, 0, 0, 0, time.UTC),
 		Penalty:     nil,
