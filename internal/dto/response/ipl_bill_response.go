@@ -19,6 +19,9 @@ type IplBillResponse struct {
 	Status      string    `json:"status"`
 	DueDate     time.Time `json:"due_date"`
 	Penalty     *string   `json:"penalty"`
+
+	House HouseResponseDetail `json:"house"`
+	Rt    RtResponse          `json:"rt"`
 }
 
 type IplBillResponses []IplBillResponse
@@ -32,6 +35,7 @@ func IplBillModelToIplBillResponse(data *models.IplBill) *IplBillResponse {
 		CreatedAt: data.CreatedAt,
 		UpdatedAt: data.UpdatedAt,
 	}
+
 	return &IplBillResponse{
 		BaseResponse: base,
 		HouseID:      data.HouseID,
@@ -45,6 +49,8 @@ func IplBillModelToIplBillResponse(data *models.IplBill) *IplBillResponse {
 		Status:       data.Status.ToString(),
 		DueDate:      data.DueDate,
 		Penalty:      data.Penalty,
+		House:        *MapHouseDetailResponse(&data.House),
+		Rt:           *RtModelToRtResponse(&data.Rt),
 	}
 }
 

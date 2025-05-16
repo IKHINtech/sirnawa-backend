@@ -25,7 +25,7 @@ func NewIplBillRepository(db *gorm.DB) IplBillRepository {
 
 func (r *iplBillRepositoryImpl) Paginated(pagination utils.Pagination, rtID, houseID, status string, month, year int) (*utils.Pagination, models.IplBills, error) {
 	var datas models.IplBills
-	query := r.db
+	query := r.db.Preload("House").Preload("House.Block").Preload("Rt")
 
 	if rtID != "" {
 		query = query.Where("rt_id = ?", rtID)
@@ -68,7 +68,7 @@ func (r *iplBillRepositoryImpl) Update(tx *gorm.DB, id string, data models.IplBi
 func (r *iplBillRepositoryImpl) FindByID(id string) (*models.IplBill, error) {
 	var data models.IplBill
 
-	err := r.db.First(&data, "id = ?", id).Error
+	err := r.db.Preload("House").Preload("House.Block").Preload("Rt").First(&data, "id = ?", id).Error
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +76,7 @@ func (r *iplBillRepositoryImpl) FindByID(id string) (*models.IplBill, error) {
 }
 
 func (r *iplBillRepositoryImpl) FindAll(rtID, houseID, status string, month, year int) (models.IplBills, error) {
-	query := r.db
+	query := r.db.Preload("House").Preload("House.Block").Preload("Rt")
 
 	if rtID != "" {
 		query = query.Where("rt_id = ?", rtID)
