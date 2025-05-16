@@ -132,7 +132,7 @@ func (s *houseServiceImpl) Update(id string, data request.HouseUpdateRequset) (*
 }
 
 func (s *houseServiceImpl) FindAll(rtID, blockID, status, isNotInGroupRonda string) ([]response.HouseResponseDetail, error) {
-	result, err := s.repository.FindAll(rtID, blockID, status, isNotInGroupRonda, nil)
+	result, err := s.repository.FindAll(rtID, blockID, status, isNotInGroupRonda, "")
 	if err != nil {
 		return nil, err
 	}

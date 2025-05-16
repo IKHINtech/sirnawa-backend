@@ -96,15 +96,14 @@ func (s *iplBillServiceImpl) Create(data request.IplBillCreateRequest) (*respons
 }
 
 func (s *iplBillServiceImpl) Generate(tx *gorm.DB, data request.IplBillGenerator, house models.House, iplRate models.IplRate, iplRateDetails []models.IplRateDetail) error {
-	var nol *int64
 	payload := models.IplBill{
 		HouseID:     house.ID,
 		RtID:        data.RtID,
 		Year:        data.Year,
 		Month:       data.Month,
 		TotalAmount: iplRate.Amount,
-		BalanceDue:  nol,
-		AmountPaid:  nol,
+		BalanceDue:  nil,
+		AmountPaid:  nil,
 		IplRateID:   &data.IplRateID,
 		Status:      models.IplBillStatusUnpaid,
 		DueDate:     time.Date(data.Year, time.Month(data.Month), data.DueDate, 0, 0, 0, 0, time.UTC),
@@ -142,14 +141,23 @@ func (s *iplBillServiceImpl) GenerateIplBill(data request.IplBillGenerator) erro
 			return err
 		}
 
-		status := "tidak aktif"
+		status := models.HouseStatusInactive
 		if data.IsAllHouse {
-			allHouse, err := s.houseRepo.FindAll(data.RtID, "", "", "", &status)
+			allHouse, err := s.houseRepo.FindAll(data.RtID, "", "", "", status.ToString())
 			if err != nil {
 				return err
 			}
 			for _, house := range allHouse {
-				err := s.Generate(tx, data, house, *iplRate, iplRateDetails)
+				// cek dulu apakah sudah ada tagihan di bulan dan tahun yang dimaksud
+				existingTagihan, err := s.repository.FindAll(data.RtID, house.ID, "", data.Month, data.Year)
+				if err != nil {
+					return err
+				}
+				if len(existingTagihan) > 0 {
+					// jika tagihan sudah ada maka skip
+					continue
+				}
+				err = s.Generate(tx, data, house, *iplRate, iplRateDetails)
 				if err != nil {
 					return err
 				}
@@ -160,13 +168,21 @@ func (s *iplBillServiceImpl) GenerateIplBill(data request.IplBillGenerator) erro
 				return err
 			}
 			for _, house := range houses {
-				err := s.Generate(tx, data, house, *iplRate, iplRateDetails)
+				// cek dulu apakah sudah ada tagihan di bulan dan tahun yang dimaksud
+				existingTagihan, err := s.repository.FindAll(data.RtID, house.ID, "", data.Month, data.Year)
+				if err != nil {
+					return err
+				}
+				if len(existingTagihan) > 0 {
+					// jika tagihan sudah ada maka skip
+					continue
+				}
+				err = s.Generate(tx, data, house, *iplRate, iplRateDetails)
 				if err != nil {
 					return err
 				}
 			}
 		}
-
 		return err
 	})
 	return err
