@@ -63,17 +63,6 @@ func DashboardMobile(c *fiber.Ctx, driveService utils.DriveService) error {
 	if err != nil {
 		return r.BadRequest(c, []string{"error", err.Error()})
 	}
-	// get bill ipl pada bulan ini dan tahun ini
-	var billIpl *models.IplBill
-
-	err = db.Where("month = ? AND year = ? AND rt_id = ? AND house_id = ?", now.Month(), now.Year(), rtID, houseID).First(&billIpl).Error
-	if err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			billIpl = nil
-		} else {
-			return r.BadRequest(c, []string{"error", err.Error()})
-		}
-	}
 	// get pengumuman limit 1
 	var announcement *models.Announcement
 
@@ -86,10 +75,22 @@ func DashboardMobile(c *fiber.Ctx, driveService utils.DriveService) error {
 		}
 	}
 
+	// get bill ipl pada bulan ini dan tahun ini
+	var currenBill *models.IplBill
+
+	err = db.Preload("House").Preload("House.Block").Preload("Rt").Where("month = ? AND year = ? AND rt_id = ? AND house_id = ?", now.Month(), now.Year(), rtID, houseID).First(&currenBill).Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			currenBill = nil
+		} else {
+			return r.BadRequest(c, []string{"error", err.Error()})
+		}
+	}
+
 	resp := response.DashboardMobileResponse{
 		RondaSchedule: response.RondaScheduleModelToRondaScheduleResponse(schedules, &totalMember),
 		Announcement:  response.AnnouncementModelToAnnouncementResponse(announcement, driveService),
-		IplBill:       response.IplBillModelToIplBillResponse(billIpl),
+		IplBill:       response.IplBillModelToIplBillResponse(currenBill),
 	}
 	// get event limit 1
 	return r.Ok(c, resp, "success", nil)
