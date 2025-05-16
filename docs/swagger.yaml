@@ -1324,10 +1324,18 @@ paths:
       - description: Status Rumah
         enum:
         - aktif
-        - tidak_akfit
+        - tidak_aktif
         - kontrakan
         in: query
         name: status
+        type: string
+      - description: Exclue Status Rumah
+        enum:
+        - aktif
+        - tidak_aktif
+        - kontrakan
+        in: query
+        name: exclude_status
         type: string
       - description: Page number
         in: query

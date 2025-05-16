@@ -997,12 +997,23 @@ const docTemplate = `{
                     {
                         "enum": [
                             "aktif",
-                            "tidak_akfit",
+                            "tidak_aktif",
                             "kontrakan"
                         ],
                         "type": "string",
                         "description": "Status Rumah",
                         "name": "status",
+                        "in": "query"
+                    },
+                    {
+                        "enum": [
+                            "aktif",
+                            "tidak_aktif",
+                            "kontrakan"
+                        ],
+                        "type": "string",
+                        "description": "Exclue Status Rumah",
+                        "name": "exclude_status",
                         "in": "query"
                     },
                     {
