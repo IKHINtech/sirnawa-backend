@@ -8,6 +8,6 @@ import (
 
 func UserFcmTokenRoutes(route fiber.Router, tokenService *services.FCMTokenService) {
 	tokenHandler := handlers.NewFCMTokenHandler(tokenService)
-	route.Get("/register", tokenHandler.RegisterToken)
-	route.Get("/remove", tokenHandler.RemoveToken)
+	route.Post("/register", tokenHandler.RegisterToken)
+	route.Post("/remove", tokenHandler.RemoveToken)
 }
