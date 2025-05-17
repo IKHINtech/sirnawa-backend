@@ -6,6 +6,7 @@ type UserResponse struct {
 	ID         string  `json:"id"`
 	Email      *string `json:"email"`
 	Role       string  `json:"role"`
+	PhotoUrl   *string `json:"photo_url"`
 	ResidentID *string `json:"resident_id"`
 }
 
@@ -29,6 +30,7 @@ func UserToResponse(user *models.User) *UserDetailResponse {
 			ID:         user.ID,
 			Email:      user.Email,
 			Role:       string(user.Role),
+			PhotoUrl:   user.PhotoUrl,
 			ResidentID: user.ResidentID,
 		},
 		UserRts:  userRts,

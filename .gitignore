@@ -31,4 +31,7 @@ go.sum
 # Logs
 *.log
 logs/
+
+# service account
 service-account-my-rt.json
+firebase_service_account.json

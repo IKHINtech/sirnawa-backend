@@ -1,5 +1,11 @@
 package models
 
+import (
+	"database/sql/driver"
+	"encoding/json"
+	"errors"
+)
+
 type (
 	HouseStatus           string
 	RondaAttendanceStatus string
@@ -37,6 +43,24 @@ func (i IplBillStatus) ToString() string {
 
 func (h HouseStatus) ToString() string {
 	return string(h)
+}
+
+type JSONB map[string]any
+
+// Implementasi Scanner dan Valuer untuk JSONB
+func (j JSONB) Value() (driver.Value, error) {
+	return json.Marshal(j)
+}
+
+func (j *JSONB) Scan(value any) error {
+	if value == nil {
+		return nil
+	}
+	b, ok := value.([]byte)
+	if !ok {
+		return errors.New("type assertion to []byte failed")
+	}
+	return json.Unmarshal(b, &j)
 }
 
 const (

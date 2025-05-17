@@ -3,12 +3,13 @@ package routes
 import (
 	_ "github.com/IKHINtech/sirnawa-backend/docs"
 	"github.com/IKHINtech/sirnawa-backend/internal/middleware"
+	"github.com/IKHINtech/sirnawa-backend/internal/services"
 	"github.com/IKHINtech/sirnawa-backend/pkg/utils"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/swagger"
 )
 
-func SetupRoutesApp(app *fiber.App, driveService utils.DriveService) {
+func SetupRoutesApp(app *fiber.App, driveService utils.DriveService, tokenService *services.FCMTokenService) {
 	AuthRoutes(app.Group("/auth"))
 	DashboardRoutes(app.Group("/dashboard"), driveService)
 	BlockRoutes(app.Group("/block", middleware.Protected()))
@@ -35,6 +36,8 @@ func SetupRoutesApp(app *fiber.App, driveService utils.DriveService) {
 	HousingAreaRoutes(app.Group("/housing-area", middleware.Protected()))
 	AnnouncementRoutes(app.Group("/announcement", middleware.Protected()), driveService)
 	ResidentHouseRoutes(app.Group("/resident-house", middleware.Protected()))
+	UserFcmTokenRoutes(app.Group("/fcm", middleware.Protected()), tokenService)
+	NotificationRoutes(app.Group("/notification", middleware.Protected()))
 
 	// Default route
 	app.Get("/", func(c *fiber.Ctx) error {

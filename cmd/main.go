@@ -2,12 +2,20 @@ package main
 
 import (
 	"log"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
 
 	"github.com/IKHINtech/sirnawa-backend/internal/config"
 	"github.com/IKHINtech/sirnawa-backend/internal/database"
 	"github.com/IKHINtech/sirnawa-backend/internal/middleware"
+	"github.com/IKHINtech/sirnawa-backend/internal/repository"
 	"github.com/IKHINtech/sirnawa-backend/internal/routes"
+	"github.com/IKHINtech/sirnawa-backend/internal/services"
+	"github.com/IKHINtech/sirnawa-backend/pkg/firebase"
 	"github.com/IKHINtech/sirnawa-backend/pkg/utils"
+	workers "github.com/IKHINtech/sirnawa-backend/pkg/worker"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -44,11 +52,30 @@ func main() {
 		log.Fatalf("Gagal inisialisasi Drive Service: %v", err)
 	}
 
+	// Inisialisasi Firebase Cloud Messaging
+	firebase.InitFCM()
+
 	app := fiber.New()
 
 	middleware.SetupCORS(app)
 	middleware.SetupRecovery(app)
-	routes.SetupRoutesApp(app, driveService)
+
+	tokenRepo := repository.NewFCMTokenRepository(database.DB)
+	tokenService := services.NewFCMTokenService(tokenRepo, database.DB)
+	routes.SetupRoutesApp(app, driveService, tokenService)
+	// Setup worker
+	cleanupWorker := workers.NewTokenCleanupWorker(tokenService, 24*time.Hour)
+	cleanupWorker.Start()
+
+	// Handle graceful shutdown
+	go func() {
+		sigchan := make(chan os.Signal, 1)
+		signal.Notify(sigchan, os.Interrupt, syscall.SIGTERM)
+		<-sigchan
+
+		cleanupWorker.Stop()
+		app.Shutdown()
+	}()
 
 	if err := app.Listen(":" + config.AppConfig.PORT); err != nil {
 		log.Fatalf("Failed to start server: %v", err)

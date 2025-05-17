@@ -12,6 +12,281 @@ definitions:
     - email
     - password
     type: object
+  models.Block:
+    properties:
+      createdAt:
+        type: string
+      houses:
+        items:
+          $ref: '#/definitions/models.House'
+        type: array
+      id:
+        type: string
+      name:
+        type: string
+      rt:
+        $ref: '#/definitions/models.Rt'
+      rt_id:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  models.House:
+    properties:
+      block:
+        $ref: '#/definitions/models.Block'
+      block_id:
+        type: string
+      createdAt:
+        type: string
+      housing_area:
+        $ref: '#/definitions/models.HousingArea'
+      housing_area_id:
+        type: string
+      id:
+        type: string
+      latitude:
+        type: number
+      longitude:
+        type: number
+      number:
+        type: string
+      residentHouses:
+        $ref: '#/definitions/models.ResidentHouses'
+      rt:
+        $ref: '#/definitions/models.Rt'
+      rt_id:
+        type: string
+      rw:
+        $ref: '#/definitions/models.Rw'
+      rw_id:
+        type: string
+      status:
+        allOf:
+        - $ref: '#/definitions/models.HouseStatus'
+        description: aktif / tidak aktif / kontrak
+      updatedAt:
+        type: string
+    type: object
+  models.HouseStatus:
+    enum:
+    - aktif
+    - tidak aktif
+    - kontrak
+    type: string
+    x-enum-varnames:
+    - HouseStatusActive
+    - HouseStatusInactive
+    - HouseStatusContract
+  models.HousingArea:
+    properties:
+      createdAt:
+        type: string
+      id:
+        type: string
+      latitude:
+        type: number
+      longitude:
+        type: number
+      name:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  models.JSONB:
+    additionalProperties: {}
+    type: object
+  models.Notification:
+    properties:
+      body:
+        description: Isi notifikasi
+        type: string
+      category:
+        description: '"payment", "announcement", "event", etc.'
+        type: string
+      createdAt:
+        type: string
+      data:
+        allOf:
+        - $ref: '#/definitions/models.JSONB'
+        description: Payload tambahan (JSON)
+      house:
+        $ref: '#/definitions/models.House'
+      house_id:
+        description: Opsional (bisa null)
+        type: string
+      id:
+        type: string
+      read_at:
+        type: string
+      rt:
+        $ref: '#/definitions/models.Rt'
+      rt_id:
+        description: Opsional (bisa null)
+        type: string
+      title:
+        description: Judul notifikasi
+        type: string
+      updatedAt:
+        type: string
+      user:
+        allOf:
+        - $ref: '#/definitions/models.User'
+        description: Relasi (optional, jika butuh eager loading)
+      user_id:
+        description: Wajib, karena notifikasi harus punya target user
+        type: string
+    type: object
+  models.Resident:
+    properties:
+      birth_date:
+        type: string
+      createdAt:
+        type: string
+      gender:
+        type: string
+      id:
+        type: string
+      is_head_of_family:
+        type: boolean
+      job:
+        type: string
+      name:
+        type: string
+      nik:
+        type: string
+      phone_number:
+        type: string
+      residentHouses:
+        items:
+          $ref: '#/definitions/models.ResidentHouse'
+        type: array
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/models.User'
+    type: object
+  models.ResidentHouse:
+    properties:
+      createdAt:
+        type: string
+      house:
+        $ref: '#/definitions/models.House'
+      houseID:
+        type: string
+      id:
+        type: string
+      isPrimary:
+        description: Apakah ini rumah utama
+        type: boolean
+      resident:
+        $ref: '#/definitions/models.Resident'
+      residentID:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  models.ResidentHouses:
+    items:
+      $ref: '#/definitions/models.ResidentHouse'
+    type: array
+  models.Role:
+    enum:
+    - admin_rt
+    - wakil_rt
+    - ketua_rt
+    - sekretaris
+    - bendahara
+    - koordinator
+    - warga
+    type: string
+    x-enum-varnames:
+    - RoleAdminRT
+    - RoleWakilRT
+    - RoleKetuaRT
+    - RoleSekretaris
+    - RoleBendahara
+    - RoleKoordinator
+    - RoleWarga
+  models.Rt:
+    properties:
+      createdAt:
+        type: string
+      housing_area:
+        $ref: '#/definitions/models.HousingArea'
+      housing_area_id:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      rw:
+        $ref: '#/definitions/models.Rw'
+      rw_id:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  models.Rw:
+    properties:
+      createdAt:
+        type: string
+      housing_area:
+        $ref: '#/definitions/models.HousingArea'
+      housing_area_id:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  models.User:
+    properties:
+      createdAt:
+        type: string
+      email:
+        type: string
+      id:
+        type: string
+      isActive:
+        type: boolean
+      photo_url:
+        type: string
+      resident:
+        $ref: '#/definitions/models.Resident'
+      resident_id:
+        description: nullable
+        type: string
+      role:
+        $ref: '#/definitions/models.Role'
+      updatedAt:
+        type: string
+      userRTs:
+        items:
+          $ref: '#/definitions/models.UserRT'
+        type: array
+    type: object
+  models.UserRT:
+    properties:
+      createdAt:
+        type: string
+      id:
+        type: string
+      role:
+        $ref: '#/definitions/models.Role'
+      rt:
+        $ref: '#/definitions/models.Rt'
+      rt_id:
+        type: string
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/models.User'
+      user_id:
+        type: string
+    type: object
   request.BlockCreateRequest:
     properties:
       name:
@@ -342,6 +617,35 @@ definitions:
         type: string
     required:
     - refresh_token
+    type: object
+  request.RegisterTokenRequest:
+    properties:
+      app_version:
+        type: string
+      device_id:
+        type: string
+      device_type:
+        enum:
+        - android
+        - ios
+        - web
+        - other
+        type: string
+      os_version:
+        type: string
+      token:
+        type: string
+    required:
+    - device_id
+    - device_type
+    - token
+    type: object
+  request.RemoveTokenRequest:
+    properties:
+      token:
+        type: string
+    required:
+    - token
     type: object
   request.ResidentCreateRequest:
     properties:
@@ -692,6 +996,8 @@ definitions:
         $ref: '#/definitions/utils.Pagination'
       status:
         type: string
+    type: object
+  utils.ResponseHandler:
     type: object
 info:
   contact:
@@ -1300,6 +1606,80 @@ paths:
       summary: Get Data DashboardMobile
       tags:
       - Dashboard
+  /fcm/register:
+    post:
+      consumes:
+      - application/json
+      description: Register a new FCM token for push notifications
+      parameters:
+      - description: Token registration data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.RegisterTokenRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Token registered successfully
+          schema:
+            $ref: '#/definitions/utils.ResponseHandler'
+        "400":
+          description: Invalid request body or validation error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Failed to register token
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: Register FCM token
+      tags:
+      - FCM
+  /fcm/remove:
+    post:
+      consumes:
+      - application/json
+      description: Remove registered FCM token
+      parameters:
+      - description: Token removal data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.RemoveTokenRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Token removed successfully
+          schema:
+            additionalProperties:
+              type: boolean
+            type: object
+        "400":
+          description: Invalid request body or token not found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Failed to remove token
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: Remove FCM token
+      tags:
+      - FCM
   /house:
     get:
       consumes:
@@ -2583,6 +2963,215 @@ paths:
       summary: Update Item
       tags:
       - Item
+  /notification:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Paginated
+        in: query
+        name: paginated
+        type: boolean
+      - description: RT ID
+        in: query
+        name: rt_id
+        type: string
+      - description: House ID
+        in: query
+        name: house_id
+        type: string
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: page_size
+        type: integer
+      - description: Order by
+        in: query
+        name: order_by
+        type: string
+      - description: Order
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+      security:
+      - Bearer: []
+      summary: Get Paginated Notification
+      tags:
+      - Notification
+    post:
+      consumes:
+      - application/json
+      description: Create Notification
+      parameters:
+      - description: Notification
+        in: body
+        name: register
+        required: true
+        schema:
+          $ref: '#/definitions/models.Notification'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: Create Notification
+      tags:
+      - Notification
+  /notification/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a specific notification
+      parameters:
+      - description: Notification ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Notification deleted successfully
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Invalid notification ID
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Notification not found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Failed to delete notification
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: Delete a notification
+      tags:
+      - Notification
+  /notification/{id}/read:
+    patch:
+      consumes:
+      - application/json
+      description: Mark a specific notification as read
+      parameters:
+      - description: Notification ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Notification marked as read successfully
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "400":
+          description: Invalid notification ID
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Notification not found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Failed to mark notification as read
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: Mark notification as read
+      tags:
+      - Notification
+  /notification/read-all:
+    patch:
+      consumes:
+      - application/json
+      description: Mark all notifications as read for the authenticated user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: All notifications marked as read successfully
+          schema:
+            $ref: '#/definitions/utils.ResponseData'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Failed to mark notifications as read
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: Mark all notifications as read
+      tags:
+      - Notification
+  /notification/unread-count:
+    get:
+      consumes:
+      - application/json
+      description: Get count of unread notifications for the authenticated user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Unread count retrieved successfully
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.ResponseData'
+            - properties:
+                data:
+                  type: integer
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Failed to get unread count
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: Get unread notifications count
+      tags:
+      - Notification
   /post:
     get:
       consumes:
