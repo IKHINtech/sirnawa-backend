@@ -35,6 +35,7 @@ COPY --from=builder /app/sirnawa_app .
 # Salin file .env ke dalam container
 COPY --from=builder /app/.env /root/.env
 COPY --from=builder /app/service-account-my-rt.json /root/service-account-my-rt.json
+COPY --from=builder /app/firebase_service_account.json /root/firebase_service_account.json
 
 # Expose port yang akan digunakan oleh aplikasi (sesuaikan dengan aplikasi Anda)
 EXPOSE 5050
