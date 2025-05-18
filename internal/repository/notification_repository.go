@@ -42,7 +42,7 @@ func (r *notificationRepositoryImpl) GetByID(ctx context.Context, id string) (*m
 // GetByUserID mendapatkan notifikasi untuk user tertentu
 func (r *notificationRepositoryImpl) GetByUserID(pagination utils.Pagination, userID, rtID, houseID string) (*utils.Pagination, []models.Notification, error) {
 	var notifications []models.Notification
-	query := r.db.Where("user_id")
+	query := r.db.Where("user_id = ?", userID)
 
 	if houseID != "" {
 		query = query.Where("house_id", houseID)
