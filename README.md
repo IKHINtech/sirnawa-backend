@@ -15,6 +15,7 @@ Ini adalah bagian backend dari aplikasi, dibangun menggunakan **Golang**, **Fibe
 - Marketplace (warung warga)
 - Pengumuman dari pengurus RT
 - Autentikasi & role-based access
+- DLL
 
 ---
 
